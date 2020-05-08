@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+  <!-- Html Head Tag-->
+  <head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="kilic">
+  <!-- Open Graph Data -->
+  <meta property="og:title" content="Geth常用操作"/>
+  <meta property="og:description" content="咸鱼游民" />
+  <meta property="og:site_name" content="kilic の 部落格"/>
+  <meta property="og:type" content="article" />
+  <meta property="og:image" content="http://kilic.site"/>
+  
+    <link rel="alternate" href="/atom.xml" title="kilic の 部落格" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+
+  <!-- Site Title -->
+  <title>kilic の 部落格</title>
+
+  <!-- Bootstrap CSS -->
+  
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+
+  <!-- Custom CSS -->
+  
+  
+<link rel="stylesheet" href="/css/style.dark.css">
+
+
+  <!-- Google Analytics -->
+  
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+  <body>
+    <!-- Page Header -->
+
+
+<header class="site-header header-background" style="background-image: url(/img/m2.jpg)">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="page-title with-background-image">
+          <p class="title">Geth常用操作</p>
+          <p class="subtitle"></p>
+        </div>
+        <div class="site-menu with-background-image">
+          <ul>
+            
+              <li>
+                <a href="/">
+                  
+                  Home
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="/archives">
+                  
+                  Archives
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="https://github.com/kilicmu">
+                  
+                  Github
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="mailto:kilicmu3389@outlook.com">
+                  
+                  Email
+                  
+                </a>
+              </li>
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<article>
+  <div class="container typo">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="post-info text-muted">
+          
+            <!-- Author -->
+            <span class="author info">By kilic</span>
+          
+          <!-- Date -->
+          <span class="date-time info">On
+            <span class="date">2020-05-06</span>
+            <span class="time">12:01:03</span>
+          </span>
+          
+        </div>
+        <!-- Tags -->
+        
+          <div class="post-tags text-muted">
+            Tags: 
+
+<a class="tag" href="/tags/%E4%BB%A5%E5%A4%AA%E5%9D%8A/">#以太坊</a>
+
+
+          </div>
+        
+        <!-- Post Main Content -->
+        <div class="post-content">
+          <p>记录一下常用的geth操作，避免忘记后搜索麻烦。</p>
+<a id="more"></a>
+
+<h2 id="什么是geth"><a href="#什么是geth" class="headerlink" title="什么是geth"></a>什么是geth</h2><p>全称为Go-Etherenum</p>
+<p>是一个用go实现的以太坊客户端</p>
+<h2 id="使用方法："><a href="#使用方法：" class="headerlink" title="使用方法："></a>使用方法：</h2><ol>
+<li><p>官网安装</p>
+</li>
+<li><p><code>geth --datadir testNet --dev console 2&gt;&gt; test.log</code>开启一个开发者网络节点</p>
+</li>
+<li><p><code>geth --datadir testNet --dev console 2&gt;&gt; test.log --rpc --rpccorsdomain https://remix.ethereum.org</code></p>
+</li>
+<li><p>允许HTTP链接unlock账户：<code>--allow-insecure-unlock</code></p>
+</li>
+<li><p><code>tail -f test.log</code>实时监控日志状态</p>
+</li>
+<li><p>配置文件修改</p>
+<ul>
+<li><p>新建创世块参数文件 <code>genesis.json</code></p>
+</li>
+<li><pre><code class="json">{
+    <span class="attr">"config"</span>: {
+        <span class="attr">"chainId"</span>: <span class="number">15</span>,
+        <span class="attr">"homesteadBlock"</span>: <span class="number">0</span>,
+        <span class="attr">"eip155Block"</span>: <span class="number">0</span>,
+        <span class="attr">"eip158Block"</span>: <span class="number">0</span>
+    },
+    <span class="attr">"difficulty"</span>: <span class="string">"10000"</span>,
+    <span class="attr">"gasLimit"</span>: <span class="string">"2100000"</span>,
+    <span class="attr">"alloc"</span>: {
+        <span class="attr">"7df9a875a174b3bc565e6424a0050ebc1b2d1d82"</span>: { <span class="attr">"balance"</span>: <span class="string">"300000"</span> },
+        <span class="attr">"f41c74c9ae680c1aa78f42e5647a62f353b7bdde"</span>: { <span class="attr">"balance"</span>: <span class="string">"400000"</span> }
+    }
+}</code></pre>
+</li>
+<li><p><code>geth --datadir ./ethdev init genesis.json</code>：初始化测试网络的以太坊。<code>./ethdev</code>是存放测试网络数据的文件夹，可以任意指定</p>
+</li>
+</ul>
+</li>
+<li><p>常用方法：</p>
+</li>
+</ol>
+<ul>
+<li>eth:<ul>
+<li><code>eth.accounts</code>：查看网络中所有账户</li>
+<li><code>eth.getBalance(account)</code>：获得账户余额</li>
+<li><code>eth.sendTransaction({from:’&#39;, to:’&#39;, value:web3.toWei(99, &quot;ether&quot;)})</code>：发起一笔交易（转账）</li>
+</ul>
+</li>
+<li>personal：<ul>
+<li><code>personal.listAccounts</code>：查看网络中所有用户</li>
+<li><code>personal.newAccount(”accountPasswd“)</code>：创建一个新的账户</li>
+<li><code>personal.unlockAccount(eth.account[1],&quot;passwd&quot;)</code>：解锁一个账户</li>
+</ul>
+</li>
+<li>挖矿<ul>
+<li>开始挖矿：<code>miner.start()</code>，不停地挖矿，会返回一个<code>null</code></li>
+<li>只挖一个区块<code>miner.start(1)</code><ul>
+<li>挖矿奖励默认发送给 <code>eth.accounts[0]</code>。</li>
+<li>测试网络里，把 <code>genesis.json</code> 中的 “difficulty”  设低一点，会比较好挖。</li>
+</ul>
+</li>
+<li>停止挖矿：<code>miner.stop()</code></li>
+<li><code>geth --mine --minerthreads=4</code>：<code>--minerthreads</code> 设置并行挖矿的线程数量，默认为所有的处理器数量；</li>
+<li>稍微复杂点的挖矿命令：<code>geth --mine --minerthreads 4 --datadir /usr/local/share/ethereum/30303 --port 30303</code>：使用不同数据目录（ethereum/30303）和不同的端口（30303）挖矿</li>
+<li>发放奖励：<code>eth.etherbase</code>（也叫 coinbase）是一个地址，挖矿奖励会发到这个地址里。改变 etherbase 的方式如下</li>
+<li><code>geth --etherbase 1 --mine</code>：改变 etherbase 为编号1的地址；</li>
+<li>控制台：<code>&gt; miner.setEtherbase(eth.accounts[2])</code></li>
+</ul>
+</li>
+<li>交易<ul>
+<li><code>eth.getBlock(i).miner</code>：查看块的挖出者</li>
+<li><code>eth.getBlockTransactionCount(&quot;pending&quot;)</code>：查看未确认交易的数量、</li>
+<li><code>eth.getBlock(&quot;pending&quot;, true).transactions</code>：查看所有未确认交易</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</article>
+
+
+
+    <!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <p class="copyright text-muted">
+          Theme By <a target="_blank" href="https://github.com/levblanc">Levblanc.</a>
+          Inspired By <a target="_blank" href="https://github.com/klugjo/hexo-theme-clean-blog">Clean Blog.</a>
+        <p class="copyright text-muted">
+          Powered By <a target="_blank" href="https://hexo.io/">Hexo.</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+    <!-- After Footer Scripts -->
+
+<script src="/js/highlight.pack.js"></script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function(event) {
+    var codeBlocks = Array.prototype.slice.call(document.getElementsByTagName('pre'))
+    codeBlocks.forEach(function(block, index) {
+      hljs.highlightBlock(block);
+    });
+  });
+</script>
+
+  </body>
+</html>
+

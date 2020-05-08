@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+  <!-- Html Head Tag-->
+  <head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="kilic">
+  <!-- Open Graph Data -->
+  <meta property="og:title" content="Koa-Body文件上传方案"/>
+  <meta property="og:description" content="咸鱼游民" />
+  <meta property="og:site_name" content="kilic の 部落格"/>
+  <meta property="og:type" content="article" />
+  <meta property="og:image" content="http://kilic.site"/>
+  
+    <link rel="alternate" href="/atom.xml" title="kilic の 部落格" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+
+  <!-- Site Title -->
+  <title>kilic の 部落格</title>
+
+  <!-- Bootstrap CSS -->
+  
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+
+  <!-- Custom CSS -->
+  
+  
+<link rel="stylesheet" href="/css/style.dark.css">
+
+
+  <!-- Google Analytics -->
+  
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+  <body>
+    <!-- Page Header -->
+
+
+<header class="site-header header-background" style="background-image: url(/img/m2.jpg)">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="page-title with-background-image">
+          <p class="title">Koa-Body文件上传方案</p>
+          <p class="subtitle"></p>
+        </div>
+        <div class="site-menu with-background-image">
+          <ul>
+            
+              <li>
+                <a href="/">
+                  
+                  Home
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="/archives">
+                  
+                  Archives
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="https://github.com/kilicmu">
+                  
+                  Github
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="mailto:kilicmu3389@outlook.com">
+                  
+                  Email
+                  
+                </a>
+              </li>
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<article>
+  <div class="container typo">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="post-info text-muted">
+          
+            <!-- Author -->
+            <span class="author info">By kilic</span>
+          
+          <!-- Date -->
+          <span class="date-time info">On
+            <span class="date">2020-04-26</span>
+            <span class="time">12:01:03</span>
+          </span>
+          
+        </div>
+        <!-- Tags -->
+        
+          <div class="post-tags text-muted">
+            Tags: 
+
+<a class="tag" href="/tags/NODEJS/">#nodejs</a>
+
+
+          </div>
+        
+        <!-- Post Main Content -->
+        <div class="post-content">
+          <p>需要写一个上传文件的测试接口，使用力koa-body，发现koa-body的文档有些简单，兜兜转转浪费了一些时间，所以决定整理一下这个过程。</p>
+<a id="more"></a>
+
+<h3 id="设置中间件"><a href="#设置中间件" class="headerlink" title="设置中间件"></a>设置中间件</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// app.js</span></span><br><span class="line">app.use(<span class="built_in">require</span>(<span class="string">'koa-static'</span>)(__dirname + <span class="string">'/public'</span>));</span><br><span class="line"></span><br><span class="line">app.use(<span class="built_in">require</span>(<span class="string">'koa-body'</span>)(&#123;</span><br><span class="line">    multipart: <span class="literal">true</span>,</span><br><span class="line">    formidable: &#123;</span><br><span class="line">      maxFileSize: <span class="number">200</span> * <span class="number">1024</span> * <span class="number">1024</span>, <span class="comment">// 设置上传文件大小</span></span><br><span class="line">      uploadDir: path.resolve(__dirname, <span class="string">"/public/upload"</span>),	<span class="comment">//设置文件的上传目录</span></span><br><span class="line">      onFileBegin: <span class="function">(<span class="params">name, file</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="comment">// TODO</span></span><br><span class="line">      &#125;,</span><br><span class="line">      onError:<span class="function">(<span class="params">err</span>)=&gt;</span>&#123;</span><br><span class="line">  		<span class="comment">// TODO handle error</span></span><br><span class="line">	  &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;));</span><br></pre></td></tr></table></figure>
+
+<p>上面的代码添加了静态资源目录<code>/public</code>，我们将可以直接访问文件资源。</p>
+<p>继续添加<code>koa-body</code>解析post的内容，并暂且推迟onFileBegin的实现。</p>
+<h2 id="一些工具函数"><a href="#一些工具函数" class="headerlink" title="一些工具函数"></a>一些工具函数</h2><p>接下来我们做一个生成文件夹的工具函数：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// utils/fileUtils.js</span></span><br><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">"fs"</span>);</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">"path"</span>);</span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  getStampDirName() &#123;</span><br><span class="line">    <span class="keyword">const</span> date = <span class="keyword">new</span> <span class="built_in">Date</span>();</span><br><span class="line">    <span class="keyword">let</span> month = <span class="built_in">Number</span>(date.getMonth()) + <span class="number">1</span>;</span><br><span class="line">    month = month.toString().length &gt; <span class="number">1</span> ? month : <span class="string">`0<span class="subst">$&#123;month&#125;</span>`</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">`<span class="subst">$&#123;date.getFullYear()&#125;</span><span class="subst">$&#123;month&#125;</span><span class="subst">$&#123;date.getDate()&#125;</span>`</span>;</span><br><span class="line">  &#125;,</span><br><span class="line">  checkDirExit(dir) &#123;</span><br><span class="line">    <span class="keyword">if</span> (!fs.existsSync(dir)) &#123;</span><br><span class="line">      fs.mkdir(dir);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  getFileExt(name) &#123;</span><br><span class="line">    <span class="keyword">const</span> ext = name.split(<span class="string">"."</span>);</span><br><span class="line">    <span class="keyword">return</span> ext[ext.length - <span class="number">1</span>];</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>getStampDirName：用来获取当期应存储文件的目录。</p>
+<p>checkDirExit：用来校验目录的存在，若不存在则新建目录。</p>
+<p>getFileExt：获取文件的扩展名。</p>
+<h2 id="onFileBegin-属性完善"><a href="#onFileBegin-属性完善" class="headerlink" title="onFileBegin 属性完善"></a>onFileBegin 属性完善</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// app.js</span></span><br><span class="line"><span class="keyword">const</span> &#123;</span><br><span class="line">  getStampDirName,</span><br><span class="line">  checkDirExit,</span><br><span class="line">  getFileExt,</span><br><span class="line">&#125; = <span class="built_in">require</span>(<span class="string">"./utils/fileUtils"</span>);</span><br><span class="line"></span><br><span class="line">onFileBegin:<span class="function">(<span class="params">name,file</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> ext =getFileExt(file.name);</span><br><span class="line">  <span class="keyword">const</span> dir = path.join(__dirname,<span class="string">`public/upload/<span class="subst">$&#123;getStampDirName()&#125;</span>`</span>);</span><br><span class="line">  checkDirExist(dir);</span><br><span class="line">  file.path = <span class="string">`<span class="subst">$&#123;dir&#125;</span>/<span class="subst">$&#123;getFileName(ext)&#125;</span>`</span>;</span><br><span class="line">  app.context.uploadpath = app.context.uploadpath</span><br><span class="line">  ? app.context.uploadpath</span><br><span class="line">  : &#123;&#125;;</span><br><span class="line">  app.context.uploadpath[name] = <span class="string">`/upload/<span class="subst">$&#123;dirName&#125;</span>/<span class="subst">$&#123;fileName&#125;</span>`</span>;</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+
+<p>在文件上传结束后，我们需要将上传文件的路径返回给前端。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">router.post(<span class="string">"/api/uploadHeadPic"</span>, <span class="keyword">async</span> ctx =&gt; &#123;</span><br><span class="line">  ctx.body = ctx.uploadpath;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h2 id="前端获取文件路径"><a href="#前端获取文件路径" class="headerlink" title="前端获取文件路径"></a>前端获取文件路径</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">handleSuccessful(resp) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"filepath: "</span>, resp.file);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>效果：</p>
+<p><img src="https://i.niupic.com/images/2020/05/04/7zZK.png" alt="前端获取路径"></p>
+<p>服务端：</p>
+<p><img src="https://i.niupic.com/images/2020/05/04/7zZM.png" alt="服务端路径"></p>
+<p>以上。</p>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</article>
+
+
+
+    <!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <p class="copyright text-muted">
+          Theme By <a target="_blank" href="https://github.com/levblanc">Levblanc.</a>
+          Inspired By <a target="_blank" href="https://github.com/klugjo/hexo-theme-clean-blog">Clean Blog.</a>
+        <p class="copyright text-muted">
+          Powered By <a target="_blank" href="https://hexo.io/">Hexo.</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+    <!-- After Footer Scripts -->
+
+<script src="/js/highlight.pack.js"></script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function(event) {
+    var codeBlocks = Array.prototype.slice.call(document.getElementsByTagName('pre'))
+    codeBlocks.forEach(function(block, index) {
+      hljs.highlightBlock(block);
+    });
+  });
+</script>
+
+  </body>
+</html>
+

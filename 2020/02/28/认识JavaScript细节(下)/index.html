@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html>
+  <!-- Html Head Tag-->
+  <head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="kilic">
+  <!-- Open Graph Data -->
+  <meta property="og:title" content="DOM&amp;BOM"/>
+  <meta property="og:description" content="咸鱼游民" />
+  <meta property="og:site_name" content="kilic の 部落格"/>
+  <meta property="og:type" content="article" />
+  <meta property="og:image" content="http://kilic.site"/>
+  
+    <link rel="alternate" href="/atom.xml" title="kilic の 部落格" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+
+  <!-- Site Title -->
+  <title>kilic の 部落格</title>
+
+  <!-- Bootstrap CSS -->
+  
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+
+  <!-- Custom CSS -->
+  
+  
+<link rel="stylesheet" href="/css/style.dark.css">
+
+
+  <!-- Google Analytics -->
+  
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+  <body>
+    <!-- Page Header -->
+
+
+<header class="site-header header-background" style="background-image: url(/img/m2.jpg)">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="page-title with-background-image">
+          <p class="title">DOM&amp;BOM</p>
+          <p class="subtitle"></p>
+        </div>
+        <div class="site-menu with-background-image">
+          <ul>
+            
+              <li>
+                <a href="/">
+                  
+                  Home
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="/archives">
+                  
+                  Archives
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="https://github.com/kilicmu">
+                  
+                  Github
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="mailto:kilicmu3389@outlook.com">
+                  
+                  Email
+                  
+                </a>
+              </li>
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<article>
+  <div class="container typo">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="post-info text-muted">
+          
+            <!-- Author -->
+            <span class="author info">By kilic</span>
+          
+          <!-- Date -->
+          <span class="date-time info">On
+            <span class="date">2020-02-28</span>
+            <span class="time">12:01:03</span>
+          </span>
+          
+        </div>
+        <!-- Tags -->
+        
+          <div class="post-tags text-muted">
+            Tags: 
+
+<a class="tag" href="/tags/JAVASCRIPT/">#JavaScript</a>
+
+
+          </div>
+        
+        <!-- Post Main Content -->
+        <div class="post-content">
+          <p>承接上文</p>
+<p>BOM与DOM不属于ECMAscript，但是在前端开发中，我们必定要对DOM和BOM操作。</p>
+<p>本文将总结常用的BOM与DOM事件或操作。</p>
+<a id="more"></a>
+
+<h1 id="DOM"><a href="#DOM" class="headerlink" title="DOM"></a>DOM</h1><h2 id="1-定义"><a href="#1-定义" class="headerlink" title="1 定义"></a>1 定义</h2><p>文档对象模型，是可扩展标记语言接口，可以该表网页内容，结构和样式</p>
+<p>分为：文档，元素，节点</p>
+<h2 id="2-API"><a href="#2-API" class="headerlink" title="2 API"></a>2 API</h2><h3 id="2-1-获取元素"><a href="#2-1-获取元素" class="headerlink" title="2.1 获取元素"></a>2.1 获取元素</h3><ul>
+<li>document,getElementById()：返回一个DOM Element对象</li>
+<li>document.getElementByTagName()：返回一个获取元素对象集合</li>
+<li>document.getElementByClassName(): HTML5新增</li>
+<li>document.querySelector(‘.class’)：获取第一个选择对象 </li>
+<li>document.querySelectorAll(‘.class/tag’)：获取所有的选择器对象</li>
+<li>docment.body：返回body对象</li>
+<li>document.documentElement：返回html元素对象</li>
+</ul>
+<h3 id="2-2-事件-触发响应的机制"><a href="#2-2-事件-触发响应的机制" class="headerlink" title="2.2 事件(触发响应的机制)"></a>2.2 事件(触发响应的机制)</h3><h4 id="组成"><a href="#组成" class="headerlink" title="组成"></a>组成</h4><p>事件源：时间触发对象</p>
+<p>事件类型：如何触发，何时触发</p>
+<p>事件处理程序：通过函数赋值完成</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//demo：</span></span><br><span class="line"><span class="keyword">var</span> el = <span class="built_in">document</span>.getElementById(<span class="string">'el'</span>);</span><br><span class="line">el.onclick = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'click'</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="事件类型"><a href="#事件类型" class="headerlink" title="事件类型"></a>事件类型</h4><table>
+<thead>
+<tr>
+<th>onclick</th>
+<th>鼠标点击左键</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>onmouseover</td>
+<td>鼠标经过触发</td>
+</tr>
+<tr>
+<td>onmouseout</td>
+<td>鼠标离开触发</td>
+</tr>
+<tr>
+<td>onfocus</td>
+<td>获得焦点触发</td>
+</tr>
+<tr>
+<td>onblur</td>
+<td>失去焦点触发</td>
+</tr>
+<tr>
+<td>onmousemove</td>
+<td>鼠标移动触发</td>
+</tr>
+<tr>
+<td>onmouseup</td>
+<td>鼠标弹起触发</td>
+</tr>
+<tr>
+<td>onmousedown</td>
+<td>鼠标按下触发</td>
+</tr>
+<tr>
+<td>onmouseover</td>
+<td>鼠标覆盖（冒泡）</td>
+</tr>
+<tr>
+<td>onmouseenter</td>
+<td>鼠标覆盖（不会冒泡）【与mouseleave配套】</td>
+</tr>
+<tr>
+<td>onscroll</td>
+<td>滚动事件</td>
+</tr>
+</tbody></table>
+<h3 id="2-3修改元素内容"><a href="#2-3修改元素内容" class="headerlink" title="2.3修改元素内容"></a>2.3修改元素内容</h3><ul>
+<li>element.innerText：从起始位置到终止位置内容（不包含html标签，空格和换行）【非标准】</li>
+<li>element.innerHTML：包括html标签和空格和换行【W3C】</li>
+<li>src，href</li>
+<li>id，alt，title</li>
+</ul>
+<h3 id="2-4-修改元素样式"><a href="#2-4-修改元素样式" class="headerlink" title="2.4 修改元素样式"></a>2.4 修改元素样式</h3><ul>
+<li>element.style（样式采用驼峰命名法）：仅可以获取行内样式</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> el = getElementById(<span class="string">'el'</span>);</span><br><span class="line">el.onclick=<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="keyword">this</span>.style.backgroundColor=<span class="string">"pink"</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>element.className：可以修改或添加类</li>
+<li>标准浏览器：window.getComputedStyle(“元素”， [伪类，一般为null])</li>
+<li>IE6-8：获取经过计算的样式：el.currentStyle</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> getCss = <span class="function"><span class="keyword">function</span>(<span class="params">currentEl, attr</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(!(<span class="string">'getComputedStyle'</span> <span class="keyword">in</span> <span class="built_in">window</span>))&#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">"浏览器不兼容"</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">let</span> val = <span class="built_in">window</span>.getComputedStyle(currentEl, <span class="literal">null</span>)</span><br><span class="line">    <span class="keyword">let</span>	reg = <span class="regexp">/^-?\d+(\.\d+)?(px|rem|em|pt)?$/i</span></span><br><span class="line">    reg.test(val)? val = <span class="built_in">parseFloat</span>(val): <span class="literal">null</span></span><br><span class="line">    <span class="keyword">return</span> val</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> setCss = <span class="function"><span class="keyword">function</span>(<span class="params">currentEl, obj</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> attr <span class="keyword">in</span> obj)&#123;</span><br><span class="line">        <span class="keyword">if</span>(!obj.hasOwnProperty(attr)) <span class="keyword">break</span></span><br><span class="line">      	currentEl.style[attr] = obj[attr]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="2-5-操作元素属性"><a href="#2-5-操作元素属性" class="headerlink" title="2.5 操作元素属性"></a>2.5 操作元素属性</h3><ul>
+<li>el.属性：获取内置属性（class为className）</li>
+<li>el.getAttribute(‘属性’)：获取内置属性或自定义属性<ul>
+<li>h5提出自定义属性需要以data-开头做属性名</li>
+</ul>
+</li>
+<li>el.dataset.属性：h5获取新增属性方法（只能获取data-开头属性，以驼峰命名获取）ie11以上支持</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> el = <span class="built_in">document</span>.querySelector(<span class="string">'input'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(el.getAttribute(<span class="string">'attr'</span>));   <span class="comment">//attr test</span></span><br><span class="line"><span class="built_in">console</span>.log(el.getAttribute(<span class="string">'class'</span>));   <span class="comment">//classname</span></span><br><span class="line"><span class="built_in">console</span>.log(el.className);                   <span class="comment">//classname</span></span><br><span class="line"><span class="built_in">console</span>.log(el.attr);                   <span class="comment">//undefined</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>el.setAttribute(‘key’, ‘value’)：修改内置或自定义</li>
+</ul>
+<h3 id="2-6-表单属性"><a href="#2-6-表单属性" class="headerlink" title="2.6 表单属性"></a>2.6 表单属性</h3><ol>
+<li><p>表单中的值通过value修改</p>
+</li>
+<li><p>disabled(表单对象是否禁用true、false)</p>
+</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> input = <span class="built_in">document</span>.querySelector(<span class="string">'input'</span>);</span><br><span class="line"><span class="keyword">var</span> btn = <span class="built_in">document</span>.querySelector(<span class="string">'button'</span>);</span><br><span class="line">btn.onclick = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123; </span><br><span class="line">	alert(input.value); </span><br><span class="line">	input.value = <span class="string">''</span>; </span><br><span class="line">	btn.disabled = <span class="literal">true</span>; </span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>通过type修改input属性（text、password…）</li>
+</ol>
+<h3 id="2-7节点操作"><a href="#2-7节点操作" class="headerlink" title="2.7节点操作"></a>2.7节点操作</h3><h4 id="节点属性"><a href="#节点属性" class="headerlink" title="节点属性"></a>节点属性</h4><p>nodeType，nodeName，nodeValue</p>
+<p>对于节点类型，元素节点nodeType为1，属性节点nodeType为2，文本节点为3</p>
+<h4 id="API"><a href="#API" class="headerlink" title="API"></a>API</h4><ul>
+<li>el.parentNode：获取与元素最近的父节点</li>
+<li>el.childNodes：获取元素的所有子节点（包含元素节点和文本节点等，使用nodeType过滤）</li>
+<li>el.children：获取所有子元素节点（非标准）</li>
+<li>el.firstChild：获取第一个子节点</li>
+<li>el.lastChild：后去最后一个子节点</li>
+<li>el.firstElementChild：获取第一个子元素节点（ie9以上）</li>
+<li>el.lastElementChild：获取最后一个子元素节点（ie9以上）</li>
+<li>el.nextSibling：下一个兄弟节点，包含元素或文本节点</li>
+<li>el.previousSibling：上一个兄弟节点</li>
+<li>el.nextElementSibling：下一个元素兄弟节点（ie9以上）</li>
+<li>el.previousElementSibling：上一个兄弟节点（ie9以上）</li>
+<li>document.createEelement(‘节点名’)：创建节点，返回一个元素节点对象</li>
+<li>el.appendChild(child)：在节点中追加节点（el是父级别）</li>
+<li>el.insertBefore(child，attributechildren)：在指定节点前添加元素</li>
+<li>el.removeChild(child)：删除父节点一个子节点</li>
+<li>el.cloneNode()：返回一个el节点副本，参数为空或false是浅拷贝，true为深拷贝</li>
+<li>document.write(‘string’)：文档流 会重绘</li>
+</ul>
+<h2 id="3-事件"><a href="#3-事件" class="headerlink" title="3 事件"></a>3 事件</h2><h3 id="3-1-注册事件"><a href="#3-1-注册事件" class="headerlink" title="3.1 注册事件"></a>3.1 注册事件</h3><p>传统注册事件以on开头有的事件</p>
+<ul>
+<li>特点：仅仅支持一个处理函数，后面处理函数将会覆盖前面的处理函数</li>
+</ul>
+<p>方法监听注册方式</p>
+<ul>
+<li>el.addEventListener(type，listener[，useCapture])：IE9以上支持<ul>
+<li>type：事件类型（click，mouseover等）</li>
+<li>listener：处理函数，事件发生调用</li>
+<li>useCapture：可选，默认为false，true表示捕获阶段，false表示冒泡阶段</li>
+</ul>
+</li>
+<li>attachEvent(eventNameWithOn, callback)：全兼容(非标准)</li>
+</ul>
+<h3 id="3-2-事件注销"><a href="#3-2-事件注销" class="headerlink" title="3.2 事件注销"></a>3.2 事件注销</h3><p>传统方式解绑</p>
+<ul>
+<li>el.event = null;</li>
+</ul>
+<p>方法监听移除事件</p>
+<ul>
+<li>el.removeEventListener(type, listener[,useCapture])</li>
+</ul>
+<h3 id="3-3-DOM事件流"><a href="#3-3-DOM事件流" class="headerlink" title="3.3 DOM事件流"></a>3.3 DOM事件流</h3><p><img src="Web%20APIS.assets/Selection_022.png" alt="Selection_022"></p>
+<h3 id="3-4-事件冒泡"><a href="#3-4-事件冒泡" class="headerlink" title="3.4 事件冒泡"></a>3.4 事件冒泡</h3><p><strong>有些事件没有冒泡效果，如onblur，onfocus，onmouseenter，onmouseleave等</strong></p>
+<p>阻止事件冒泡方法：</p>
+<ul>
+<li>使用<code>e.stopPropagation()</code>函数停止冒泡</li>
+<li>使用<code>e.cancelBubble = true</code>停止传播</li>
+</ul>
+<h3 id="3-5-事件对象"><a href="#3-5-事件对象" class="headerlink" title="3.5 事件对象"></a>3.5 事件对象</h3><p>事件对象是事件回调的参数，事件对象包含一系列和事件相关数据</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">el.setEventListener(<span class="string">'click'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">event</span>)</span>&#123;&#125;);</span><br><span class="line">el.onclick=<span class="function"><span class="keyword">function</span>(<span class="params">event</span>)</span>&#123;&#125;;</span><br><span class="line"><span class="comment">//ie9以下需要使用</span></span><br><span class="line">el.onclick=<span class="function"><span class="keyword">function</span>(<span class="params">e</span>)</span>&#123;e = e ||  <span class="built_in">window</span>.event)&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>常见属性方法：</p>
+<table>
+<thead>
+<tr>
+<th>对象属性</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>e.target</td>
+<td>事件触发对象（标准</td>
+</tr>
+<tr>
+<td>e.srcElement</td>
+<td>事件触发对象（非标准IE6-8</td>
+</tr>
+<tr>
+<td>e.type</td>
+<td>事件类型（click等</td>
+</tr>
+<tr>
+<td>e.cancelBubble</td>
+<td>阻止事件冒泡（非标准 ie6-8</td>
+</tr>
+<tr>
+<td>e.returnValue</td>
+<td>阻止默认事件（非标准 ie6-8使用</td>
+</tr>
+<tr>
+<td>e.preventDefault()</td>
+<td>阻止默认事件不如不让链接跳转</td>
+</tr>
+<tr>
+<td>e.stopPropagation()</td>
+<td>阻止冒泡（标准</td>
+</tr>
+</tbody></table>
+<h3 id="3-6-事件委托"><a href="#3-6-事件委托" class="headerlink" title="3.6 事件委托"></a>3.6 事件委托</h3><p>原理：不给每个子节点添加事件监听器，给父节点添加事件监听器</p>
+<p>优点：提高了事件性能</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> ul = <span class="built_in">document</span>.querySelector(<span class="string">'ul'</span>);</span><br><span class="line">ul.addEventListener(<span class="string">'click'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">e</span>)</span>&#123;</span><br><span class="line">	e.target.style.backgroundColor = “pink”;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-7-鼠标对象"><a href="#3-7-鼠标对象" class="headerlink" title="3.7 鼠标对象"></a>3.7 鼠标对象</h3><h4 id="鼠标事件应用"><a href="#鼠标事件应用" class="headerlink" title="鼠标事件应用"></a>鼠标事件应用</h4><ol>
+<li>禁止鼠标右键菜单</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">document</span>.addEventListener(<span class="string">'contextmenu'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">e</span>)</span>&#123;</span><br><span class="line">    e.preventDefault();</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>禁止选中</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">document</span>.addEventListener(<span class="string">'selectstart'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">e</span>)</span>&#123;</span><br><span class="line">    e.preventDefault();</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h4 id="鼠标事件对象"><a href="#鼠标事件对象" class="headerlink" title="鼠标事件对象"></a>鼠标事件对象</h4><table>
+<thead>
+<tr>
+<th>鼠标事件对象</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>e.clientX</td>
+<td>返回鼠标对于浏览器窗口的可视区的X坐标</td>
+</tr>
+<tr>
+<td>e.clientY</td>
+<td>返回鼠标对于浏览器可视区Y</td>
+</tr>
+<tr>
+<td>e.pageX</td>
+<td>返回鼠标对于文档页面的X坐标ie9+支持</td>
+</tr>
+<tr>
+<td>e.pageY</td>
+<td>返回鼠标对于文档页面的Y坐标ie9+支持</td>
+</tr>
+<tr>
+<td>e.screenX</td>
+<td>返回鼠标对于屏幕的x坐标</td>
+</tr>
+<tr>
+<td>e.screenY</td>
+<td>返回鼠标对于屏幕的Y坐标</td>
+</tr>
+</tbody></table>
+<h3 id="3-8-键盘事件"><a href="#3-8-键盘事件" class="headerlink" title="3.8 键盘事件"></a>3.8 键盘事件</h3><table>
+<thead>
+<tr>
+<th>键盘事件</th>
+<th>触发条件</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>onkeyup</td>
+<td>某个按键松开触发</td>
+</tr>
+<tr>
+<td>onkeydown</td>
+<td>按键按下触发</td>
+</tr>
+<tr>
+<td>onkeypress</td>
+<td>按键按下触发（不识别功能键）</td>
+</tr>
+</tbody></table>
+<h4 id="键盘事件对象"><a href="#键盘事件对象" class="headerlink" title="键盘事件对象"></a>键盘事件对象</h4><table>
+<thead>
+<tr>
+<th>键盘事件对象属性</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>keyCode</td>
+<td>返回键的ASCII值</td>
+</tr>
+</tbody></table>
+<p>注意：keyup与keydown不区分大小写，keypress区分大小写</p>
+<h2 id="4-元素偏移量（offset）"><a href="#4-元素偏移量（offset）" class="headerlink" title="4 元素偏移量（offset）"></a>4 元素偏移量（offset）</h2><p>offset可以动态获取元素的位置（偏移量，大小等）</p>
+<h3 id="4-1-常用属性"><a href="#4-1-常用属性" class="headerlink" title="4.1 常用属性"></a>4.1 常用属性</h3><table>
+<thead>
+<tr>
+<th>offset属性</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>el.offsetParent</td>
+<td>返回作为元素带有定位的父级元素，若是没有定位返回body</td>
+</tr>
+<tr>
+<td>el.offsetTop</td>
+<td>返回元素相对<strong>带有定位</strong>的父级元素上方的偏移</td>
+</tr>
+<tr>
+<td>el.offsetLeft</td>
+<td>返回元素相对带有定位父级元素左边框偏移</td>
+</tr>
+<tr>
+<td>el.offsetWidth</td>
+<td>返回自身包括padding，边框，内容区域的宽度，返回数值不带单位</td>
+</tr>
+<tr>
+<td>el.offsetHeight</td>
+<td>返回自身包括padding，边框，内容区域的高度，不带单位</td>
+</tr>
+</tbody></table>
+<p> 注意：offset属性为只读属性，无法更改变元素位置</p>
+<h2 id="5-元素可视区（client）"><a href="#5-元素可视区（client）" class="headerlink" title="5 元素可视区（client）"></a>5 元素可视区（client）</h2><p>client可以动态得到元素边框大小，元素大小</p>
+<h3 id="5-1-常用属性"><a href="#5-1-常用属性" class="headerlink" title="5.1 常用属性"></a>5.1 常用属性</h3><table>
+<thead>
+<tr>
+<th>client系列属性</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>el.clientTop</td>
+<td>返回元素上边框大小</td>
+</tr>
+<tr>
+<td>el.clientLeft</td>
+<td>返回元素左边框大小</td>
+</tr>
+<tr>
+<td>el.clientWidth</td>
+<td>返回包括padding，内容区的宽度，不含边框，返回数值不带单位</td>
+</tr>
+<tr>
+<td>el.clientHeight</td>
+<td>返回包含padding，内容区高度，不含边框，返回数值不带单位</td>
+</tr>
+</tbody></table>
+<h2 id="6-元素滚动区域（scroll）"><a href="#6-元素滚动区域（scroll）" class="headerlink" title="6 元素滚动区域（scroll）"></a>6 元素滚动区域（scroll）</h2><p>scroll系列可以动态得到元素大小，滚动距离</p>
+<h3 id="3-6-1-常用属性"><a href="#3-6-1-常用属性" class="headerlink" title="3.6.1 常用属性"></a>3.6.1 常用属性</h3><table>
+<thead>
+<tr>
+<th>scroll系列属性</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>el.scrollTop</td>
+<td>返回被卷上去的上侧距离（页面为window.pageYoffset())</td>
+</tr>
+<tr>
+<td>el.scrollLeft</td>
+<td>返回被卷左侧距离</td>
+</tr>
+<tr>
+<td>el.scrollWidth</td>
+<td>返回自身实际宽度，不含边框</td>
+</tr>
+<tr>
+<td>el.scrollHeight</td>
+<td>返回自身实际高度，不含边框</td>
+</tr>
+</tbody></table>
+<p><img src="Web%20APIS.assets/Selection_025.png" alt="Selection_025"></p>
+<h1 id="BOM"><a href="#BOM" class="headerlink" title="BOM"></a>BOM</h1><h2 id="1-window对象"><a href="#1-window对象" class="headerlink" title="1 window对象"></a>1 window对象</h2><p>浏览器对象模型，为浏览器窗口做交互</p>
+<p><img src="Web%20APIS.assets/Selection_023.png" alt="Selection_023"></p>
+<h3 id="1-1-window对象常见事件"><a href="#1-1-window对象常见事件" class="headerlink" title="1.1 window对象常见事件"></a>1.1 window对象常见事件</h3><ol>
+<li>窗口加载事件</li>
+</ol>
+<p><code>window.onload=function(){}</code>或<code>window.addEventListener(&quot;loader&quot;, function(){})</code></p>
+<p>​    但是有时候图片很多只需要加载dom后就执行js脚本，可以使用：<code>document.addEventListener(&#39;DOMContentLoaded&#39;,function(){})</code></p>
+<ol start="2">
+<li><p>window.onresize 事件，窗口尺寸变化事件</p>
+<p>可使用window.addEventListener(“resize”， function())</p>
+</li>
+</ol>
+<h3 id="1-2-定时器"><a href="#1-2-定时器" class="headerlink" title="1.2 定时器"></a>1.2 定时器</h3><p>window提供了两种定时器</p>
+<ol>
+<li>window.setTimeout(callback, time)</li>
+<li>setInterval(callback，time)</li>
+</ol>
+<p>对于定时器，可以取一个名字用来取消定时器：<code>clearTimeout(定时器标识符)</code></p>
+<h3 id="1-3-数据存储"><a href="#1-3-数据存储" class="headerlink" title="1.3 数据存储"></a>1.3 数据存储</h3><ol>
+<li><p>window.sessionStorage</p>
+<ol>
+<li>生命周期为浏览器窗口</li>
+<li>同一个窗口下数据可共享</li>
+<li>以键值对存储</li>
+</ol>
+<p>API：</p>
+<ul>
+<li>sessionStorage.setItem(key, value);</li>
+<li>sessionStorage.getItem(key, value);</li>
+<li>sessionStorage.removeItem(key);</li>
+<li>sessionStorage.clear()：清除所有数据</li>
+</ul>
+</li>
+<li><p>window.localStorage</p>
+<ol>
+<li>永久生命周期</li>
+<li>多窗口共享</li>
+<li>键值对存储</li>
+</ol>
+</li>
+</ol>
+<h2 id="2-location对象"><a href="#2-location对象" class="headerlink" title="2 location对象"></a>2 location对象</h2><h3 id="2-1-属性"><a href="#2-1-属性" class="headerlink" title="2.1 属性"></a>2.1 属性</h3><table>
+<thead>
+<tr>
+<th>属性</th>
+<th>返回值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>location.href</td>
+<td>获取整个url</td>
+</tr>
+<tr>
+<td>location.host</td>
+<td></td>
+</tr>
+<tr>
+<td>location.port</td>
+<td></td>
+</tr>
+<tr>
+<td>location.pathname</td>
+<td></td>
+</tr>
+<tr>
+<td>location.search</td>
+<td></td>
+</tr>
+<tr>
+<td>location.hash</td>
+<td>获取片段（#后内容</td>
+</tr>
+</tbody></table>
+<h3 id="2-2-方法"><a href="#2-2-方法" class="headerlink" title="2.2 方法"></a>2.2 方法</h3><table>
+<thead>
+<tr>
+<th>方法</th>
+<th>返回值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>location.assign(url)</td>
+<td>和href一样可以跳转页面（记录hishtory）</td>
+</tr>
+<tr>
+<td>location.replace(url)</td>
+<td>替换当前页面（不记录history）</td>
+</tr>
+<tr>
+<td>location.reload(url)</td>
+<td>重新加载页面（相当于f5，如果参数为true强制刷新）</td>
+</tr>
+</tbody></table>
+<h2 id="3-navigator对象"><a href="#3-navigator对象" class="headerlink" title="3 navigator对象"></a>3 navigator对象</h2><p>navigator对象包含浏览器信息与操作系统信息等</p>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>对象</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>userAgent</td>
+<td>查看浏览器信息</td>
+</tr>
+</tbody></table>
+<h2 id="4-hishtory对象"><a href="#4-hishtory对象" class="headerlink" title="4 hishtory对象"></a>4 hishtory对象</h2><table>
+<thead>
+<tr>
+<th>方法</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>back()</td>
+<td>回退</td>
+</tr>
+<tr>
+<td>forward()</td>
+<td>前进</td>
+</tr>
+<tr>
+<td>go(number)</td>
+<td>前进后退（1为前进一个页面，-1为后退一个页面）</td>
+</tr>
+</tbody></table>
+<h1 id="5-移动端"><a href="#5-移动端" class="headerlink" title="5. 移动端"></a>5. 移动端</h1><h2 id="5-1-事件"><a href="#5-1-事件" class="headerlink" title="5.1 事件"></a>5.1 事件</h2><table>
+<thead>
+<tr>
+<th>触屏touch事件</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>touchstart</td>
+<td>手指触摸到DOM元素触发</td>
+</tr>
+<tr>
+<td>touchmove</td>
+<td>手指在DOM滑动触发</td>
+</tr>
+<tr>
+<td>touchend</td>
+<td>手指从DOM元素移开触发</td>
+</tr>
+</tbody></table>
+<h2 id="5-2-事件对象"><a href="#5-2-事件对象" class="headerlink" title="5.2 事件对象"></a>5.2 事件对象</h2><table>
+<thead>
+<tr>
+<th>触摸列表</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>touches</td>
+<td>正在触摸屏幕的所有手指的列表(touchend没有)</td>
+</tr>
+<tr>
+<td>targetTouches</td>
+<td>正在触摸当前DOM元素上的手指列表(touchend没有)</td>
+</tr>
+<tr>
+<td>changedTouched</td>
+<td>手指状态发生改变的列表，从无到有，从有到无</td>
+</tr>
+</tbody></table>
+<h2 id="5-3-特点："><a href="#5-3-特点：" class="headerlink" title="5.3 特点："></a>5.3 特点：</h2><ol>
+<li><p>300ms延迟问题</p>
+<blockquote>
+<ol>
+<li><p>可以通过使用&lt;meta name=“viewport” content=”user0scalable=no”解决300ms延迟</p>
+</li>
+<li><p>通过touch事件解决延迟：</p>
+<ol>
+<li>记录触摸时间</li>
+<li>离开时间减去触摸时间</li>
+<li>时间小于150mx且没有滑动则，定义为点击</li>
+<li>一个js插件：fashclick.js</li>
+</ol>
+</li>
+</ol>
+</blockquote>
+</li>
+<li><p>Swiper插件</p>
+</li>
+<li><p>移动端视频插件zy.media.js</p>
+</li>
+<li><p>点击穿透问题</p>
+<blockquote>
+<p>当有一个绝对定位或固定定位元素绑定了touch事件，那么覆盖在他之下的具有点击特性的元素也会被触发。</p>
+<p>比如: 有一个遮罩层A元素，他的底下有一个链接元素B. 当这个遮罩层点击之后希望遮罩层消失，真实的状况是这时候点击遮罩层不见的同时会跳转页面。</p>
+</blockquote>
+<p>解决方案：</p>
+<blockquote>
+<p>下层元素不使用点击特性的元素</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">document</span>.addEventListener(<span class="string">"click"</span>,<span class="function"><span class="keyword">function</span>(<span class="params">ev</span>)</span>&#123;</span><br><span class="line"> ev.preventDefault();</span><br><span class="line">&#125;)</span><br><span class="line"><span class="built_in">document</span>.addEventListener(<span class="string">"touchstart"</span>,<span class="function"><span class="keyword">function</span>(<span class="params">ev</span>)</span>&#123;</span><br><span class="line"> ev.preventDefault();</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">  * 按需加载</span></span><br><span class="line"><span class="comment">  * 添加a标签的点击事件。</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line">a.addEventListener(<span class="string">"touchstart"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">e</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">window</span>.location = <span class="keyword">this</span>.href;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</article>
+
+
+
+    <!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <p class="copyright text-muted">
+          Theme By <a target="_blank" href="https://github.com/levblanc">Levblanc.</a>
+          Inspired By <a target="_blank" href="https://github.com/klugjo/hexo-theme-clean-blog">Clean Blog.</a>
+        <p class="copyright text-muted">
+          Powered By <a target="_blank" href="https://hexo.io/">Hexo.</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+    <!-- After Footer Scripts -->
+
+<script src="/js/highlight.pack.js"></script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function(event) {
+    var codeBlocks = Array.prototype.slice.call(document.getElementsByTagName('pre'))
+    codeBlocks.forEach(function(block, index) {
+      hljs.highlightBlock(block);
+    });
+  });
+</script>
+
+  </body>
+</html>
+

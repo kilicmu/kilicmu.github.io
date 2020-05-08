@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+  <!-- Html Head Tag-->
+  <head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="kilic">
+  <!-- Open Graph Data -->
+  <meta property="og:title" content="函数式编程？"/>
+  <meta property="og:description" content="咸鱼游民" />
+  <meta property="og:site_name" content="kilic の 部落格"/>
+  <meta property="og:type" content="article" />
+  <meta property="og:image" content="http://kilic.site"/>
+  
+    <link rel="alternate" href="/atom.xml" title="kilic の 部落格" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+
+  <!-- Site Title -->
+  <title>kilic の 部落格</title>
+
+  <!-- Bootstrap CSS -->
+  
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+
+  <!-- Custom CSS -->
+  
+  
+<link rel="stylesheet" href="/css/style.dark.css">
+
+
+  <!-- Google Analytics -->
+  
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+  <body>
+    <!-- Page Header -->
+
+
+<header class="site-header header-background" style="background-image: url(/img/m2.jpg)">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="page-title with-background-image">
+          <p class="title">函数式编程？</p>
+          <p class="subtitle"></p>
+        </div>
+        <div class="site-menu with-background-image">
+          <ul>
+            
+              <li>
+                <a href="/">
+                  
+                  Home
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="/archives">
+                  
+                  Archives
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="https://github.com/kilicmu">
+                  
+                  Github
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="mailto:kilicmu3389@outlook.com">
+                  
+                  Email
+                  
+                </a>
+              </li>
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<article>
+  <div class="container typo">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="post-info text-muted">
+          
+            <!-- Author -->
+            <span class="author info">By kilic</span>
+          
+          <!-- Date -->
+          <span class="date-time info">On
+            <span class="date">2020-03-22</span>
+            <span class="time">12:01:03</span>
+          </span>
+          
+        </div>
+        <!-- Tags -->
+        
+          <div class="post-tags text-muted">
+            Tags: 
+
+<a class="tag" href="/tags/%E5%87%BD%E6%95%B0%E5%BC%8F/">#函数式</a> <a class="tag" href="/tags/JAVASCRIPT/">#JavaScript</a>
+
+
+          </div>
+        
+        <!-- Post Main Content -->
+        <div class="post-content">
+          <p>我最先了解函数式编程是以前在油管上面看了一个小姐姐的分享视频：<a href="https://www.youtube.com/watch?v=e-5obm1G_FY">使用JavaScript学习函数式编程</a>。</p>
+<p>我承认我看这个视频的初衷真的是小姐姐很漂亮(｡・`ω´･)。但是看过以后也就基本忘了，只记得小姐姐分享的，推荐尽量去使用函数代替其他操作，同样的输入要产生同样的相同输出，不要产生副作用等等。</p>
+<p>我知道作为一个在学界很受欢迎的编程范式，函数式编程的知识与智慧绝对不仅仅与这些，但是事实上我实在是精力有限，每天瞎忙，还没有钱。所以也没有取深入了解它。</p>
+<p>不过在19年初期更新的React 16.8引入hooks概念，并在19年下半年愈加流行。我就知道，应该把这东西拿起来了解一下了，下面的内容与其所是博客，我认为它算是对《JS函数式编程指南整理》的总结与理解。由于本人水平有限，理解可能存在问题，不喜勿喷。</p>
+<h2 id="简单了解一下函数式编程"><a href="#简单了解一下函数式编程" class="headerlink" title="简单了解一下函数式编程"></a>简单了解一下函数式编程</h2><h3 id="与命令式编程比较："><a href="#与命令式编程比较：" class="headerlink" title="与命令式编程比较："></a>与命令式编程比较：</h3><p>看下面的代码：</p>
+<ol>
+<li>命令式编程</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//为每个数组成员平方</span></span><br><span class="line"><span class="keyword">let</span> arr = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>]</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">let</span> i <span class="keyword">in</span> arr)&#123;</span><br><span class="line">    arr[i] = arr[i]**<span class="number">2</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(arr);</span><br></pre></td></tr></table></figure>
+
+<p>上面的代码显然存在一些问题，如死板，复用性差。我们可以对他做一些提取与封装：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> handleArr = <span class="function">(<span class="params">arr, todo</span>)=&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> tmp = []</span><br><span class="line">    <span class="keyword">switch</span>(todo)&#123;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">'power'</span>:</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">let</span> item <span class="keyword">of</span> arr)&#123;</span><br><span class="line">                tmp.push(item**<span class="number">2</span>)</span><br><span class="line">            &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> tmp;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//main.js</span></span><br><span class="line"><span class="keyword">let</span> arr=[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>]</span><br><span class="line">arr = handleArr(arr, <span class="string">'power'</span>); =&gt; [<span class="number">1</span>,<span class="number">4</span>,<span class="number">9</span>,<span class="number">16</span>]</span><br></pre></td></tr></table></figure>
+
+<p>有些类似于公共代码的提取。</p>
+<p><strong>函数式编程的核心就是将一系列操作分解为简单的函数，然后将一系列过程简化为函数嵌套</strong></p>
+<p>在JS中函数作为一等公民显然很适合来做函数式编程，在JS中函数可以如任何基本数据类型一样操作，这带来了相当优秀的灵活性。</p>
+<p>总结就是使用函数式编程可以简化代码，降低耦合，避免this的使用。</p>
+<h3 id="性能问题"><a href="#性能问题" class="headerlink" title="性能问题"></a>性能问题</h3><p>不得不说，函数式编程存在一些性能问题，可以参考：<a href="https://www.zhihu.com/question/54637225">JavaScript 函数式编程存在性能问题么？</a></p>
+<p>不过引入函数式编程本来也不是为了锱铢必较性能。而是要开发者把优化交给引擎，更多去保证代码的把可读性，可维护性，可测试性。</p>
+<p>下面我们将打开函数式编程的大门。</p>
+<h2 id="几个概念"><a href="#几个概念" class="headerlink" title="几个概念"></a>几个概念</h2><h3 id="纯函数"><a href="#纯函数" class="headerlink" title="纯函数"></a>纯函数</h3><p>特点：执行期间不依赖任何函数外部的数据或状态变化，<strong>必须</strong>仅仅依赖函数的输入决定输出。即相同输入对应相同输出，且不应去改变输入。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> xs = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>]</span><br><span class="line"><span class="comment">//纯的</span></span><br><span class="line">xs.slice(<span class="number">0</span>,<span class="number">3</span>)   <span class="comment">//=&gt; [1,2,3]</span></span><br><span class="line">xs.slice(<span class="number">0</span>,<span class="number">3</span>)   <span class="comment">//=&gt; [1,2,3]</span></span><br><span class="line"><span class="comment">//不纯的</span></span><br><span class="line">xs.splice(<span class="number">0</span>,<span class="number">3</span>);   <span class="comment">//=&gt; [1,2,3]</span></span><br><span class="line">xs.splice(<span class="number">0</span>,<span class="number">3</span>);   <span class="comment">//=&gt; [4,5]</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="为什么要追求使用纯函数？"><a href="#为什么要追求使用纯函数？" class="headerlink" title="为什么要追求使用纯函数？"></a>为什么要追求使用纯函数？</h4><h5 id="Cacheable"><a href="#Cacheable" class="headerlink" title="Cacheable"></a>Cacheable</h5><p>纯函数可以根据input做一些缓存：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> memoize = <span class="function"><span class="keyword">function</span>(<span class="params">f</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> cache = &#123;&#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">...args</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">let</span> argStr = <span class="built_in">JSON</span>.stringify(args) </span><br><span class="line">        cache[argStr] = cache[argStr] || f.apply(f, args)</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">catch</span>[argStr]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们可以在请求http的过程对请求函数进行缓存：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> pureHttpCall = memoize(<span class="function"><span class="keyword">function</span>(<span class="params">url</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; <span class="keyword">return</span> fetch(url); &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h5 id="可移植性"><a href="#可移植性" class="headerlink" title="可移植性"></a>可移植性</h5><p> JavaScript 的设定中，可移植性可以意味着把函数序列化（serializing）并通过 socket 发送。也可以意味着代码能够在 web workers 中运行。</p>
+<p>纯函数与命令式编程不同，它与环境无关，只要我们愿意，可以在任何地方运行它。</p>
+<h5 id="自文档化"><a href="#自文档化" class="headerlink" title="自文档化"></a>自文档化</h5><p>由于纯函数依赖单一，所以可以通过函数签名（函数名）来获取足够的信息。</p>
+<h5 id="可测试性"><a href="#可测试性" class="headerlink" title="可测试性"></a>可测试性</h5><p>由于纯函数的特性可以使用一个最真实的断言来判断函数的正确性。</p>
+<h5 id="合理性"><a href="#合理性" class="headerlink" title="合理性"></a>合理性</h5><p>纯函数具有引用透明性的性质，如果一段代码可以替换成它执行所得的结果，而且是在不改变整个程序行为的前提下替换的，那么我们就说这段代码是引用透明的。</p>
+<h5 id="并行代码"><a href="#并行代码" class="headerlink" title="并行代码"></a>并行代码</h5><p>纯函数也不会因副作用而进入竞争态，所以可以进行大量的并行操作而不用考虑资源问题。</p>
+<hr>
+<h4 id="转化为纯函数"><a href="#转化为纯函数" class="headerlink" title="转化为纯函数"></a>转化为纯函数</h4><h5 id="推迟执行"><a href="#推迟执行" class="headerlink" title="推迟执行"></a>推迟执行</h5><p>我们有一个http请求的例子：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> httpRequire = <span class="function">(<span class="params">url</span>)=&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> fetch(url).then(</span><br><span class="line">    	res=&gt;res.json()</span><br><span class="line">    )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>简单的请求一个json数据，显然这是一个不纯的函数，其中我们可以将存在副作用的函数封装后，推迟执行：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> httpRequire = <span class="function">(<span class="params">url</span>)=&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> fetch(url).then(</span><br><span class="line">        	res=&gt;res.json()</span><br><span class="line">        )</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以看到，httpRequire函数已经变为一个纯函数。</p>
+<h5 id="TODO"><a href="#TODO" class="headerlink" title="//TODO"></a>//TODO</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+</article>
+
+
+
+    <!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <p class="copyright text-muted">
+          Theme By <a target="_blank" href="https://github.com/levblanc">Levblanc.</a>
+          Inspired By <a target="_blank" href="https://github.com/klugjo/hexo-theme-clean-blog">Clean Blog.</a>
+        <p class="copyright text-muted">
+          Powered By <a target="_blank" href="https://hexo.io/">Hexo.</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+    <!-- After Footer Scripts -->
+
+<script src="/js/highlight.pack.js"></script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function(event) {
+    var codeBlocks = Array.prototype.slice.call(document.getElementsByTagName('pre'))
+    codeBlocks.forEach(function(block, index) {
+      hljs.highlightBlock(block);
+    });
+  });
+</script>
+
+  </body>
+</html>
+

@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+  <!-- Html Head Tag-->
+  <head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="kilic">
+  <!-- Open Graph Data -->
+  <meta property="og:title" content="Webpack快速配置"/>
+  <meta property="og:description" content="咸鱼游民" />
+  <meta property="og:site_name" content="kilic の 部落格"/>
+  <meta property="og:type" content="article" />
+  <meta property="og:image" content="http://kilic.site"/>
+  
+    <link rel="alternate" href="/atom.xml" title="kilic の 部落格" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+
+  <!-- Site Title -->
+  <title>kilic の 部落格</title>
+
+  <!-- Bootstrap CSS -->
+  
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+
+  <!-- Custom CSS -->
+  
+  
+<link rel="stylesheet" href="/css/style.dark.css">
+
+
+  <!-- Google Analytics -->
+  
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+  <body>
+    <!-- Page Header -->
+
+
+<header class="site-header header-background" style="background-image: url(/img/m2.jpg)">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="page-title with-background-image">
+          <p class="title">Webpack快速配置</p>
+          <p class="subtitle"></p>
+        </div>
+        <div class="site-menu with-background-image">
+          <ul>
+            
+              <li>
+                <a href="/">
+                  
+                  Home
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="/archives">
+                  
+                  Archives
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="https://github.com/kilicmu">
+                  
+                  Github
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="mailto:kilicmu3389@outlook.com">
+                  
+                  Email
+                  
+                </a>
+              </li>
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<article>
+  <div class="container typo">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="post-info text-muted">
+          
+            <!-- Author -->
+            <span class="author info">By kilic</span>
+          
+          <!-- Date -->
+          <span class="date-time info">On
+            <span class="date">2020-03-16</span>
+            <span class="time">12:01:03</span>
+          </span>
+          
+        </div>
+        <!-- Tags -->
+        
+          <div class="post-tags text-muted">
+            Tags: 
+
+<a class="tag" href="/tags/WEBPACK/">#webpack</a>
+
+
+          </div>
+        
+        <!-- Post Main Content -->
+        <div class="post-content">
+          <p>本文目的是总结如何在不使用脚手架的情况下，如何快速搭建一个可以使用的webpack环境，算是对webpack基本使用方法的复习。</p>
+<a id="more"></a>
+
+<h1 id="webpack4-x"><a href="#webpack4-x" class="headerlink" title="webpack4.x"></a>webpack4.x</h1><h2 id="1-npm-init"><a href="#1-npm-init" class="headerlink" title="1.npm init"></a>1.<code>npm init</code></h2><h2 id="2-创建目录结构"><a href="#2-创建目录结构" class="headerlink" title="2. 创建目录结构:"></a>2. 创建目录结构:</h2><p>| - project</p>
+<p>​    | - dist</p>
+<p>​    | - src</p>
+<p>​        | - main.js</p>
+<p>​        | - index.html</p>
+<h2 id="3-安装webpack与webpack-cli"><a href="#3-安装webpack与webpack-cli" class="headerlink" title="3. 安装webpack与webpack-cli"></a>3. 安装webpack与webpack-cli</h2><p><code>yarn add webpack -dev</code></p>
+<p><code>yarn add webpack-cli -dev</code></p>
+<h2 id="4-写webpack-config-js"><a href="#4-写webpack-config-js" class="headerlink" title="4. 写webpack.config.js"></a>4. 写webpack.config.js</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">moudle.exports=&#123;</span><br><span class="line">	mode:<span class="string">'development'</span>, <span class="comment">//development不压缩 production压缩</span></span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>webpack4.x中约定大于配置，默认打包入口为src-&gt;index.js，输出为dist -&gt; main.js</strong></p>
+<h2 id="5-添加webpack-dev-server"><a href="#5-添加webpack-dev-server" class="headerlink" title="5. 添加webpack-dev-server"></a>5. 添加webpack-dev-server</h2><p>在package.json添加构建脚本：</p>
+<p>参数：</p>
+<ul>
+<li>–open [chrome/firefox/iexplore]：打开浏览器</li>
+<li>–port port：端口号</li>
+<li>–hot：开启热更新</li>
+<li>–compress：压缩</li>
+<li>–host 127.0.0.1：打开域名</li>
+</ul>
+<p><code>“dev”：&quot;webpack-dev-server&quot;</code></p>
+<p>webpack-dev-server打包文件默认存在项目根目录，存在内存中</p>
+<h2 id="6-添加html-webpack-plugin插件"><a href="#6-添加html-webpack-plugin插件" class="headerlink" title="6. 添加html-webpack-plugin插件"></a>6. 添加html-webpack-plugin插件</h2><ol>
+<li><p><code>yarn add html-webpack-plugin  -dev</code></p>
+</li>
+<li><p>实例化html-webpack-plugin插件：</p>
+</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> HtmlWebPackPlugin = <span class="built_in">require</span>(<span class="string">'html-webpack-plugin'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> htmlPlugin = <span class="keyword">new</span> HtmlWebPackPlugin(&#123;</span><br><span class="line">    template:path.join(__dirname, <span class="string">'src/index.html'</span>),</span><br><span class="line">    filename:<span class="string">'index.html'</span><span class="comment">//生成内存中首页名称</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>在package.json中添加插件</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">plugins:[</span><br><span class="line">    htmlPlugin</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<h2 id="7-配置babel："><a href="#7-配置babel：" class="headerlink" title="7. 配置babel："></a>7. 配置babel：</h2><ol>
+<li>运行<code>yarn add babel-core babel-loader babel-plugin-transform-runtime --dev</code></li>
+<li>运行<code>yarn add babel-preset-env babel-preset-stage-0 –dev</code></li>
+</ol>
+<p>可选：</p>
+<ol start="3">
+<li><code>yarn add babel-preset-react -D</code>支持jsx转换 </li>
+</ol>
+<p>webpack.config.js添加rules：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>:&#123;</span><br><span class="line">	rules:[</span><br><span class="line">		&#123;<span class="attr">test</span>:<span class="regexp">/\.js|.jsx$/</span>, <span class="attr">use</span>:<span class="string">'babel-loader'</span>, <span class="attr">exclude</span>: <span class="regexp">/node_modules/</span>&#125;</span><br><span class="line">	]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>配置.babelrc：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"presets"</span>:[<span class="string">"env"</span>, <span class="string">"stage-0"</span>, <span class="string">"react"</span>],</span><br><span class="line">    <span class="attr">"plugins"</span>:[<span class="string">"transform-runtime"</span>]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="8-配置resolved"><a href="#8-配置resolved" class="headerlink" title="8. 配置resolved"></a>8. 配置resolved</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">resolved:&#123;</span><br><span class="line">	extensions:[<span class="string">'.js'</span>, <span class="string">'.jsx'</span>, <span class="string">'.json'</span>]<span class="comment">//表示下列后缀名可省略</span></span><br><span class="line">    alias:&#123;</span><br><span class="line">        <span class="string">'@'</span>:path.join(__dirname, <span class="string">'./src'</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="9-添加css解析"><a href="#9-添加css解析" class="headerlink" title="9. 添加css解析"></a>9. 添加css解析</h2><p><code>npm install style-loader css-loader</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>:&#123;</span><br><span class="line">	rules:[</span><br><span class="line">		&#123;<span class="attr">test</span>:<span class="regexp">/\.js|.jsx$/</span>, <span class="attr">use</span>:<span class="string">'babel-loader'</span>, <span class="attr">exclude</span>: <span class="regexp">/node_modules/</span>&#125;,</span><br><span class="line">        &#123;<span class="attr">test</span>:<span class="regexp">/\.css$/</span>, <span class="attr">use</span>:[<span class="string">'style-loader'</span>,<span class="string">'css-loader?modules'</span>]&#125;,</span><br><span class="line">	]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以再css-loaders中添加中加modules来模块化：</p>
+<p><img src="https://i.niupic.com/images/2020/05/04/7AhF.png" alt="Selection_028"></p>
+<p>:global(类名)：可以接受所有的</p>
+<p>只针对类选择器和id选择器模块化，不会模块化标签选择器</p>
+<p><strong>如果启用第三方模块化，那么我们使用的样式需要用.sass/.less结尾，而.css结尾用来处理其他如bootstrap库</strong>    </p>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</article>
+
+
+
+    <!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <p class="copyright text-muted">
+          Theme By <a target="_blank" href="https://github.com/levblanc">Levblanc.</a>
+          Inspired By <a target="_blank" href="https://github.com/klugjo/hexo-theme-clean-blog">Clean Blog.</a>
+        <p class="copyright text-muted">
+          Powered By <a target="_blank" href="https://hexo.io/">Hexo.</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+    <!-- After Footer Scripts -->
+
+<script src="/js/highlight.pack.js"></script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function(event) {
+    var codeBlocks = Array.prototype.slice.call(document.getElementsByTagName('pre'))
+    codeBlocks.forEach(function(block, index) {
+      hljs.highlightBlock(block);
+    });
+  });
+</script>
+
+  </body>
+</html>
+
