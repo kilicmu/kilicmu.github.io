@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+  <!-- Html Head Tag-->
+  <head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="kilic">
+  <!-- Open Graph Data -->
+  <meta property="og:title" content="大小端问题"/>
+  <meta property="og:description" content="咸鱼游民" />
+  <meta property="og:site_name" content="kilic の 部落格"/>
+  <meta property="og:type" content="article" />
+  <meta property="og:image" content="http://kilic.site"/>
+  
+    <link rel="alternate" href="/atom.xml" title="kilic の 部落格" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+
+  <!-- Site Title -->
+  <title>kilic の 部落格</title>
+
+  <!-- Bootstrap CSS -->
+  
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+
+  <!-- Custom CSS -->
+  
+  
+<link rel="stylesheet" href="/css/style.dark.css">
+
+
+  <!-- Google Analytics -->
+  
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+  <body>
+    <!-- Page Header -->
+
+
+<header class="site-header header-background" style="background-image: url(/img/m2.jpg)">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="page-title with-background-image">
+          <p class="title">大小端问题</p>
+          <p class="subtitle"></p>
+        </div>
+        <div class="site-menu with-background-image">
+          <ul>
+            
+              <li>
+                <a href="/">
+                  
+                  Home
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="/archives">
+                  
+                  Archives
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="https://github.com/kilicmu">
+                  
+                  Github
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="mailto:kilicmu3389@outlook.com">
+                  
+                  Email
+                  
+                </a>
+              </li>
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<article>
+  <div class="container typo">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="post-info text-muted">
+          
+            <!-- Author -->
+            <span class="author info">By kilic</span>
+          
+          <!-- Date -->
+          <span class="date-time info">On
+            <span class="date">2020-05-17</span>
+            <span class="time">13:33:19</span>
+          </span>
+          
+        </div>
+        <!-- Tags -->
+        
+          <div class="post-tags text-muted">
+            Tags: 
+
+<a class="tag" href="/tags/%E8%AE%A1%E7%BB%84/">#计组</a>
+
+
+          </div>
+        
+        <!-- Post Main Content -->
+        <div class="post-content">
+          <p>这是我昨天想到的一个问题，当时计组只会做题，最近看WebSocket才突然想起这个问题，网上很多答案十分不直观也远离应用，所以这里自己总结一下。</p>
+<a id="more"></a>
+
+<p>说到网络，就不得提字节的大小端了。</p>
+<p>在js中，我们不需要考虑这种事情，但是如果学过如果使用过C++的socket就会知道，在初始化server_addr的时候需要对ip地址与端口号进行转换（<code>inet_addr()</code>与<code>htons()</code>）。</p>
+<p>我们用python的socket与C++的socket使用做一个对比：</p>
+<p>C++使用socket：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">SOCKADDR_IN server_addr;</span><br><span class="line">server_addr.sin_family = AF_INET;</span><br><span class="line">server_addr.sin_addr.S_un.S_addr = inet_addr(<span class="string">"127.0.0.1"</span>);</span><br><span class="line">server_addr.sin_port = htons(<span class="number">8808</span>);</span><br><span class="line"></span><br><span class="line">SOCKET s_server = socket(AF_INET, SOCK_STREAM, <span class="number">0</span>);</span><br><span class="line"><span class="built_in">connect</span>(s_server, (SOCKADDR*)&amp; server_addr, <span class="keyword">sizeof</span>(SOCKADDR));</span><br></pre></td></tr></table></figure>
+
+<p>python使用socket：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> socket</span><br><span class="line">s = socket.scoket(socket.AF_INET,soket.SOCK_STREAM)  <span class="comment"># 实例化一个套接字对象</span></span><br><span class="line">s.bind((<span class="string">'192.168.20.49'</span>,<span class="number">8808</span>))  <span class="comment"># 绑定ip地址及端口号</span></span><br><span class="line">s.lisen(<span class="number">10</span>)</span><br><span class="line">conn, addr = s.accept()</span><br><span class="line">ret = conn.recv(<span class="number">2048</span>)</span><br><span class="line">conn.send(<span class="string">"send msg"</span>)</span><br><span class="line">conn.close()</span><br><span class="line">s.close()</span><br></pre></td></tr></table></figure>
+
+<p>可以看到，python直接绑定地址字符串即可，但是C++却需要使用函数进行处理，我们为啥需要这么做？</p>
+<p>C++作为一个比较贴近计算机底层的语言，封装程度较js或python等语言要低，所以在使用时可以暴露出更多的底层知识。</p>
+<p>而这就涉及了字节的大小端。</p>
+<h3 id="主机序"><a href="#主机序" class="headerlink" title="主机序"></a>主机序</h3><p>不同的CPU有不同的字节序类型，这些字节序是指 <strong>整数</strong> 在内存中保存的顺序，这个叫做 主机序。</p>
+<h4 id="LE-little-endian（小端）"><a href="#LE-little-endian（小端）" class="headerlink" title="LE little-endian（小端）"></a>LE little-endian（小端）</h4><ul>
+<li>最符合人的思维的字节序；</li>
+<li>地址低位存储值的低位；</li>
+<li>地址高位存储值的高位；</li>
+</ul>
+<h4 id="BE-big-endian（大端）"><a href="#BE-big-endian（大端）" class="headerlink" title="BE big-endian（大端）"></a>BE big-endian（大端）</h4><ul>
+<li>最直观的字节序；</li>
+<li>地址低位存储值的高位； </li>
+<li>地址高位存储值的低位；</li>
+</ul>
+<p>举个例子：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> buffer = Buffer.from([<span class="number">0b00000001</span>, <span class="number">0b00000000</span>])</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"大端："</span>, buffer.readUInt16BE(<span class="number">0</span>));</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"小端："</span>, buffer.readUInt16LE(<span class="number">0</span>));</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://i.niupic.com/images/2020/05/17/7SiO.png" alt="大小端图片"></p>
+<p>为什么会这样？在我们读取同一段内存的时候，可以按照两种方式（大端，小端）读取。这段字节序按照大端读取为ob000000010000000转10进制为256。而按照小端读取则为0b0000000000000001转换为十进制为1。</p>
+<h4 id="网络字节序"><a href="#网络字节序" class="headerlink" title="网络字节序"></a>网络字节序</h4><p>无论主机字节序是如何，TCP/IP首部中所有的二进制整数在网络中传输时，4个字节的32 bit值以下面的次序传输：首先是0～7bit，其次8～15bit，然后16～23bit，最后是24~31bit。这种传输次序称作大端字节序。</p>
+<p>当我们将本地IP地址写入源地址，若是主机字节序为小端，则会产生发送数据与期望数据不同的错误，如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//127 0 0 1的本地字节序存储</span></span><br><span class="line"><span class="keyword">const</span> buffer = Buffer.from([<span class="number">0b01111111</span>, <span class="number">0b00000000</span> , <span class="number">0b00000000</span>, <span class="number">0b00000001</span>])</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"网络字节序："</span>, buffer.readUInt32BE(<span class="number">0</span>)); </span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"主机字节序："</span>, buffer.readUInt32LE(<span class="number">0</span>));</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://i.niupic.com/images/2020/05/17/7SiP.png" alt="网络字节序"></p>
+<p>这就是为什么在C++中我们需要使用inet_addr对ip地址的字节序进行转换。</p>
+<p>若主机使用的是大端存储，则不需要转换，宏为空。若是主机为小端存储则被方法转换为大端存储。</p>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</article>
+
+
+
+    <!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <p class="copyright text-muted">
+          Theme By <a target="_blank" href="https://github.com/levblanc">Levblanc.</a>
+          Inspired By <a target="_blank" href="https://github.com/klugjo/hexo-theme-clean-blog">Clean Blog.</a>
+        <p class="copyright text-muted">
+          Powered By <a target="_blank" href="https://hexo.io/">Hexo.</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+    <!-- After Footer Scripts -->
+
+<script src="/js/highlight.pack.js"></script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function(event) {
+    var codeBlocks = Array.prototype.slice.call(document.getElementsByTagName('pre'))
+    codeBlocks.forEach(function(block, index) {
+      hljs.highlightBlock(block);
+    });
+  });
+</script>
+
+  </body>
+</html>
+
