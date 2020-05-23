@@ -104,7 +104,7 @@
           <!-- Date -->
           <span class="date-time info">On
             <span class="date">2020-05-17</span>
-            <span class="time">13:33:19</span>
+            <span class="time">01:40:07</span>
           </span>
           
         </div>
@@ -123,7 +123,7 @@
           <p>这是我昨天想到的一个问题，当时计组只会做题，最近看WebSocket才突然想起这个问题，网上很多答案十分不直观也远离应用，所以这里自己总结一下。</p>
 <a id="more"></a>
 
-<p>说到网络，就不得提字节的大小端了。</p>
+<p>说到网络，就不得提数据存储的大小端了。</p>
 <p>在js中，我们不需要考虑这种事情，但是如果学过如果使用过C++的socket就会知道，在初始化server_addr的时候需要对ip地址与端口号进行转换（<code>inet_addr()</code>与<code>htons()</code>）。</p>
 <p>我们用python的socket与C++的socket使用做一个对比：</p>
 <p>C++使用socket：</p>
@@ -132,9 +132,9 @@
 <p>python使用socket：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> socket</span><br><span class="line">s = socket.scoket(socket.AF_INET,soket.SOCK_STREAM)  <span class="comment"># 实例化一个套接字对象</span></span><br><span class="line">s.bind((<span class="string">'192.168.20.49'</span>,<span class="number">8808</span>))  <span class="comment"># 绑定ip地址及端口号</span></span><br><span class="line">s.lisen(<span class="number">10</span>)</span><br><span class="line">conn, addr = s.accept()</span><br><span class="line">ret = conn.recv(<span class="number">2048</span>)</span><br><span class="line">conn.send(<span class="string">"send msg"</span>)</span><br><span class="line">conn.close()</span><br><span class="line">s.close()</span><br></pre></td></tr></table></figure>
 
-<p>可以看到，python直接绑定地址字符串即可，但是C++却需要使用函数进行处理，我们为啥需要这么做？</p>
-<p>C++作为一个比较贴近计算机底层的语言，封装程度较js或python等语言要低，所以在使用时可以暴露出更多的底层知识。</p>
-<p>而这就涉及了字节的大小端。</p>
+<p>可以看到，python直接绑定我们可以理解的ip地址即可，但是C++却需要使用函数进行一下处理，我们为啥需要这么做？</p>
+<p>C++作为一个比较贴近计算机底层的语言，在使用时可以暴露出更多的底层知识。</p>
+<p>而这就涉及了数据存储的大小端。</p>
 <h3 id="主机序"><a href="#主机序" class="headerlink" title="主机序"></a>主机序</h3><p>不同的CPU有不同的字节序类型，这些字节序是指 <strong>整数</strong> 在内存中保存的顺序，这个叫做 主机序。</p>
 <h4 id="LE-little-endian（小端）"><a href="#LE-little-endian（小端）" class="headerlink" title="LE little-endian（小端）"></a>LE little-endian（小端）</h4><ul>
 <li>最符合人的思维的字节序；</li>

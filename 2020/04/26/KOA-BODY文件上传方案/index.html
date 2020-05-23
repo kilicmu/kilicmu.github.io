@@ -104,7 +104,7 @@
           <!-- Date -->
           <span class="date-time info">On
             <span class="date">2020-04-26</span>
-            <span class="time">13:33:19</span>
+            <span class="time">01:40:07</span>
           </span>
           
         </div>
@@ -120,7 +120,7 @@
         
         <!-- Post Main Content -->
         <div class="post-content">
-          <p>需要写一个上传文件的测试接口，使用力koa-body，发现koa-body的文档有些简单，兜兜转转浪费了一些时间，所以决定整理一下这个过程。</p>
+          <p>需要写一个上传文件的测试接口，用了koa-body，发现koa-body的文档有些简单，兜兜转转浪费了一些时间，所以决定整理一下这个过程。</p>
 <a id="more"></a>
 
 <h3 id="设置中间件"><a href="#设置中间件" class="headerlink" title="设置中间件"></a>设置中间件</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// app.js</span></span><br><span class="line">app.use(<span class="built_in">require</span>(<span class="string">'koa-static'</span>)(__dirname + <span class="string">'/public'</span>));</span><br><span class="line"></span><br><span class="line">app.use(<span class="built_in">require</span>(<span class="string">'koa-body'</span>)(&#123;</span><br><span class="line">    multipart: <span class="literal">true</span>,</span><br><span class="line">    formidable: &#123;</span><br><span class="line">      maxFileSize: <span class="number">200</span> * <span class="number">1024</span> * <span class="number">1024</span>, <span class="comment">// 设置上传文件大小</span></span><br><span class="line">      uploadDir: path.resolve(__dirname, <span class="string">"/public/upload"</span>),	<span class="comment">//设置文件的上传目录</span></span><br><span class="line">      onFileBegin: <span class="function">(<span class="params">name, file</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="comment">// TODO</span></span><br><span class="line">      &#125;,</span><br><span class="line">      onError:<span class="function">(<span class="params">err</span>)=&gt;</span>&#123;</span><br><span class="line">  		<span class="comment">// TODO handle error</span></span><br><span class="line">	  &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;));</span><br></pre></td></tr></table></figure>
