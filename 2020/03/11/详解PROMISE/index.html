@@ -42,7 +42,7 @@
     <!-- Page Header -->
 
 
-<header class="site-header header-background" style="background-image: url(/img/m2.jpg)">
+<header class="site-header header-background" style="background-image: url(/img/m1.jpg)">
   <div class="container">
     <div class="row">
       <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
@@ -104,7 +104,7 @@
           <!-- Date -->
           <span class="date-time info">On
             <span class="date">2020-03-11</span>
-            <span class="time">00:00:04</span>
+            <span class="time">20:49:44</span>
           </span>
           
         </div>
@@ -161,7 +161,24 @@
 <p><code>promises-aplus-tests index.js</code></p>
 <p><img src="https://i.niupic.com/images/2020/05/24/7Wfv.png" alt="测试"></p>
 <p>项目地址：<a href="https://github.com/kilicmu/PromiseDemo">PromiseDemo</a></p>
-<h2 id="一些ES6实现方法"><a href="#一些ES6实现方法" class="headerlink" title="一些ES6实现方法"></a>一些ES6实现方法</h2><p>// TODO待补充</p>
+<h2 id="其他一些常用方法实现"><a href="#其他一些常用方法实现" class="headerlink" title="其他一些常用方法实现"></a>其他一些常用方法实现</h2><p>由于标准不同，同样的函数可能有不同的实现，此处的函数可能与部分规范效果不同。</p>
+<p>下面都很简单直接po出来代码：</p>
+<p>resolve的实现：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> resolve(value) &#123;</span><br><span class="line">    <span class="keyword">const</span> _promise = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">      setImmediate(<span class="function"><span class="params">()</span> =&gt;</span> _resolve(_promise, value, resolve, reject))</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="keyword">return</span> _promise</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<p>reject的实现：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> reject(e) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">      reject(e)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<p>catch的实现：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">catch</span>(onRejected) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.then(<span class="literal">null</span>, onRejected)</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<p>all的实现：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> all(promiseArray) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">const</span> length = promiseArray.length</span><br><span class="line">      <span class="keyword">const</span> resultArray = <span class="keyword">new</span> <span class="built_in">Array</span>(length)</span><br><span class="line">      <span class="keyword">let</span> count = <span class="number">0</span></span><br><span class="line">      promiseArray.forEach(<span class="function">(<span class="params">_i, i</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">Promise</span>.resolve(_i).then(</span><br><span class="line">          (value) =&gt; &#123;</span><br><span class="line">            resultArray[i] = value</span><br><span class="line">            <span class="keyword">if</span> (++count === length) &#123;</span><br><span class="line">              resolve(resultArray)</span><br><span class="line">            &#125;</span><br><span class="line">          &#125;,</span><br><span class="line">          (e) =&gt; &#123;</span><br><span class="line">            reject(e)</span><br><span class="line">          &#125;</span><br><span class="line">        )</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<p>finally的实现：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">finally</span>(fn) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.then(</span><br><span class="line">      (v) =&gt; &#123;</span><br><span class="line">        setImmediate(fn) <span class="comment">//放在所以then的下一轮执行</span></span><br><span class="line">        <span class="keyword">return</span> v</span><br><span class="line">      &#125;,</span><br><span class="line">      (e) =&gt; &#123;</span><br><span class="line">        setImmediate(fn)</span><br><span class="line">        <span class="keyword">throw</span> e</span><br><span class="line">      &#125;</span><br><span class="line">    )</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<p>以上~</p>
 
         </div>
       </div>
