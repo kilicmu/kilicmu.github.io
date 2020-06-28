@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+  <!-- Html Head Tag-->
+  <head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="kilic">
+  <!-- Open Graph Data -->
+  <meta property="og:title" content="前端路由原理与实现"/>
+  <meta property="og:description" content="咸鱼游民" />
+  <meta property="og:site_name" content="kilic の 部落格"/>
+  <meta property="og:type" content="article" />
+  <meta property="og:image" content="http://kilic.site"/>
+  
+    <link rel="alternate" href="/atom.xml" title="kilic の 部落格" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+
+  <!-- Site Title -->
+  <title>kilic の 部落格</title>
+
+  <!-- Bootstrap CSS -->
+  
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+
+  <!-- Custom CSS -->
+  
+  
+<link rel="stylesheet" href="/css/style.dark.css">
+
+
+  <!-- Google Analytics -->
+  
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+  <body>
+    <!-- Page Header -->
+
+
+<header class="site-header header-background" style="background-image: url(/img/m5.jpg)">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="page-title with-background-image">
+          <p class="title">前端路由原理与实现</p>
+          <p class="subtitle"></p>
+        </div>
+        <div class="site-menu with-background-image">
+          <ul>
+            
+              <li>
+                <a href="/">
+                  
+                  Home
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="/archives">
+                  
+                  Archives
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="https://github.com/kilicmu">
+                  
+                  Github
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="mailto:kilicmu3389@outlook.com">
+                  
+                  Email
+                  
+                </a>
+              </li>
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<article>
+  <div class="container typo">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="post-info text-muted">
+          
+            <!-- Author -->
+            <span class="author info">By kilic</span>
+          
+          <!-- Date -->
+          <span class="date-time info">On
+            <span class="date">2020-06-19</span>
+            <span class="time">01:30:38</span>
+          </span>
+          
+        </div>
+        <!-- Tags -->
+        
+          <div class="post-tags text-muted">
+            Tags: 
+
+<a class="tag" href="/tags/%E5%89%8D%E7%AB%AF/">#前端</a>
+
+
+          </div>
+        
+        <!-- Post Main Content -->
+        <div class="post-content">
+          <p>SPA应用开发一般会需要使用前端路由的插件或包，一般会提供两种模式的路由（hash和history）。</p>
+<p>根据使用方法来判断，实现方法应该不难，这篇文章来简单的实现一下SPA应用的路由。</p>
+<a id="more"></a>
+
+<h2 id="Hash模式"><a href="#Hash模式" class="headerlink" title="Hash模式"></a>Hash模式</h2><p>Hash模式路由本质是利用了HTML的锚点不跳转的特性，使用hashchange事件监听锚点的变换实现路由的切换行为。</p>
+<p>公共的部分：</p>
+<p>先来写一个HTML模板：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">nav</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">ul</span> <span class="attr">id</span>=<span class="string">"nav"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">li</span> <span class="attr">onclick</span>=<span class="string">"route.push('/')"</span>&gt;</span>index<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">li</span> <span class="attr">onclick</span>=<span class="string">"route.push('/page1')"</span>&gt;</span>page1<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">li</span> <span class="attr">onclick</span>=<span class="string">"route.push('/page2')"</span>&gt;</span>page2<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">nav</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">article</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"view"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">article</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>然后写一下config的配置：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> view = <span class="built_in">document</span>.querySelector(<span class="string">'#view'</span>);</span><br><span class="line"><span class="keyword">const</span> config = &#123;</span><br><span class="line">      mode: <span class="string">'history'</span>,</span><br><span class="line">      routes: [</span><br><span class="line">        &#123;</span><br><span class="line">          path: <span class="string">'/'</span>,</span><br><span class="line">          template: <span class="string">'&lt;div&gt;index&lt;div&gt;'</span></span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">          path: <span class="string">'/page1'</span>,</span><br><span class="line">          template: <span class="string">'&lt;div&gt;page1&lt;div&gt;'</span></span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">          path: <span class="string">'/page2'</span>,</span><br><span class="line">          template: <span class="string">'&lt;div&gt;page2&lt;div&gt;'</span></span><br><span class="line">        &#125;,</span><br><span class="line">      ],</span><br><span class="line">      view</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>写一下构造函数：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Router</span>(<span class="params">config</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">if</span>(!(<span class="keyword">this</span> <span class="keyword">instanceof</span> Router))&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> Router(config);</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">this</span>.mode = config.mode</span><br><span class="line">      <span class="keyword">this</span>.routes = &#123;&#125;</span><br><span class="line">      <span class="keyword">this</span>.current = <span class="string">''</span></span><br><span class="line">      <span class="keyword">this</span>.view = config.view</span><br><span class="line">      <span class="keyword">this</span>.initRoutes()</span><br><span class="line">      <span class="keyword">this</span>.listenAddressBar()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>对于initRoutes我们需要绑定路由地址和相应的模板处理的映射，这里只是把简单的指定的模板挂载到进指定的挂载点：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Router.prototype.initRoutes = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">   <span class="keyword">for</span>(<span class="keyword">const</span> _i <span class="keyword">of</span> config.routes) &#123;</span><br><span class="line">     <span class="keyword">this</span>.routes[_i.path] = <span class="function"><span class="params">()</span>=&gt;</span>&#123;</span><br><span class="line">       <span class="keyword">this</span>.view.innerHTML = _i.template;</span><br><span class="line">     &#125;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>listenAddressBar需要监听load事件和hashchange事件，用来触发hash路由的处理：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Router.prototype.listenAddressBar = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">      <span class="built_in">window</span>.addEventListener(<span class="string">"load"</span>, <span class="keyword">this</span>.handleRoute.bind(<span class="keyword">this</span>));</span><br><span class="line">      <span class="built_in">window</span>.addEventListener(<span class="string">'hashchange'</span>, <span class="keyword">this</span>.handleRoute.bind(<span class="keyword">this</span>))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>定义handleRoute来处理事件的回调：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Router.prototype.handleRoute = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">   <span class="keyword">this</span>.current = <span class="built_in">window</span>.location.hash.slice(<span class="number">1</span>) || <span class="string">'/'</span>;</span><br><span class="line">   <span class="keyword">try</span>&#123;</span><br><span class="line">      <span class="keyword">this</span>.routes[<span class="keyword">this</span>.current]();</span><br><span class="line">   &#125;<span class="keyword">catch</span>(err)&#123;</span><br><span class="line">      <span class="keyword">throw</span> <span class="built_in">TypeError</span>(<span class="string">`unknown mode: <span class="subst">$&#123;<span class="keyword">this</span>.mode&#125;</span>`</span>);</span><br><span class="line">   &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>提供一个push方法用来做跳转：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Router.prototype.push = <span class="function"><span class="keyword">function</span>(<span class="params">to</span>)</span>&#123;</span><br><span class="line">      location.href = <span class="string">'#'</span> + to;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>hash模式完。</p>
+<h2 id="History模式"><a href="#History模式" class="headerlink" title="History模式"></a>History模式</h2><p>history模式有一个问题需要解决一下：</p>
+<p>正常使用Restful路由做请求会发生跳转，也就是我们需要阻止请求到服务端。vue-router关于history模式的文档中提到了history.pushState，MDN一搜，这个函数可以改变地址栏的信息同时，不发生跳转，可以完美解决这个问题。</p>
+<p>可是这里又引入一个新问题，如果当前路由使用F5刷新一定会向后端发送一次请求，而后端一定不存在这个Controller，这种情况该怎么办？</p>
+<p>其实作为SPA应用，只需要要求每次服务端请求，不理会路由信息，返回同样的HTML页面就可以了，vue-router也提示了，这种方式需要自己实现404页面，因为页面如果不存在，服务端依然会返回同一单页HTML。</p>
+<p>我们用node模拟一下Web服务器处理：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123;readFileSync&#125; = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"><span class="keyword">var</span> http = <span class="built_in">require</span>(<span class="string">'http'</span>);</span><br><span class="line"></span><br><span class="line">http.createServer(<span class="keyword">async</span> (request, response) =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> page = readFileSync(<span class="string">'./index.html'</span>);</span><br><span class="line">  response.writeHead(<span class="number">200</span>, &#123;<span class="string">'Content-Type'</span>: <span class="string">'text/html'</span>&#125;);</span><br><span class="line">  response.end(page);</span><br><span class="line">&#125;).listen(<span class="number">8081</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'Server running at http://127.0.0.1:8081/'</span>);</span><br></pre></td></tr></table></figure>
+
+<p>每次请求都返回index.html，防止出现后端的404错误。</p>
+<p>然后我们实现一下Restful请求。</p>
+<p>对于history模式，只需要对handleRoute，listenAddressBar与push方法做一下扩展即可：</p>
+<p>push：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">Router.prototype.push = <span class="function"><span class="keyword">function</span>(<span class="params">to</span>)</span>&#123;</span><br><span class="line">      <span class="keyword">switch</span> (<span class="keyword">this</span>.mode)&#123;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">'hash'</span>:</span><br><span class="line">          location.href = <span class="string">'#'</span> + to; </span><br><span class="line">          <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">'history'</span>:</span><br><span class="line">          history.pushState(<span class="literal">null</span>, <span class="string">''</span>, <span class="keyword">this</span>.current);</span><br><span class="line">          <span class="keyword">this</span>.handleRoute(); <span class="comment">/* 路由的变换需要手动触发处理函数 */</span></span><br><span class="line">          <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">default</span>:</span><br><span class="line">          <span class="keyword">throw</span> <span class="built_in">TypeError</span>(<span class="string">`unknown mode: <span class="subst">$&#123;<span class="keyword">this</span>.mode&#125;</span>`</span>);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>handleRoute:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">Router.prototype.handleRoute = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">      <span class="keyword">switch</span> (<span class="keyword">this</span>.mode) &#123;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">'hash'</span>:</span><br><span class="line">          <span class="keyword">this</span>.current = <span class="built_in">window</span>.location.hash.slice(<span class="number">1</span>) || <span class="string">'/'</span>;</span><br><span class="line">          <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">'history'</span>:</span><br><span class="line">          <span class="keyword">this</span>.current = <span class="built_in">window</span>.location.pathname;</span><br><span class="line">          history.pushState(<span class="literal">null</span>, <span class="string">''</span>, <span class="keyword">this</span>.current);</span><br><span class="line">          <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">default</span>:</span><br><span class="line">          <span class="keyword">return</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">try</span>&#123;</span><br><span class="line">         <span class="keyword">this</span>.routes[<span class="keyword">this</span>.current]();</span><br><span class="line">      &#125;<span class="keyword">catch</span>(err)&#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="built_in">TypeError</span>(<span class="string">`unknown mode: <span class="subst">$&#123;<span class="keyword">this</span>.mode&#125;</span>`</span>);</span><br><span class="line">      &#125; </span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>listenAddressBar:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Router.prototype.listenAddressBar = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">      <span class="built_in">window</span>.addEventListener(<span class="string">"load"</span>, <span class="keyword">this</span>.handleRoute.bind(<span class="keyword">this</span>));</span><br><span class="line">      <span class="keyword">switch</span> (<span class="keyword">this</span>.mode) &#123;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">'hash'</span>:</span><br><span class="line">          <span class="built_in">window</span>.addEventListener(<span class="string">'hashchange'</span>, <span class="keyword">this</span>.handleRoute.bind(<span class="keyword">this</span>))</span><br><span class="line">        <span class="keyword">case</span> <span class="string">'history'</span>:</span><br><span class="line">          <span class="built_in">window</span>.addEventListener(<span class="string">"popstate"</span>, <span class="keyword">this</span>.handleRoute.bind(<span class="keyword">this</span>))  </span><br><span class="line">        <span class="keyword">default</span>:</span><br><span class="line">          <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">`unknown mode: <span class="subst">$&#123;<span class="keyword">this</span>.mode&#125;</span>`</span>);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>这么写有大量重复代码，且耦合性过高，难扩展。可以优化一下，做个继承然后用工厂模式按需创建对象即可，本文重点在于解释前端路由原理，这么写可以直观的对比两种路由的区别，此处也就不做优化了。</p>
+<p>下面贴出完整JS代码：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> view = <span class="built_in">document</span>.querySelector(<span class="string">'#view'</span>);</span><br><span class="line">   <span class="keyword">const</span> config = &#123;</span><br><span class="line">     mode: <span class="string">'hash'</span>,</span><br><span class="line">     routes: [</span><br><span class="line">       &#123;</span><br><span class="line">         path: <span class="string">'/'</span>,</span><br><span class="line">         template: <span class="string">'&lt;div&gt;index&lt;div&gt;'</span></span><br><span class="line">       &#125;,</span><br><span class="line">       &#123;</span><br><span class="line">         path: <span class="string">'/page1'</span>,</span><br><span class="line">         template: <span class="string">'&lt;div&gt;page1&lt;div&gt;'</span></span><br><span class="line">       &#125;,</span><br><span class="line">       &#123;</span><br><span class="line">         path: <span class="string">'/page2'</span>,</span><br><span class="line">         template: <span class="string">'&lt;div&gt;page2&lt;div&gt;'</span></span><br><span class="line">       &#125;,</span><br><span class="line">     ],</span><br><span class="line">     view</span><br><span class="line">   &#125;</span><br><span class="line">   </span><br><span class="line">   <span class="function"><span class="keyword">function</span> <span class="title">Router</span>(<span class="params">config</span>) </span>&#123;</span><br><span class="line">     <span class="keyword">if</span>(!(<span class="keyword">this</span> <span class="keyword">instanceof</span> Router))&#123;</span><br><span class="line">       <span class="keyword">return</span> <span class="keyword">new</span> Router(config);</span><br><span class="line">     &#125;</span><br><span class="line">     <span class="keyword">this</span>.mode = config.mode</span><br><span class="line">     <span class="keyword">this</span>.routes = &#123;&#125;</span><br><span class="line">     <span class="keyword">this</span>.current = <span class="string">''</span></span><br><span class="line">     <span class="keyword">this</span>.view = config.view</span><br><span class="line">     <span class="keyword">this</span>.initRoutes()</span><br><span class="line">     <span class="keyword">this</span>.listenAddressBar()</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   Router.prototype.initRoutes = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">     <span class="keyword">for</span>(<span class="keyword">const</span> _i <span class="keyword">of</span> config.routes) &#123;</span><br><span class="line">       <span class="keyword">this</span>.routes[_i.path] = <span class="function"><span class="params">()</span>=&gt;</span>&#123;</span><br><span class="line">         <span class="keyword">this</span>.view.innerHTML = _i.template</span><br><span class="line">       &#125;</span><br><span class="line">     &#125;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   Router.prototype.listenAddressBar = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">     <span class="built_in">window</span>.addEventListener(<span class="string">"load"</span>, <span class="keyword">this</span>.handleRoute.bind(<span class="keyword">this</span>))</span><br><span class="line">     <span class="keyword">switch</span> (<span class="keyword">this</span>.mode) &#123;</span><br><span class="line">       <span class="keyword">case</span> <span class="string">'hash'</span>:</span><br><span class="line">         <span class="built_in">window</span>.addEventListener(<span class="string">'hashchange'</span>, <span class="keyword">this</span>.handleRoute.bind(<span class="keyword">this</span>))</span><br><span class="line">       <span class="keyword">case</span> <span class="string">'history'</span>:</span><br><span class="line">         <span class="built_in">window</span>.addEventListener(<span class="string">"popstate"</span>, <span class="keyword">this</span>.handleRoute.bind(<span class="keyword">this</span>))  </span><br><span class="line">       <span class="keyword">default</span>:</span><br><span class="line">         <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">`unknown mode: <span class="subst">$&#123;<span class="keyword">this</span>.mode&#125;</span>`</span>);</span><br><span class="line">     &#125;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   Router.prototype.handleRoute = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">     <span class="keyword">switch</span> (<span class="keyword">this</span>.mode) &#123;</span><br><span class="line">       <span class="keyword">case</span> <span class="string">'hash'</span>:</span><br><span class="line">         <span class="keyword">this</span>.current = <span class="built_in">window</span>.location.hash.slice(<span class="number">1</span>) || <span class="string">'/'</span></span><br><span class="line">         <span class="keyword">break</span>;</span><br><span class="line">       <span class="keyword">case</span> <span class="string">'history'</span>:</span><br><span class="line">         <span class="keyword">this</span>.current = <span class="built_in">window</span>.location.pathname</span><br><span class="line">         history.pushState(<span class="literal">null</span>, <span class="string">''</span>, <span class="keyword">this</span>.current)</span><br><span class="line">         <span class="keyword">break</span>;</span><br><span class="line">       <span class="keyword">default</span>:</span><br><span class="line">         <span class="keyword">return</span>;</span><br><span class="line">     &#125;</span><br><span class="line">     <span class="keyword">try</span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.routes[<span class="keyword">this</span>.current]()</span><br><span class="line">     &#125;<span class="keyword">catch</span>(err)&#123;</span><br><span class="line">       <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">`unknown mode: <span class="subst">$&#123;<span class="keyword">this</span>.mode&#125;</span>`</span>)</span><br><span class="line">     &#125; </span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   Router.prototype.push = <span class="function"><span class="keyword">function</span>(<span class="params">to</span>)</span>&#123;</span><br><span class="line">     <span class="keyword">switch</span> (<span class="keyword">this</span>.mode)&#123;</span><br><span class="line">       <span class="keyword">case</span> <span class="string">'hash'</span>:</span><br><span class="line">         location.href = <span class="string">'#'</span> + to; </span><br><span class="line">         <span class="keyword">break</span>;</span><br><span class="line">       <span class="keyword">case</span> <span class="string">'history'</span>:</span><br><span class="line">         history.pushState(<span class="literal">null</span>, <span class="string">''</span>, <span class="keyword">this</span>.current);</span><br><span class="line">         <span class="keyword">this</span>.handleRoute();  <span class="comment">/*路由的变换需要手动触发处理函数*/</span></span><br><span class="line">         <span class="keyword">break</span>;</span><br><span class="line">       <span class="keyword">default</span>:</span><br><span class="line">         <span class="keyword">throw</span> <span class="built_in">Error</span>(<span class="string">`unknown mode: <span class="subst">$&#123;<span class="keyword">this</span>.mode&#125;</span>`</span>)</span><br><span class="line">     &#125;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="keyword">const</span> route = <span class="keyword">new</span> Router(config)</span><br></pre></td></tr></table></figure>
+
+<p><a href="https://gitee.com/kilicmu/analog_front_end_route可以获取文章代码">https://gitee.com/kilicmu/analog_front_end_route可以获取文章代码</a></p>
+<p>以上~</p>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</article>
+
+
+
+    <!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <p class="copyright text-muted">
+          Theme By <a target="_blank" href="https://github.com/levblanc">Levblanc.</a>
+          Inspired By <a target="_blank" href="https://github.com/klugjo/hexo-theme-clean-blog">Clean Blog.</a>
+        <p class="copyright text-muted">
+          Powered By <a target="_blank" href="https://hexo.io/">Hexo.</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+    <!-- After Footer Scripts -->
+
+<script src="/js/highlight.pack.js"></script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function(event) {
+    var codeBlocks = Array.prototype.slice.call(document.getElementsByTagName('pre'))
+    codeBlocks.forEach(function(block, index) {
+      hljs.highlightBlock(block);
+    });
+  });
+</script>
+
+  </body>
+</html>
+

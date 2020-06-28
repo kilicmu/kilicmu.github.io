@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html>
+  <!-- Html Head Tag-->
+  <head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="kilic">
+  <!-- Open Graph Data -->
+  <meta property="og:title" content="前端必知的浏览器知识"/>
+  <meta property="og:description" content="咸鱼游民" />
+  <meta property="og:site_name" content="kilic の 部落格"/>
+  <meta property="og:type" content="article" />
+  <meta property="og:image" content="http://kilic.site"/>
+  
+    <link rel="alternate" href="/atom.xml" title="kilic の 部落格" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+
+  <!-- Site Title -->
+  <title>kilic の 部落格</title>
+
+  <!-- Bootstrap CSS -->
+  
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+
+  <!-- Custom CSS -->
+  
+  
+<link rel="stylesheet" href="/css/style.dark.css">
+
+
+  <!-- Google Analytics -->
+  
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+  <body>
+    <!-- Page Header -->
+
+
+<header class="site-header header-background" style="background-image: url(/img/m5.jpg)">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="page-title with-background-image">
+          <p class="title">前端必知的浏览器知识</p>
+          <p class="subtitle"></p>
+        </div>
+        <div class="site-menu with-background-image">
+          <ul>
+            
+              <li>
+                <a href="/">
+                  
+                  Home
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="/archives">
+                  
+                  Archives
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="https://github.com/kilicmu">
+                  
+                  Github
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="mailto:kilicmu3389@outlook.com">
+                  
+                  Email
+                  
+                </a>
+              </li>
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<article>
+  <div class="container typo">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="post-info text-muted">
+          
+            <!-- Author -->
+            <span class="author info">By kilic</span>
+          
+          <!-- Date -->
+          <span class="date-time info">On
+            <span class="date">2020-06-14</span>
+            <span class="time">01:30:38</span>
+          </span>
+          
+        </div>
+        <!-- Tags -->
+        
+          <div class="post-tags text-muted">
+            Tags: 
+
+<a class="tag" href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/">#浏览器</a>
+
+
+          </div>
+        
+        <!-- Post Main Content -->
+        <div class="post-content">
+          <p>个人觉得现代前端开发本质和后端语言开发几乎没有太大的区别，浏览器的本质就可以看做一个小型的操作系统。在后端开发过程中，理解操作系统的原理可以帮助我们解决很多问题。同理，作为前端开发者，理解浏览器的原理可以帮助我们迅速定位开发过程的各种问题并解决问题。本文将简单整理前端开发者必须了解的浏览器知识，如果一篇文章太长会考虑做一个系列，就酱~</p>
+<a id="more"></a>
+
+<h2 id="现代浏览器架构"><a href="#现代浏览器架构" class="headerlink" title="现代浏览器架构"></a>现代浏览器架构</h2><h3 id="过去"><a href="#过去" class="headerlink" title="过去"></a>过去</h3><p>早期浏览器是单线程架构。这种架构有很多问题，如稳定性差，安全性差，处理速度缓慢等。所以我们此处就不再多提，这段我们从现代浏览器架构聊起。</p>
+<h3 id="现在"><a href="#现在" class="headerlink" title="现在"></a>现在</h3><p>下图是最新的Chrome浏览器架构，如图所示它是一个多进程架构：</p>
+<p><img src="https://i.niupic.com/images/2020/06/14/8gyx.jpg" alt="浏览器架构"></p>
+<p>这些进程各有分工，我们细看主要的几个进程：</p>
+<ul>
+<li>Browser Process：浏览器的主进程，负责界面的显示，用户交互与存储</li>
+<li>Renderer Process：渲染进程，他负责做HTML、CSS与JS的解析渲染包括排版引擎（Blink）与V8都在这个进程，这个进程是一个只读的进程（安全性），浏览器会为每个标签提供一个Penderer Process</li>
+<li>GPU Process：实现网页的UI绘制与CSS的3D实现等功能</li>
+<li>Plugin Process：负责运行插件，同样是隔离进程，为了防止插件崩溃破坏系统的稳定性</li>
+</ul>
+<p>其他还有如NetWork Process（负责网路资源加载），Utility Process等其他功能进程。</p>
+<p>这种架构解决了许多问题，如稳定性，安全性，流畅性等。但是他还是有一些问题</p>
+<ul>
+<li>资源占用：chrome作为一个资源内存使用大户，用过的一定都有体会。因为每进程都需要基础副本（如页面解析环境），这必然会有内存占用巨大的问题。</li>
+<li>复杂的体系结构：现在的chrome已经十分复杂，各种模块的耦合很高，扩展性不不是很高，难以适应新需求。</li>
+</ul>
+<h3 id="将来"><a href="#将来" class="headerlink" title="将来"></a>将来</h3><p>2016 年，Chrome 官方团队使用“面向服务的架构”（SOA）的思想设计了新的 Chrome 架构，重构模块为服务，这样，chrome将会在不同性能硬件上，将服务在独立或相同的进程运行，达到更优秀的硬件表现。同时可以进一步提高程序内聚、降低低耦合。</p>
+<p>如下图：</p>
+<p><img src="https://i.niupic.com/images/2020/06/14/8gyE.jpg" alt="服务架构"></p>
+<p>这个迭代过程会很长，此处不做赘述。</p>
+<h2 id="浏览器如何为你呈现一个页面"><a href="#浏览器如何为你呈现一个页面" class="headerlink" title="浏览器如何为你呈现一个页面"></a>浏览器如何为你呈现一个页面</h2><p>聊这个问题之前，我们先来说说从输入URL到页面的解析前我们做了些什么。</p>
+<h4 id="请求的发送"><a href="#请求的发送" class="headerlink" title="请求的发送"></a>请求的发送</h4><p>首先，用户在地址栏输入一个文本，这时候按下回车，浏览器的<code>浏览器进程</code>会根据你的输入来处理具体导航。他的处理流程如下：</p>
+<ul>
+<li>判断输入的关键字是搜索内容，还是请求的 URL。</li>
+<li>如果内容不符合URL规则，则使用浏览器默认搜索引擎去拼接一个新的请求</li>
+<li>如果是符合，但是没有协议，则浏览器会为用户加上协议形成完整URL</li>
+</ul>
+<p>开始导航前，浏览器页面执行一次 beforeunload 事件，可以做一些清理操作，也可以在这个事件终止导航。</p>
+<p>如果导航被允许，<code>浏览器进程</code>会开启标签上的加载动画，并开始导航。</p>
+<p>开始导航以后，<code>浏览器进程</code>会要求<code>网络进程</code>去做URL请求，请注意，网络进程不是直接去做这个请求的。在发送请求前，网络进程会先查看本地缓存，若本地缓存有相应资源，则网络进程会直接返回相应的资源给<code>浏览器进程</code>，若没有缓存才会发出HTTP请求。</p>
+<p>关于请求依然需要几个步骤：</p>
+<ul>
+<li>做DNS解析</li>
+<li>TLS连接（HTTPS）</li>
+<li>建立TCP连接</li>
+<li>构建HTTP请求头</li>
+<li>……</li>
+</ul>
+<p>以上内容涉及计算机网络，此处不做赘述。</p>
+<p>当<code>网络进程</code>收到了服务器的响应时，<code>网络进程</code>会去解析响应内容。</p>
+<p><code>网络进程</code>会判断当前响应行的状态码，若是2XX标识请求正常，301/2则会自动根据请求体的Location字段发送第二次重定向指定请求。</p>
+<p>如果这个请求返回2XX，浏览器如何判断是否要解析这个html而不是显示html文本或下载html文本？</p>
+<p>很多人都知道，HTTP请求头中有个字段<code>Content-Type</code>，浏览器就是根据它来判断如何处理响应体内容。</p>
+<p>一下列举一下常见的content-type：</p>
+<table>
+<thead>
+<tr>
+<th>name</th>
+<th>info</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>application/x-www-form-urlencoded</td>
+<td>浏览器的原生form表单</td>
+</tr>
+<tr>
+<td>multipart/form-data</td>
+<td>使用表单上传文件,必须让 form的 enctype=”multipart/form-data”</td>
+</tr>
+<tr>
+<td>application/json</td>
+<td>提交序列化后的 JSON 字符串</td>
+</tr>
+<tr>
+<td>text/html</td>
+<td>HTML格式文件</td>
+</tr>
+<tr>
+<td>application/octet-stream</td>
+<td>字节流类型</td>
+</tr>
+<tr>
+<td>image/png</td>
+<td>数据是图片类型</td>
+</tr>
+</tbody></table>
+<h4 id="页面的渲染"><a href="#页面的渲染" class="headerlink" title="页面的渲染"></a>页面的渲染</h4><p>拿到服务端数据以后，就轮到<code>渲染进程</code>帮助来渲染页面的。</p>
+<p>这时候数据在<code>网络进程</code>，<code>渲染进程</code>拿不到怎么办？当然是找<code>浏览器进程</code>协商啦。<code>网络进程</code>在解析了响应头后，会向会向<code>浏览器进程</code>提交请求。<code>浏览器进程</code>收到请求后，向<code>渲染进程</code>发起“提交文档”的消息；</p>
+<p><code>渲染进程</code>接受消息后，与<code>网络进程</code>构建IPC，对文档信息接收。</p>
+<p>当信息接受完毕，<code>渲染进程</code>会发送确认提交信息给<code>浏览器进程</code>，这个信息供浏览器进程更新浏览器标签与状态。</p>
+<p>渲染进程如果完成了渲染，会发送一个消息给<code>浏览器进程</code>，浏览器接收到消息后，会停止标签图标上的加载动画，并替换为服务端提供的ico图标。</p>
+<p>那么很多人又要好奇了？<code>渲染进程</code>是如何将文档解析为的页面图像呢？</p>
+<h2 id="渲染进程的工作流程"><a href="#渲染进程的工作流程" class="headerlink" title="渲染进程的工作流程"></a>渲染进程的工作流程</h2><p>这部分工作主要就是解析与渲染HTML，CSS与JS了。这里十分重要，我会总结一些性能优化的思考与原理。</p>
+<p>我们把这个流程主要分为以下几个阶段：</p>
+<ol>
+<li>构建 DOM 树</li>
+<li>样式计算</li>
+<li>布局</li>
+<li>分层</li>
+<li>绘制</li>
+<li>分块</li>
+<li>光栅化和合成</li>
+</ol>
+<p>下面来具体看看每个阶段做了什么？</p>
+<h3 id="构建DOM树"><a href="#构建DOM树" class="headerlink" title="构建DOM树"></a>构建DOM树</h3><p>首先，浏览器需要解析HTML。由于html文件只是一个文本，浏览器无法识别，所以需要使用HTML解析器将HTML解析为可识别的DOM树。</p>
+<p>DOM树是一种使用节点构建成的一个树形结构，节点的类型分为：元素节点，属性节点，文本节点。</p>
+<p>大致感觉如下：</p>
+<p><img src="https://i.niupic.com/images/2020/06/27/8k9A.jpg" alt="DOM树"></p>
+<p>可以思考一下这里如何优化：</p>
+<ol>
+<li>减少DOM层级</li>
+<li>使用 HTML5 语义化标签</li>
+<li>做好文件分离，不要把HTML，CSS，JS写在一起</li>
+<li>不要保留空标签</li>
+<li>如果一个脚本或请求会阻塞HTML解析，应该把它放在HTML后面</li>
+<li>…..以后想到再补充</li>
+</ol>
+<p>很多人认为DOM树构建结束后需要构建CSSOM再构建RenderTree，但是很显然是不对的，可以参考一下以下文章：</p>
+<p><a href="https://zhuanlan.zhihu.com/p/25445527">从Chrome源码看浏览器如何layout布局</a></p>
+<p><a href="https://stackoverflow.com/questions/45748837/tree-structures-in-webkit-chrome">Tree structures in WebKit (Chrome)</a></p>
+<p>事实上，不需要构建什么CSSOM与RenderTree，在DOM树构建结束，浏览器直接开始计算节点样式后构建布局树。</p>
+<h3 id="样式计算"><a href="#样式计算" class="headerlink" title="样式计算"></a>样式计算</h3><h4 id="构建styleSheet"><a href="#构建styleSheet" class="headerlink" title="构建styleSheet"></a>构建styleSheet</h4><p>在解析HTML的时候CSS会被请求加载，这些CSS是一些文本文件，浏览器是无法直接识别的，所以需要被转换为styleSheets结构，可以方便的查询响应的样式信息。</p>
+<p>如图所示：</p>
+<p><img src="https://i.niupic.com/images/2020/06/27/8k9V.png" alt="styleSheet"></p>
+<p>在这里，我们需要明确一个问题，也是一个性能优化需要注意的点<strong>。如果选择器的层级过多，会导致CSS解析速度变慢</strong>。同理，若使用CSS预编译器，如果嵌套层级过多同样会存在性能问题。</p>
+<h4 id="标准化"><a href="#标准化" class="headerlink" title="标准化"></a>标准化</h4><p>所谓标准化就是如字面意思，很多属性值，如rem等不被渲染引擎理解，所以需要把他们转换为渲染引擎可以理解的相应值。</p>
+<h4 id="节点样式计算"><a href="#节点样式计算" class="headerlink" title="节点样式计算"></a>节点样式计算</h4><p>当属性已经标准化后，就可以计算DOM树中每个节点的样式了。</p>
+<p>CSS有继承机制，所以每个DOM节点都会包含有父节点的样式。如果子节点有与父节点相同的样式，则子节点会覆盖父节点的样式。如下图表示：</p>
+<p><img src="https://i.niupic.com/images/2020/06/27/8kfU.png" alt="CSS继承"></p>
+<p>样式计算就是根据继承与层叠的规则计算出每个DOM节点的具体样式，为下面的布局阶段做铺垫。</p>
+<h3 id="布局"><a href="#布局" class="headerlink" title="布局"></a>布局</h3><p>如果说上面的样式计算是为了根据CSS计算出每个DOM节点的样式，那么这个布局阶段就是为了算出DOM节点的可见元素的几何位置，我们把这个计算过程叫做布局。</p>
+<p>布局需要做下面两个任务：</p>
+<ul>
+<li>布局树创建</li>
+<li>布局计算</li>
+</ul>
+<h4 id="布局树（Layout-Tree）"><a href="#布局树（Layout-Tree）" class="headerlink" title="布局树（Layout Tree）"></a>布局树（Layout Tree）</h4><p>布局树是一颗所有可见元素构成的树，他的构建过程如下：</p>
+<ul>
+<li>遍历DOM树中所有可见节点，把他们添加到布局树</li>
+<li>不可见的节点忽略</li>
+<li>对所有布局树的节点做布局计算</li>
+<li>将布局计算结果会写到布局树中</li>
+</ul>
+<p>有了布局树，浏览器就可以开始页面的绘制了吗？显然不是的。</p>
+<h3 id="分层"><a href="#分层" class="headerlink" title="分层"></a>分层</h3><p>看上面的流程总结，布局结束节点并非绘制阶段，而是分层阶段，我们可以吧页面理解为一个一个层级组合而成，这些层级的组合便于我们做出一些更满意的布局，我们可以通过z-index控制<strong>同一父元素</strong>的层级。</p>
+<p>那么浏览器又如何处理这些层级关系呢？</p>
+<p>浏览器会根据布局树来构建出一个图层树，但是不是每个布局树的节点都可以被提取为单独的一层，需要满足下面的任一条件会被提取为单独一层。</p>
+<ul>
+<li><p>拥有层叠上下文属性</p>
+<p>这部分可以去看<a href="https://www.zhangxinxu.com/wordpress/2016/01/understand-css-stacking-context-order-z-index/">深入理解CSS中的层叠上下文和层叠顺序</a>，简单来说，如果一个元素定义了非static的position属性，定义了opacity属性，使用了滤镜。则这就拥有了层叠上下文属性</p>
+</li>
+<li><p>发生剪裁</p>
+<p>所谓剪裁就是当限制一个box大小，且为盒子设置了overflow:auto，如果盒子内的内容超出了盒子的范围，则会触发剪裁，而被剪裁的内容会被创建新的一层。</p>
+<p>如果剪裁出现了滚动条，滚动条也是单独的一层。</p>
+</li>
+</ul>
+<p>如下面的例子：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="css">    <span class="selector-class">.layout-box</span> &#123;</span></span><br><span class="line">      overflow: scroll;</span><br><span class="line">      width: 300px;</span><br><span class="line">      height: 300px;</span><br><span class="line"><span class="css">      <span class="selector-tag">border</span>: 2<span class="selector-tag">px</span> <span class="selector-tag">solid</span> <span class="selector-id">#000</span>;</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="css">    <span class="selector-class">.content</span> &#123;</span></span><br><span class="line">      height: 500px;</span><br><span class="line">      width: 300px;</span><br><span class="line">      background-color: paleturquoise;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"layout-box"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"content"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>看效果图：</p>
+<p><img src="https://i.niupic.com/images/2020/06/27/8kgS.png" alt="布局"></p>
+<p>可以看到，被裁减的区域被单独提取出一个图层，进度条也是单独一个图层</p>
+<h3 id="图层绘制"><a href="#图层绘制" class="headerlink" title="图层绘制"></a>图层绘制</h3><p>图层树的构建之后，渲染引擎会对图层树中的每个图层进行绘制。</p>
+<p>那么渲染引擎是如何实现的图层绘制？</p>
+<p>类似于用canvas通过一个个函数绘制相应的图形，渲染引擎会使用绘制指令去控制图层的绘制。</p>
+<p>绘制指令大致如下所示：</p>
+<p><img src="https://i.niupic.com/images/2020/06/27/8kiF.png" alt="绘制指令"></p>
+<p>可以看出，这些指令只是指导绘制一些基本的图形，所以一个元素的渲染需要使用很多指令。而这些指令组成的列表叫做绘制列表。绘制阶段的主要目的就是获取绘制列表为合成线程做具体绘制做指导。</p>
+<h3 id="栅格化"><a href="#栅格化" class="headerlink" title="栅格化"></a>栅格化</h3><p>当图层的绘制列表准备好之后，主线程会把该绘制列表提交（commit）给合成线程，那么是直接按照绘制指令开始绘制吗？</p>
+<p>显然不是的。我们需要思考一个问题。</p>
+<p>如果一个页面十分长，而浏览器的视口是相对很小的。如果把所有的整体页面全部绘制，那也太浪费性能了。所以只需要绘制可见区域就可以了。但是因为不同显示器分辨率不同，无法精准控制绘制的范围。</p>
+<p>所以合成线程会将图层划分为图块，图块的大小通常是 256x256 或者 512x512。然后合成线程会按照视口附近的图块来优先生成位图，实际生成位图的操作是由栅格化来执行的。</p>
+<p>所谓栅格化，是指将图块转换为位图。</p>
+<p>一般使用GPU来加速栅格化过程，生成的位图被保存在 GPU 内存中</p>
+<h3 id="合成和显示"><a href="#合成和显示" class="headerlink" title="合成和显示"></a>合成和显示</h3><p>所有图块都被栅格化后，合成线程就会生成一个绘制图块的命令——“DrawQuad”，然后将该命令提交给浏览器进程。浏览器进程里面有一个叫 viz 的组件，用来接收合成线程发过来的 DrawQuad 命令，然后根据 DrawQuad 命令，将其页面内容绘制到内存中，最后再将内存显示在屏幕上。</p>
+<p>以上就是浏览器图象的的渲染流程啦。</p>
+<p><a href="https://juejin.im/post/5e032fa6f265da33f8653a62">窥探现代浏览器架构</a></p>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</article>
+
+
+
+    <!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <p class="copyright text-muted">
+          Theme By <a target="_blank" href="https://github.com/levblanc">Levblanc.</a>
+          Inspired By <a target="_blank" href="https://github.com/klugjo/hexo-theme-clean-blog">Clean Blog.</a>
+        <p class="copyright text-muted">
+          Powered By <a target="_blank" href="https://hexo.io/">Hexo.</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+    <!-- After Footer Scripts -->
+
+<script src="/js/highlight.pack.js"></script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function(event) {
+    var codeBlocks = Array.prototype.slice.call(document.getElementsByTagName('pre'))
+    codeBlocks.forEach(function(block, index) {
+      hljs.highlightBlock(block);
+    });
+  });
+</script>
+
+  </body>
+</html>
+

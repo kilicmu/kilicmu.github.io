@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+  <!-- Html Head Tag-->
+  <head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="kilic">
+  <!-- Open Graph Data -->
+  <meta property="og:title" content="常用排序算法总结"/>
+  <meta property="og:description" content="咸鱼游民" />
+  <meta property="og:site_name" content="kilic の 部落格"/>
+  <meta property="og:type" content="article" />
+  <meta property="og:image" content="http://kilic.site"/>
+  
+    <link rel="alternate" href="/atom.xml" title="kilic の 部落格" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+
+  <!-- Site Title -->
+  <title>kilic の 部落格</title>
+
+  <!-- Bootstrap CSS -->
+  
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+
+  <!-- Custom CSS -->
+  
+  
+<link rel="stylesheet" href="/css/style.dark.css">
+
+
+  <!-- Google Analytics -->
+  
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+  <body>
+    <!-- Page Header -->
+
+
+<header class="site-header header-background" style="background-image: url(/img/m5.jpg)">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="page-title with-background-image">
+          <p class="title">常用排序算法总结</p>
+          <p class="subtitle"></p>
+        </div>
+        <div class="site-menu with-background-image">
+          <ul>
+            
+              <li>
+                <a href="/">
+                  
+                  Home
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="/archives">
+                  
+                  Archives
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="https://github.com/kilicmu">
+                  
+                  Github
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="mailto:kilicmu3389@outlook.com">
+                  
+                  Email
+                  
+                </a>
+              </li>
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<article>
+  <div class="container typo">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="post-info text-muted">
+          
+            <!-- Author -->
+            <span class="author info">By kilic</span>
+          
+          <!-- Date -->
+          <span class="date-time info">On
+            <span class="date">2020-06-23</span>
+            <span class="time">01:30:38</span>
+          </span>
+          
+        </div>
+        <!-- Tags -->
+        
+          <div class="post-tags text-muted">
+            Tags: 
+
+<a class="tag" href="/tags/%E7%AE%97%E6%B3%95/">#算法</a>
+
+
+          </div>
+        
+        <!-- Post Main Content -->
+        <div class="post-content">
+          <p>今天来盘点一下常见的排序算法。好久没写go了，打算用go搞一搞。最后我们在顺带看看V8是如何实现的Array.prototype.sort。</p>
+<a id="more"></a>
+
+<h2 id="冒泡排序"><a href="#冒泡排序" class="headerlink" title="冒泡排序"></a>冒泡排序</h2><p>这个就很常见了，很多人接触的第一个排序算法。</p>
+<h3 id="算法描述："><a href="#算法描述：" class="headerlink" title="算法描述："></a>算法描述：</h3><ol>
+<li>比较两个相邻元素，如果与目标排序方向相反则交换他们</li>
+<li>对每一对元素执行一样的操作，直到最后一对，它是这组元素的极值</li>
+<li>对除了极值以外的其他值重复上述步骤，循环执行</li>
+</ol>
+<h3 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">BubbleSort</span><span class="params">(array []<span class="keyword">int</span>)</span> []<span class="title">int</span></span> &#123;</span><br><span class="line">	<span class="keyword">for</span> i:= <span class="number">0</span>; i &lt; <span class="built_in">len</span>(array) - <span class="number">1</span>; i++ &#123;</span><br><span class="line">		<span class="keyword">for</span> j := <span class="number">0</span>; j &lt; <span class="built_in">len</span>(array) - i - <span class="number">1</span>; j++ &#123;</span><br><span class="line">			<span class="keyword">if</span>(array[j] &gt; array[j + <span class="number">1</span>])&#123;</span><br><span class="line">				array[j], array[j + <span class="number">1</span>] = array[j + <span class="number">1</span>], array[j]</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> array;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="时间复杂度："><a href="#时间复杂度：" class="headerlink" title="时间复杂度："></a>时间复杂度：</h3><p>最好： O(n)</p>
+<p>最坏：O(n<sup>2</sup>)</p>
+<p>平均：O(n<sup>2</sup>)</p>
+<h3 id="空间复杂度"><a href="#空间复杂度" class="headerlink" title="空间复杂度"></a>空间复杂度</h3><p>O(1)</p>
+<h3 id="稳定性"><a href="#稳定性" class="headerlink" title="稳定性"></a>稳定性</h3><p>稳定</p>
+<h2 id="插入排序"><a href="#插入排序" class="headerlink" title="插入排序"></a>插入排序</h2><p>插入排序是一种很符合排序直觉的排序方法，他的实现也是否简单</p>
+<h3 id="算法描述"><a href="#算法描述" class="headerlink" title="算法描述"></a>算法描述</h3><ol>
+<li>从第一个元素开始，认定这个元素已经被排序</li>
+<li>用下一个元素与所有已被排序元素扫描（从后到前）</li>
+<li>如果已排序元素大于/小于新元素，则将这个元素后移</li>
+<li>重复3直到正确位置</li>
+<li>将元素插入</li>
+<li>while 2-5</li>
+</ol>
+<h3 id="代码实现-1"><a href="#代码实现-1" class="headerlink" title="代码实现"></a>代码实现</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//从小-&gt;大排序</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">InsertionSort</span><span class="params">(array []<span class="keyword">int</span>)</span> []<span class="title">int</span></span> &#123;</span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">1</span>; i &lt; <span class="built_in">len</span>(array); i++ &#123; <span class="comment">//从0开始假设前面的元素都已经排序</span></span><br><span class="line">		current := array[i]</span><br><span class="line">		j := i - <span class="number">1</span></span><br><span class="line">		<span class="keyword">for</span> ; j &gt;= <span class="number">0</span> &amp;&amp; current &lt; array[j]; j-- &#123;</span><br><span class="line">			array[j+<span class="number">1</span>] = array[j]</span><br><span class="line">		&#125;</span><br><span class="line">		array[j+<span class="number">1</span>] = current</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> array</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>时间复杂度：</p>
+<h3 id="时间复杂度：-1"><a href="#时间复杂度：-1" class="headerlink" title="时间复杂度："></a>时间复杂度：</h3><p>最好： O(n)</p>
+<p>最坏：O(n<sup>2</sup>)</p>
+<p>平均：O(n<sup>2</sup>)</p>
+<h3 id="空间复杂度-1"><a href="#空间复杂度-1" class="headerlink" title="空间复杂度"></a>空间复杂度</h3><p>O(1)</p>
+<h3 id="稳定性-1"><a href="#稳定性-1" class="headerlink" title="稳定性"></a>稳定性</h3><p>稳定</p>
+<h2 id="希尔排序"><a href="#希尔排序" class="headerlink" title="希尔排序"></a>希尔排序</h2><p>希尔排序是在插入排序基础上的改编，希尔排序又叫<strong>缩小增量排序</strong>。</p>
+<p>// 考完日语填坑</p>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</article>
+
+
+
+    <!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <p class="copyright text-muted">
+          Theme By <a target="_blank" href="https://github.com/levblanc">Levblanc.</a>
+          Inspired By <a target="_blank" href="https://github.com/klugjo/hexo-theme-clean-blog">Clean Blog.</a>
+        <p class="copyright text-muted">
+          Powered By <a target="_blank" href="https://hexo.io/">Hexo.</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+    <!-- After Footer Scripts -->
+
+<script src="/js/highlight.pack.js"></script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function(event) {
+    var codeBlocks = Array.prototype.slice.call(document.getElementsByTagName('pre'))
+    codeBlocks.forEach(function(block, index) {
+      hljs.highlightBlock(block);
+    });
+  });
+</script>
+
+  </body>
+</html>
+
