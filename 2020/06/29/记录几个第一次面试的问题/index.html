@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html>
+  <!-- Html Head Tag-->
+  <head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="kilic">
+  <!-- Open Graph Data -->
+  <meta property="og:title" content="记录几个第一次面试的问题"/>
+  <meta property="og:description" content="咸鱼游民" />
+  <meta property="og:site_name" content="kilic の 部落格"/>
+  <meta property="og:type" content="article" />
+  <meta property="og:image" content="http://kilic.site"/>
+  
+    <link rel="alternate" href="/atom.xml" title="kilic の 部落格" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+
+  <!-- Site Title -->
+  <title>kilic の 部落格</title>
+
+  <!-- Bootstrap CSS -->
+  
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+
+  <!-- Custom CSS -->
+  
+  
+<link rel="stylesheet" href="/css/style.dark.css">
+
+
+  <!-- Google Analytics -->
+  
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+  <body>
+    <!-- Page Header -->
+
+
+<header class="site-header header-background" style="background-image: url(/img/m5.jpg)">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="page-title with-background-image">
+          <p class="title">记录几个第一次面试的问题</p>
+          <p class="subtitle"></p>
+        </div>
+        <div class="site-menu with-background-image">
+          <ul>
+            
+              <li>
+                <a href="/">
+                  
+                  Home
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="/archives">
+                  
+                  Archives
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="https://github.com/kilicmu">
+                  
+                  Github
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="mailto:kilicmu3389@outlook.com">
+                  
+                  Email
+                  
+                </a>
+              </li>
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<article>
+  <div class="container typo">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="post-info text-muted">
+          
+            <!-- Author -->
+            <span class="author info">By kilic</span>
+          
+          <!-- Date -->
+          <span class="date-time info">On
+            <span class="date">2020-06-29</span>
+            <span class="time">22:42:21</span>
+          </span>
+          
+        </div>
+        <!-- Tags -->
+        
+          <div class="post-tags text-muted">
+            Tags: 
+
+<a class="tag" href="/tags/%E9%9D%A2%E8%AF%95%E6%80%BB%E7%BB%93/">#面试总结</a>
+
+
+          </div>
+        
+        <!-- Post Main Content -->
+        <div class="post-content">
+          <p>第一次面试，很突然，很多东西答得稀烂，这里整理一下：</p>
+<a id="more"></a>
+
+<h1 id="先说JS"><a href="#先说JS" class="headerlink" title="先说JS"></a>先说JS</h1><h2 id="0-1-0-2-0-3问题"><a href="#0-1-0-2-0-3问题" class="headerlink" title="0.1+0.2!=0.3问题"></a>0.1+0.2!=0.3问题</h2><p>一句话解释是浮点存储误差问题</p>
+<p>IEEE754标准64位双精度浮点数</p>
+<p><img src="https://user-gold-cdn.xitu.io/2019/12/1/16ec1f7a1f614ffc?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt="img"></p>
+<p>0.1二进制：</p>
+<p><img src="https://user-gold-cdn.xitu.io/2019/12/3/16ecc585db0cf0fd?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt="img"></p>
+<p>0.2二进制：</p>
+<p><img src="https://user-gold-cdn.xitu.io/2019/12/3/16ecc58ec88eff0e?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt="img"></p>
+<p>超出52位的会被处理掉，所以当涉及js中的浮点数计算时，会产生各种奇怪的问题也就是</p>
+<p><img src="https://i.niupic.com/images/2020/06/29/8ldo.png" alt="image-20200629192853406"></p>
+<p>部分浮点可能会忽略这个零头，但是js只有number，所以会全部显示</p>
+<h2 id="JS常见的类型"><a href="#JS常见的类型" class="headerlink" title="JS常见的类型"></a>JS常见的类型</h2><p>这个一起整理过了，还是想不全，应该看看以前的东西的。。。。。</p>
+<p>string，boolean，number，Object，Array，undefined，null， function，Symbol</p>
+<h2 id="JS变量提升顺序"><a href="#JS变量提升顺序" class="headerlink" title="JS变量提升顺序"></a>JS变量提升顺序</h2><p>函数声明优先，同名声明忽略，所以如果变量和函数同名，变量的声明会被忽略。</p>
+<h2 id="ES6-特性整理："><a href="#ES6-特性整理：" class="headerlink" title="ES6+特性整理："></a>ES6+特性整理：</h2><p>防忘，很多东西用的使用才能想起来，面试全忘了。。。。。。</p>
+<p>ES6：</p>
+<ul>
+<li>let与const(块作用域)</li>
+<li>类(class / extend)</li>
+<li>模块化(ES6 Module)</li>
+<li>箭头函数(this绑定词法上下文)</li>
+<li>函数参数默认值</li>
+<li>模板字符串</li>
+<li>解构赋值</li>
+<li>延展操作符</li>
+<li>对象属性简写</li>
+<li>Promise</li>
+</ul>
+<p>ES7</p>
+<ul>
+<li>Array.prototype.includes()</li>
+<li><code>**</code> 操作符</li>
+</ul>
+<p>ES8:</p>
+<ul>
+<li>async/await</li>
+<li><code>Object.values()</code>：ps: 这个竟然是ES8新增的！！</li>
+<li><code>Object.entries()</code></li>
+<li><code>padStart()</code>和<code>padEnd()</code>，填充字符串达到当前长度</li>
+<li>函数参数列表结尾允许逗号</li>
+<li><code>Object.getOwnPropertyDescriptors()</code></li>
+<li><code>ShareArrayBuffer</code>和<code>Atomics</code>对象，用于从共享内存位置读取和写入</li>
+</ul>
+<p>ES9： <strong>ps：除了finally和Rest/Spread 基本没用过哎</strong></p>
+<ul>
+<li><p>异步迭代</p>
+<p>支持使用循环异步语法：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">process</span>(<span class="params">array</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">for</span> <span class="keyword">await</span>(<span class="keyword">const</span> i <span class="keyword">of</span> array)&#123;</span><br><span class="line">        syncDo(i);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Promise.finally()</p>
+</li>
+<li><p>Rest/Spread 属性：    <strong>ps：这个是ES9新增。。。</strong></p>
+</li>
+<li><p><a href="https://link.juejin.im/?target=http%3A%2F%2Fesnext.justjavac.com%2Fproposal%2Fregexp-named-groups.html">正则表达式命名捕获组</a>（Regular Expression Named Capture Groups）</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span></span><br><span class="line">  reDate = <span class="regexp">/([0-9]&#123;4&#125;)-([0-9]&#123;2&#125;)-([0-9]&#123;2&#125;)/</span>,</span><br><span class="line">  match  = reDate.exec(<span class="string">'2020-06-29'</span>),</span><br><span class="line">  year   = match[<span class="number">1</span>], <span class="comment">// 2020</span></span><br><span class="line">  month  = match[<span class="number">2</span>], <span class="comment">// 06</span></span><br><span class="line">  day    = match[<span class="number">3</span>]; <span class="comment">// 29</span></span><br><span class="line"><span class="comment">// 分组匹配</span></span><br><span class="line"><span class="keyword">const</span></span><br><span class="line">  reDate = <span class="regexp">/(?&lt;year&gt;[0-9]&#123;4&#125;)-(?&lt;month&gt;[0-9]&#123;2&#125;)-(?&lt;day&gt;[0-9]&#123;2&#125;)/</span>,</span><br><span class="line">  match  = reDate.exec(<span class="string">'2020-06-29'</span>),</span><br><span class="line">  year   = match.groups.year,  <span class="comment">// 2020</span></span><br><span class="line">  month  = match.groups.month, <span class="comment">// 06</span></span><br><span class="line">  day    = match.groups.day;   <span class="comment">// 29</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><a href="https://link.juejin.im/?target=https%3A%2F%2Fsegmentfault.com%2Fa%2F1190000006824133">正则表达式反向断言</a>（lookbehind）</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">reLookbehind = <span class="regexp">/(?&lt;=\D)\d+/</span> <span class="comment">//肯定反向断言</span></span><br><span class="line">relookbehindNeg = <span class="regexp">/(?&lt;!\D)\d+/</span></span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ul>
+<ul>
+<li><p>正则表达式dotAll模式</p>
+<p>正则表达式中点<code>.</code>匹配除回车外的任何单字符，标记<code>s</code>改变这种行为，允许行终止符的出现，例如：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/hello.world/.test(<span class="string">'hello\nworld'</span>);  <span class="comment">// false</span></span><br><span class="line">/hello.world/s.test(<span class="string">'hello\nworld'</span>); <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p>ES10：</p>
+<ul>
+<li>更加友好的 JSON.stringify</li>
+<li>新增了Array的<code>flat()</code>方法和<code>flatMap()</code>方法</li>
+<li>新增了String的<code>trimStart()</code>方法和<code>trimEnd()</code>方法</li>
+<li><code>Object.fromEntries()</code></li>
+<li><code>Symbol.prototype.description</code></li>
+<li><code>String.prototype.matchAll</code></li>
+<li><code>Function.prototype.toString()</code>现在返回精确字符，包括空格和注释</li>
+<li>简化<code>try {} catch {}</code>,修改 <code>catch</code> 绑定</li>
+<li>新的基本数据类型<code>BigInt</code></li>
+<li>globalThis</li>
+<li>import()</li>
+<li>Legacy RegEx</li>
+<li>私有的实例方法和访问器</li>
+</ul>
+<p>很多时候感觉被babel惯坏了，不管ES几随便写转换完都能用。。。。。。</p>
+<h2 id="Vue常用指令"><a href="#Vue常用指令" class="headerlink" title="Vue常用指令"></a>Vue常用指令</h2><p>都用过为啥一问就想不起来。。。。。</p>
+<p>v-bind</p>
+<p>v-if</p>
+<p>v-else</p>
+<p>v-show</p>
+<p>v-on</p>
+<p>v-else-if</p>
+<p>v-for</p>
+<p>v-once</p>
+<p>v-model</p>
+<p>v-text</p>
+<p>v-html</p>
+<p>v-slot</p>
+<p>v-clock</p>
+<h2 id="Vuex刷新数据不保留问题："><a href="#Vuex刷新数据不保留问题：" class="headerlink" title="Vuex刷新数据不保留问题："></a>Vuex刷新数据不保留问题：</h2><p>找了这么篇文章：</p>
+<p><a href="https://www.cnblogs.com/zhongchao666/p/9567527.html">https://www.cnblogs.com/zhongchao666/p/9567527.html</a></p>
+<p>这个问题其实挺好理解的，就是SPA路由是无跳转路由（可以看我以前的一篇前端路由文章），使用了Vuex后用户的刷新会导致Vuex数据的重置。</p>
+<p>所以我们需要本来有的数据F5刷新后页面重载，数据销毁，所以导致了这个问题</p>
+<p>解决方法：</p>
+<ol>
+<li>loaclStorage存储</li>
+</ol>
+<p>将this.$store.state.PV存入到缓存里之后，然后监听页面重载事件，如果页面重新载入了，那就从缓存里读取数据，然后赋值</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">created()&#123;</span><br><span class="line">    localStorage.getItem(<span class="string">'msg'</span>) &amp;&amp; <span class="keyword">this</span>.$store.replaceState(</span><br><span class="line">        <span class="built_in">Object</span>.assign(<span class="keyword">this</span>.$store.state, <span class="built_in">JSON</span>.parse( <span class="comment">// 这里只要获取对象的引用即可</span></span><br><span class="line">            localStorage.getItem(<span class="string">"msg"</span>)</span><br><span class="line">        )</span><br><span class="line">      )</span><br><span class="line">    )</span><br><span class="line">    <span class="built_in">window</span>.addEventListener(<span class="string">"beforeunload"</span>,()=&gt;&#123;</span><br><span class="line">       localStorage.setItem(<span class="string">"msg"</span>,<span class="built_in">JSON</span>.stringify(<span class="keyword">this</span>.$store.state))</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li><p>插件vuex-persistedstate</p>
+<p>安装：</p>
+<p><code>yarn add vuex-persistedstate</code></p>
+<p>使用：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> createPersistedState <span class="keyword">from</span> <span class="string">"vuex-persistedstate"</span></span><br><span class="line"><span class="keyword">const</span> store = <span class="keyword">new</span> Vuex.Store(&#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">  plugins: [createPersistedState(</span><br><span class="line">  	  storage: <span class="built_in">window</span>.sessionStorage,</span><br><span class="line">      reducer(val) &#123;</span><br><span class="line">          <span class="keyword">return</span> &#123;</span><br><span class="line">          <span class="comment">// 只储存state中的user</span></span><br><span class="line">          user: val.user</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">  )]</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ol>
+<h1 id="再看CSS："><a href="#再看CSS：" class="headerlink" title="再看CSS："></a>再看CSS：</h1><h2 id="CSS3新增"><a href="#CSS3新增" class="headerlink" title="CSS3新增"></a>CSS3新增</h2><p>过渡：transition</p>
+<p>动画：animation</p>
+<p>形变： transform</p>
+<p>选择器：nth-xx</p>
+<p>阴影：box-shadow</p>
+<p>边框：border-image</p>
+<p>背景：background-clip背景绘制</p>
+<p>反射：webkit-box-reflect:</p>
+<p>颜色：rgba 支持</p>
+<p>弹性布局：flex</p>
+<p>栅格布局：grid</p>
+<p>多列布局</p>
+<p>盒模型：box-sizing：border-box</p>
+<p>媒体查询 @media</p>
+<h2 id="Flex布局"><a href="#Flex布局" class="headerlink" title="Flex布局"></a>Flex布局</h2><p>这个地方我真的是，，，，，</p>
+<p>Flex布局：弹性布局</p>
+<p>Flex布局特点：与方向无关</p>
+<p>Flex布局适合简单的线性布局</p>
+<p>几个常用的属性：</p>
+<ul>
+<li><p>flex-direction：决定主轴的方向</p>
+<p>row: 水平 左-&gt;右</p>
+<p>rot-reverse：水平 右-&gt;左</p>
+<p>column：主轴垂直从上到下</p>
+<p>column：主轴垂直从下到上</p>
+</li>
+<li><p>flex-wrap：是否换行</p>
+<p>nowrap：默认不换行</p>
+<p>wrap：换行，第一行在上</p>
+<p>wrap-reverse：换行，第一行在下</p>
+</li>
+<li><p>flex-flow：<code>flex-direction</code>和<code>flex-wrap</code>的组合</p>
+</li>
+<li><p>justify-content：定义子元素在主轴的对齐方式</p>
+<p>flex-start</p>
+<p>flex-end</p>
+<p>center</p>
+<p>space-between</p>
+<p>space-around</p>
+</li>
+<li><p>align-items：定义子元素在侧轴上的对齐方式，主要由5种取值：（单行，多行使用align-content）</p>
+<p>strech: 默认值，子元素的高度铺满父元素<br> flex-start: 子元素从侧轴起点对齐<br> flex-end: 子元素从侧轴终点对齐<br> center: 子元素根据侧轴居中对齐<br> baseline: 根据子元素第一行文字的基线对齐(当字体大小不一致时，突出效果</p>
+</li>
+</ul>
+<p>子元素属性:</p>
+<ul>
+<li><p>flex-grow：当父元素空间有剩余时，将剩余空间分配给各子元素的比例</p>
+</li>
+<li><p>flex-shrink：各子元素压缩大小，默认为<code>1</code></p>
+</li>
+<li><p>flex-basis：当父元素有剩余空间时，可通过此属性扩充子元素的空间，设置子元素的空间默认为auto</p>
+</li>
+<li><p>flex：<code>flex-grow</code>、<code>flex-shrink</code>和<code>flex-basis</code>的合集 默认0 1 auto</p>
+</li>
+<li><p>order：值越小越靠前</p>
+</li>
+</ul>
+<p>总结几个问题：</p>
+<ol>
+<li>最后的问面试官环节存在问题，应该准备万能问题，不能脑袋一抽瞎白活</li>
+<li>准备一个开场白</li>
+<li>复习以前总结的基础问题，很多已经开始忘记了</li>
+<li>英语单词别瞎白活了，我就不适合说英语。。。。。。</li>
+</ol>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</article>
+
+
+
+    <!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <p class="copyright text-muted">
+          Theme By <a target="_blank" href="https://github.com/levblanc">Levblanc.</a>
+          Inspired By <a target="_blank" href="https://github.com/klugjo/hexo-theme-clean-blog">Clean Blog.</a>
+        <p class="copyright text-muted">
+          Powered By <a target="_blank" href="https://hexo.io/">Hexo.</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+    <!-- After Footer Scripts -->
+
+<script src="/js/highlight.pack.js"></script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function(event) {
+    var codeBlocks = Array.prototype.slice.call(document.getElementsByTagName('pre'))
+    codeBlocks.forEach(function(block, index) {
+      hljs.highlightBlock(block);
+    });
+  });
+</script>
+
+  </body>
+</html>
+
