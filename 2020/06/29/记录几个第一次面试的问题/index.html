@@ -104,7 +104,7 @@
           <!-- Date -->
           <span class="date-time info">On
             <span class="date">2020-06-29</span>
-            <span class="time">22:42:21</span>
+            <span class="time">17:05:18</span>
           </span>
           
         </div>
@@ -123,7 +123,7 @@
           <p>第一次面试，很突然，很多东西答得稀烂，这里整理一下：</p>
 <a id="more"></a>
 
-<h1 id="先说JS"><a href="#先说JS" class="headerlink" title="先说JS"></a>先说JS</h1><h2 id="0-1-0-2-0-3问题"><a href="#0-1-0-2-0-3问题" class="headerlink" title="0.1+0.2!=0.3问题"></a>0.1+0.2!=0.3问题</h2><p>一句话解释是浮点存储误差问题</p>
+<h1 id="JS"><a href="#JS" class="headerlink" title="JS"></a>JS</h1><h2 id="0-1-0-2-0-3问题"><a href="#0-1-0-2-0-3问题" class="headerlink" title="0.1+0.2!=0.3问题"></a>0.1+0.2!=0.3问题</h2><p>一句话解释是浮点存储误差问题</p>
 <p>IEEE754标准64位双精度浮点数</p>
 <p><img src="https://user-gold-cdn.xitu.io/2019/12/1/16ec1f7a1f614ffc?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt="img"></p>
 <p>0.1二进制：</p>
@@ -133,8 +133,6 @@
 <p>超出52位的会被处理掉，所以当涉及js中的浮点数计算时，会产生各种奇怪的问题也就是</p>
 <p><img src="https://i.niupic.com/images/2020/06/29/8ldo.png" alt="image-20200629192853406"></p>
 <p>部分浮点可能会忽略这个零头，但是js只有number，所以会全部显示</p>
-<h2 id="JS常见的类型"><a href="#JS常见的类型" class="headerlink" title="JS常见的类型"></a>JS常见的类型</h2><p>这个一起整理过了，还是想不全，应该看看以前的东西的。。。。。</p>
-<p>string，boolean，number，Object，Array，undefined，null， function，Symbol</p>
 <h2 id="JS变量提升顺序"><a href="#JS变量提升顺序" class="headerlink" title="JS变量提升顺序"></a>JS变量提升顺序</h2><p>函数声明优先，同名声明忽略，所以如果变量和函数同名，变量的声明会被忽略。</p>
 <h2 id="ES6-特性整理："><a href="#ES6-特性整理：" class="headerlink" title="ES6+特性整理："></a>ES6+特性整理：</h2><p>防忘，很多东西用的使用才能想起来，面试全忘了。。。。。。</p>
 <p>ES6：</p>
@@ -300,6 +298,58 @@
 <li><p>flex：<code>flex-grow</code>、<code>flex-shrink</code>和<code>flex-basis</code>的合集 默认0 1 auto</p>
 </li>
 <li><p>order：值越小越靠前</p>
+</li>
+</ul>
+<h1 id="HTML5"><a href="#HTML5" class="headerlink" title="HTML5"></a>HTML5</h1><p>没问，但是感觉应该顺带整理一下H5新增:</p>
+<p>语义化标签支持：</p>
+<p>新增一些标签：</p>
+<ul>
+<li><p>canvas</p>
+</li>
+<li><p>svg支持</p>
+</li>
+<li><p>音视频(video, radio)</p>
+</li>
+<li><p>表单新元素（tel，email，range，search，url……)</p>
+</li>
+<li><p>表单新特性（placeholoder，autocomplete，autofocus，spellcheck）</p>
+</li>
+<li><p>Web Storage API(localStorage, sessionStorage)</p>
+</li>
+<li><p>Geolocation：可以请求用户共享他们的位置。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> getPosition = navigator.geolocation.getCurrentPosition;</span><br><span class="line">getPosition(updateLocation, (error)=&gt;&#123;<span class="built_in">console</span>.log(error)&#125;)</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">updateLocation</span>(<span class="params">position</span>)</span>&#123;</span><br><span class="line">	<span class="keyword">const</span> latitude = position.coords.latitude; <span class="comment">// 纬度</span></span><br><span class="line">    <span class="keyword">const</span> longitude = position.coords.longitude; <span class="comment">// 经度</span></span><br><span class="line">    <span class="keyword">const</span> accuracy = position.coords.accuracy; <span class="comment">// 准确度</span></span><br><span class="line">    <span class="keyword">const</span> timestamp = position.coords.timestamp; </span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 监听位置更新</span></span><br><span class="line"><span class="keyword">const</span> watchId=navigator.geolocation.watchPostion(updateLocation,handleLocationError);</span><br><span class="line"><span class="comment">// 取消监视</span></span><br><span class="line">navigator.geolocation.clearWatcher(watcheId);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Communication：跨文档消息通信，可以确保iframe、标签页、窗口间安全地进行跨源通信。*</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">window</span>.postMessage(<span class="string">'hello,world'</span>,<span class="string">'http://www.example.com'</span>);</span><br><span class="line"><span class="built_in">window</span>.addEventListener(<span class="string">'message'</span>,messageHandler,<span class="literal">true</span>);</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">messageHandler</span>(<span class="params">e</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">switch</span>(e.origin)&#123;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">'friend.example.com'</span>:</span><br><span class="line">      processMessage(e.data);</span><br><span class="line">    <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">default</span>:</span><br><span class="line">    <span class="keyword">break</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>XMLHttpRequest Level2：改进XMLHttpRequest</p>
+<ul>
+<li>旧版：<ul>
+<li>仅支持文本的数据传输，无法读取和上传二进制</li>
+<li>传送和接收数据时候，没有进度信息</li>
+<li>收到同源策略影响</li>
+</ul>
+</li>
+<li>新版：<ul>
+<li>可以设置HTTP请求时限</li>
+<li>课程是由FormData管理数据</li>
+<li>支持文件上传</li>
+<li>可以请求不同域名数据</li>
+<li>可以获取服务端二进制数据</li>
+<li>可以获取数据传输和进度信息</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">//设置超时时间为</span></span><br><span class="line">xhr.timeout=<span class="number">3000</span>;</span><br><span class="line"><span class="comment">// 监听错误处理</span></span><br><span class="line">xhr.ontimeout = <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</span><br><span class="line">	handleTimeout(e);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 模拟表单提交</span></span><br><span class="line"><span class="keyword">const</span> formData2 = <span class="keyword">new</span> FormData($(<span class="string">'#form'</span>)); <span class="comment">// 初始化已有表单</span></span><br><span class="line">xhr.open(formData2.method, formData2.action);</span><br><span class="line">xhr.send(formDatat2); <span class="comment">//表单提交</span></span><br><span class="line"><span class="comment">// 文件上传</span></span><br><span class="line"><span class="keyword">const</span> formData = <span class="keyword">new</span> FormData();</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; files.length; i++)&#123;</span><br><span class="line">    formData.append(<span class="string">'files[]'</span>, files[i]);</span><br><span class="line">&#125;</span><br><span class="line">xhr.send(formData);</span><br><span class="line"><span class="comment">// 跨域需要浏览器与服务器同时同意这种请求，使用方法与原来方法相同</span></span><br><span class="line">xhr.open(<span class="string">'GET'</span>, <span class="string">'https://www.example.com/'</span>);</span><br><span class="line"><span class="comment">// 接受二进制图像</span></span><br><span class="line">xhr.open(<span class="string">'GET'</span>, <span class="string">'/path/to/image.png'</span>);</span><br><span class="line">xhr.responseType = <span class="string">'blob'</span>;</span><br><span class="line"><span class="keyword">const</span> binaryData = <span class="keyword">new</span> Blob([xhr.response], &#123;<span class="attr">type</span>: <span class="string">'image/png'</span>&#125;);</span><br><span class="line"><span class="comment">// 进度信息</span></span><br><span class="line"><span class="comment">// 五个事件</span></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">	* load事件：传输成功完成。</span></span><br><span class="line"><span class="comment">　　* abort事件：传输被用户取消。</span></span><br><span class="line"><span class="comment">　　* error事件：传输中出现错误。</span></span><br><span class="line"><span class="comment">　　* loadstart事件：传输开始。</span></span><br><span class="line"><span class="comment">　　* loadEnd事件：传输结束，但是不知道成功还是失败。</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">xhr.progress = updateProgress;</span><br><span class="line">xhr.upload.onprogress = updateProgress;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">updateProgress</span>(<span class="params">event</span>) </span>&#123;</span><br><span class="line">　　<span class="keyword">if</span> (event.lengthComputable) &#123;</span><br><span class="line">　　　　<span class="keyword">var</span> percentComplete = event.loaded / event.total;</span><br><span class="line">　　&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>FormData对象：模拟表单对象</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> $ = <span class="built_in">document</span>.querySelector;</span><br><span class="line"><span class="keyword">const</span> formData = <span class="keyword">new</span> FormData();</span><br><span class="line"><span class="keyword">const</span> formData2 = <span class="keyword">new</span> FormData($(<span class="string">'#form'</span>)); <span class="comment">// 初始化已有表单</span></span><br><span class="line">formData.append(<span class="string">'username'</span>, <span class="string">'kilic'</span>);</span><br><span class="line">formData2.append(<span class="string">'passwd'</span>, <span class="string">'123'</span>);</span><br><span class="line">xhr.open(formData2.method, formData2.action);</span><br><span class="line">xhr.send(formDatat2); <span class="comment">//表单提交</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>WebSocket：复用HTTP线路的轻量级通信协议</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 使用：</span></span><br><span class="line"><span class="keyword">const</span> socket = <span class="keyword">new</span> WebSocket(<span class="string">'ws://www.example.com'</span>);</span><br><span class="line">socket.onopen = <span class="function">(<span class="params">e</span>) =&gt;</span> &#123;</span><br><span class="line">    socket.send(<span class="string">'send data'</span>);</span><br><span class="line">&#125; </span><br><span class="line">socket.onmessage = <span class="function">(<span class="params">e</span>) =&gt;</span> &#123;</span><br><span class="line">    parseData(e.data)</span><br><span class="line">&#125;</span><br><span class="line">socket.onclose = (e) = &#123;</span><br><span class="line">    socket.onmessage = <span class="literal">null</span>;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'close'</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
 </li>
 </ul>
 <p>总结几个问题：</p>
