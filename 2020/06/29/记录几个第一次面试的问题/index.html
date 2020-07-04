@@ -104,7 +104,7 @@
           <!-- Date -->
           <span class="date-time info">On
             <span class="date">2020-06-29</span>
-            <span class="time">17:05:18</span>
+            <span class="time">17:22:29</span>
           </span>
           
         </div>
@@ -126,14 +126,12 @@
 <h1 id="JS"><a href="#JS" class="headerlink" title="JS"></a>JS</h1><h2 id="0-1-0-2-0-3问题"><a href="#0-1-0-2-0-3问题" class="headerlink" title="0.1+0.2!=0.3问题"></a>0.1+0.2!=0.3问题</h2><p>一句话解释是浮点存储误差问题</p>
 <p>IEEE754标准64位双精度浮点数</p>
 <p><img src="https://user-gold-cdn.xitu.io/2019/12/1/16ec1f7a1f614ffc?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt="img"></p>
-<p>0.1二进制：</p>
-<p><img src="https://user-gold-cdn.xitu.io/2019/12/3/16ecc585db0cf0fd?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt="img"></p>
-<p>0.2二进制：</p>
-<p><img src="https://user-gold-cdn.xitu.io/2019/12/3/16ecc58ec88eff0e?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt="img"></p>
-<p>超出52位的会被处理掉，所以当涉及js中的浮点数计算时，会产生各种奇怪的问题也就是</p>
+<p>0.1与0.2的二进制：</p>
+<p><img src="https://i.niupic.com/images/2020/07/02/8mfZ.png" alt="image-20200702234224195"></p>
+<p>这里有一个问题，可以明显的看出来这两个数转换为二进制的时候死循环了。。。。。。</p>
+<p>所以有误差是肯定的，当把这两个二进制数相加以后，转换为十进制就是以下的效果：</p>
 <p><img src="https://i.niupic.com/images/2020/06/29/8ldo.png" alt="image-20200629192853406"></p>
-<p>部分浮点可能会忽略这个零头，但是js只有number，所以会全部显示</p>
-<h2 id="JS变量提升顺序"><a href="#JS变量提升顺序" class="headerlink" title="JS变量提升顺序"></a>JS变量提升顺序</h2><p>函数声明优先，同名声明忽略，所以如果变量和函数同名，变量的声明会被忽略。</p>
+<h2 id="JS变量提升顺序"><a href="#JS变量提升顺序" class="headerlink" title="JS变量提升顺序"></a>JS变量提升顺序</h2><p>看以前的博客（认识JavaScript细节）</p>
 <h2 id="ES6-特性整理："><a href="#ES6-特性整理：" class="headerlink" title="ES6+特性整理："></a>ES6+特性整理：</h2><p>防忘，很多东西用的使用才能想起来，面试全忘了。。。。。。</p>
 <p>ES6：</p>
 <ul>

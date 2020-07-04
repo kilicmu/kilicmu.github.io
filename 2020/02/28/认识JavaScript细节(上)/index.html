@@ -104,7 +104,7 @@
           <!-- Date -->
           <span class="date-time info">On
             <span class="date">2020-02-28</span>
-            <span class="time">17:05:18</span>
+            <span class="time">17:22:29</span>
           </span>
           
         </div>
@@ -170,7 +170,11 @@
 </li>
 </ul>
 </li>
-<li><p>string</p>
+<li><p>string：</p>
+<ul>
+<li>字符串是存储在栈内存的</li>
+<li>js的字符串有不可变长的特性</li>
+</ul>
 </li>
 <li><p>boolean</p>
 <ul>
@@ -189,6 +193,10 @@
 <li><p>null</p>
 <ul>
 <li>空对象指针：指预期之中不存在（人为），后期会操作</li>
+<li><code>typeof null === ’object‘</code>是true为什么null是个基本数据类型？<ul>
+<li>因为计算机存储将000开头标识为对象，null存储时候将所有位置0，所以会出现typeof null === true，但是不能说明null是引用数据类型</li>
+</ul>
+</li>
 </ul>
 </li>
 <li><p>undefined</p>
@@ -339,15 +347,24 @@
 </ol>
 </li>
 </ol>
-<h1 id="2-语法细节"><a href="#2-语法细节" class="headerlink" title="2.  语法细节"></a>2.  语法细节</h1><h2 id="2-1-变量的提升"><a href="#2-1-变量的提升" class="headerlink" title="2.1 变量的提升"></a>2.1 变量的提升</h2><p>当<strong>栈作用域</strong>形成，js代码在运行前将所有带var的关键字变量提前声明（declare），对所有function变量进行提前声明（declare）与定义（defined）。</p>
-<p>在变量提升阶段，在全局作用域中声明一个变量A，此时就已经将A赋值给window了，可以用in运算符进行检验。</p>
-<p>变量提升与代码内容无关，只与作用域有关，当前作用域下无论分支是否成立都需哟进行变量的提升。</p>
-<p>在新版本浏览器中，对分支中的function变量仅仅会定义，不会声明，但是进入函数定义的代码块时，会对先function进行定义，然后执行逻辑。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(a); <span class="comment">//undefined</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">      <span class="built_in">console</span>.log(a); <span class="comment">//f a()&#123;...&#125;</span></span><br><span class="line">      <span class="function"><span class="keyword">function</span> <span class="title">a</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">"a"</span>);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="built_in">console</span>.log(a);<span class="comment">//f a()&#123;...&#125;</span></span><br></pre></td></tr></table></figure>
+<h1 id="2-语法细节"><a href="#2-语法细节" class="headerlink" title="2.  语法细节"></a>2.  语法细节</h1><h2 id="2-1-变量的提升"><a href="#2-1-变量的提升" class="headerlink" title="2.1 变量的提升"></a>2.1 变量的提升</h2><h3 id="JS作用域？"><a href="#JS作用域？" class="headerlink" title="JS作用域？"></a>JS作用域？</h3><p>没有let时候，JS中只有三种作用域：全局，函数，eval</p>
+<p>js作用域是静态的作用域（定义时候产生）</p>
+<p>执行函数时，会产生执行上下文（EC），这个EC会压入EC栈（ECS）</p>
+<h3 id="函数的执行"><a href="#函数的执行" class="headerlink" title="函数的执行"></a>函数的执行</h3><p>分为创建阶段与执行阶段</p>
+<p>其中不得不提到VO与AO</p>
+<h4 id="VO与AO"><a href="#VO与AO" class="headerlink" title="VO与AO"></a>VO与AO</h4><p>可以理解VO为一个与执行上下文关联的对象，这个对象的属性是这个执行上下文中的声明的函数、变量、参数列表作为其属性。</p>
+<p>AO可以肯做是与VO相同的东西，在函数调用时，VO被激活成了AO。</p>
+<p>未进入执行阶段之前，变量对象(VO)中的属性都不能访问！但是进入执行阶段之后，变量对象(VO)转变为了活动对象(AO)，里面的属性都能被访问了，然后开始进行执行阶段的操作。</p>
+<p>进入上下文阶段，AO会做如下初始化：</p>
+<ul>
+<li>函数的所有形式参数</li>
+<li>所有函数声明，这个属性由一个函数对象的名称和值组成如果变量对象已经存在相同名称的属性，则完全替换这个属性</li>
+<li>所有变量声明，这个属性由变量名称和undefined值(系统默认初始值)组成；如果变量名称跟已经声明的形式参数或函数相同，则变量声明被忽略。</li>
+</ul>
+<p>下面举个AO构建的例子：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params">a, b</span>)</span>&#123;</span><br><span class="line">	<span class="keyword">var</span> c = <span class="number">10</span>;</span><br><span class="line">    <span class="keyword">var</span> d = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">e</span>(<span class="params"></span>)</span>&#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Ao:</span></span><br><span class="line">AO = &#123;</span><br><span class="line">    a: <span class="number">10</span>,</span><br><span class="line">    b: <span class="literal">undefined</span>,</span><br><span class="line">    e: <span class="xml"><span class="tag">&lt;<span class="name">ref</span> <span class="attr">to</span> <span class="attr">function</span> <span class="attr">total</span>&gt;</span>.</span></span><br><span class="line"><span class="xml">    d: undefined</span></span><br><span class="line"><span class="xml">&#125;</span></span><br></pre></td></tr></table></figure>
 
-
-
-<p>注意：<strong>只对等号左边变量进行变量提升，也就是说在开始阶段，匿名函数的函数表达式仅仅是定义了函数，而没有对函数定义</strong></p>
+<p>这也就揭示了所谓的变量提升机制。</p>
 <h2 id="2-2-带var与不带var区别"><a href="#2-2-带var与不带var区别" class="headerlink" title="2.2 带var与不带var区别"></a>2.2 带var与不带var区别</h2><p>带var是一种变量声明，会将变量映射到window上</p>
 <p>不带var是一种对window.A变量的赋值动作，是一个为对象添加属性的行为</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="built_in">window</span>.A) <span class="comment">//undefined</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'A'</span> <span class="keyword">in</span> <span class="built_in">window</span>) <span class="comment">//true</span></span><br><span class="line"><span class="keyword">var</span> A</span><br></pre></td></tr></table></figure>
@@ -445,6 +462,11 @@
 <p>当我们的构造函数不存在return时，浏览器会返回自动构造的实例，但是如果自己返回了一个基本值时，对构造实例没有影响，但是若是返回了一个对象，会覆盖默认实例，如果必须使用return则使用return;</p>
 <p>当构造函数不存在参数，可以省略小括号</p>
 </blockquote>
+<p>下面简单实现一个new：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">mockNew</span> (<span class="params">constructorFunc, ...args</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> prototype = constructorFunc.prototype</span><br><span class="line">  <span class="keyword">const</span> instance = <span class="built_in">Object</span>.create(prototype)</span><br><span class="line">  <span class="keyword">const</span> ret = constructorFunc.apply(instance, args)</span><br><span class="line">  <span class="keyword">if</span> (ret <span class="keyword">instanceof</span> <span class="built_in">Object</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> ret;</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> instance;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
 <h3 id="2-9-2-原型链设计模式"><a href="#2-9-2-原型链设计模式" class="headerlink" title="2.9.2 原型链设计模式"></a>2.9.2 原型链设计模式</h3><ul>
 <li>原型（prototype）</li>
 <li>原型链（_<em>proto_</em>)</li>
@@ -481,7 +503,14 @@
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Function</span>.prototype.es3Apply = <span class="function"><span class="keyword">function</span>(<span class="params">context, arr</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> ctx = context || <span class="built_in">window</span></span><br><span class="line">    ctx.fn = <span class="keyword">this</span></span><br><span class="line">    <span class="keyword">var</span> result</span><br><span class="line">    <span class="keyword">if</span>(!arr)&#123;</span><br><span class="line">        result = ctx.fn()</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">var</span> args = [];</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; arr.length; i++)&#123;</span><br><span class="line">            args.push(<span class="string">'arr['</span>+i+<span class="string">']'</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        result = <span class="built_in">eval</span>(<span class="string">'context.fn('</span>+args+<span class="string">')'</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">delete</span> context.fn</span><br><span class="line">    <span class="keyword">return</span> result</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h4 id="bind"><a href="#bind" class="headerlink" title="bind"></a>bind</h4><p>bind会返回一个新的函数，其中的this将会转换为第一个参数，之后的一序列参数会作为传递实参前的参数</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Function</span>.prototype.es6Bind = <span class="function"><span class="keyword">function</span>(<span class="params">context, ...rest</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">typeof</span> <span class="keyword">this</span> !== <span class="string">'function'</span>) <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">TypeError</span>(<span class="string">'invalid invoked!'</span>);</span><br><span class="line">  <span class="keyword">var</span> self = <span class="keyword">this</span>;</span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> <span class="title">F</span>(<span class="params">...args</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span> <span class="keyword">instanceof</span> F) &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">new</span> self(...rest, ...args)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> self.apply(context, rest.concat(args))</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>他有以下几个特点：</p>
+<ul>
+<li>bind可以绑定this指向</li>
+<li>bind可以返回绑定指向后的函数</li>
+<li>如果绑定后的函数被new了，则当前函数的this就是当前的实例</li>
+<li>new的对象可以找到原函数的ptototype</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Function</span>.prototype.es6Bind = <span class="function"><span class="keyword">function</span>(<span class="params">context, ...rest</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">typeof</span> <span class="keyword">this</span> !== <span class="string">'function'</span>) <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">TypeError</span>(<span class="string">'invalid invoked!'</span>);</span><br><span class="line">  <span class="keyword">var</span> self = <span class="keyword">this</span>;</span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> <span class="title">F</span>(<span class="params">...args</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span> <span class="keyword">instanceof</span> F) &#123;</span><br><span class="line">      <span class="keyword">const</span> obj = <span class="keyword">new</span> self(...rest, ...args)</span><br><span class="line">      obj.setPrototypeOf(self.prototype);</span><br><span class="line">      <span class="keyword">return</span> obj;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> self.apply(context, rest.concat(args))</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h3 id="2-10-3-使用apply来获取最大值"><a href="#2-10-3-使用apply来获取最大值" class="headerlink" title="2.10.3 使用apply来获取最大值"></a>2.10.3 使用apply来获取最大值</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//正常方案</span></span><br><span class="line"><span class="keyword">let</span> arr = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">1</span>,<span class="number">23</span>]</span><br><span class="line"><span class="built_in">eval</span>(<span class="string">'Math.max('</span>+arr.toString()+<span class="string">')'</span>)</span><br><span class="line"><span class="built_in">Math</span>.max(...arr)</span><br><span class="line"><span class="comment">//apply作为参数的方案</span></span><br><span class="line"><span class="built_in">Math</span>.max.apply(<span class="literal">null</span>, arr);</span><br></pre></td></tr></table></figure>
 
