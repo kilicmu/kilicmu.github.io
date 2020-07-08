@@ -104,7 +104,7 @@
           <!-- Date -->
           <span class="date-time info">On
             <span class="date">2020-06-14</span>
-            <span class="time">17:44:14</span>
+            <span class="time">09:09:47</span>
           </span>
           
         </div>
@@ -233,7 +233,7 @@
 <p>很多人认为DOM树构建结束后需要构建CSSOM再构建RenderTree，但是很显然是不对的，可以参考一下以下文章：</p>
 <p><a href="https://zhuanlan.zhihu.com/p/25445527">从Chrome源码看浏览器如何layout布局</a></p>
 <p><a href="https://stackoverflow.com/questions/45748837/tree-structures-in-webkit-chrome">Tree structures in WebKit (Chrome)</a></p>
-<p>事实上，不需要构建什么CSSOM与RenderTree，在DOM树构建结束，浏览器直接开始计算节点样式后构建布局树。</p>
+<p>事实上，不需要构建什么CSSOM与RenderTree，在DOM树构建结束，浏览器会处理样式表，然后直接开始计算节点样式，构建布局树。</p>
 <h3 id="样式计算"><a href="#样式计算" class="headerlink" title="样式计算"></a>样式计算</h3><h4 id="构建styleSheet"><a href="#构建styleSheet" class="headerlink" title="构建styleSheet"></a>构建styleSheet</h4><p>在解析HTML的时候CSS会被请求加载，这些CSS是一些文本文件，浏览器是无法直接识别的，所以需要被转换为styleSheets结构，可以方便的查询响应的样式信息。</p>
 <p>如图所示：</p>
 <p><img src="https://i.niupic.com/images/2020/06/27/8k9V.png" alt="styleSheet"></p>
