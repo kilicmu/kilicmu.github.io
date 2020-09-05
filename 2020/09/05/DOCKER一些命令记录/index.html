@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html>
+  <!-- Html Head Tag-->
+  <head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="kilic">
+  <!-- Open Graph Data -->
+  <meta property="og:title" content="Docker一些命令记录"/>
+  <meta property="og:description" content="咸鱼游民" />
+  <meta property="og:site_name" content="kilic の 部落格"/>
+  <meta property="og:type" content="article" />
+  <meta property="og:image" content="http://kilic.site"/>
+  
+    <link rel="alternate" href="/atom.xml" title="kilic の 部落格" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+
+  <!-- Site Title -->
+  <title>kilic の 部落格</title>
+
+  <!-- Bootstrap CSS -->
+  
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+
+  <!-- Custom CSS -->
+  
+  
+<link rel="stylesheet" href="/css/style.dark.css">
+
+
+  <!-- Google Analytics -->
+  
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+  <body>
+    <!-- Page Header -->
+
+
+<header class="site-header header-background" style="background-image: url(/img/m5.jpg)">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="page-title with-background-image">
+          <p class="title">Docker一些命令记录</p>
+          <p class="subtitle"></p>
+        </div>
+        <div class="site-menu with-background-image">
+          <ul>
+            
+              <li>
+                <a href="/">
+                  
+                  Home
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="/archives">
+                  
+                  Archives
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="https://github.com/kilicmu">
+                  
+                  Github
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="mailto:kilicmu3389@outlook.com">
+                  
+                  Email
+                  
+                </a>
+              </li>
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<article>
+  <div class="container typo">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="post-info text-muted">
+          
+            <!-- Author -->
+            <span class="author info">By kilic</span>
+          
+          <!-- Date -->
+          <span class="date-time info">On
+            <span class="date">2020-09-05</span>
+            <span class="time">00:42:16</span>
+          </span>
+          
+        </div>
+        <!-- Tags -->
+        
+          <div class="post-tags text-muted">
+            Tags: 
+
+<a class="tag" href="/tags/DOCKER/">#Docker</a>
+
+
+          </div>
+        
+        <!-- Post Main Content -->
+        <div class="post-content">
+          <p>这里记录几个我不常用的Docker命令，防止忘记不好找</p>
+<a id="more"></a>
+
+<h3 id="镜像管理"><a href="#镜像管理" class="headerlink" title="镜像管理"></a>镜像管理</h3><ol>
+<li><p>重命名</p>
+<p><code>docker tag 旧镜像名称:版本 新的名称:版本</code></p>
+<p><strong>伪修改，不改变id</strong></p>
+</li>
+<li><p>删除</p>
+<p><code>docker rmi [参数] [镜像名称]:[版本]</code></p>
+<p><code>docker rmi [参数] [镜像id]</code></p>
+</li>
+<li><p>导出</p>
+<p><code>docker save [参数[-o]] [导出镜像名] [本地镜像名称]</code></p>
+<p>例如：</p>
+<p><code>docker save mysql.tar mysql:latest</code></p>
+<p>将下载镜像导出本地，做备份</p>
+</li>
+<li><p>导入镜像</p>
+<p><code>docker load [命令参数] [被导入压缩文件名]</code></p>
+<p><code>docker load &lt; [被导入镜像亚索文件名称]</code></p>
+<p><code>docker load --input [被导入镜像压缩文件名称]</code></p>
+<p>举个栗子：</p>
+<p><code>docker load –input mysql.tar</code></p>
+</li>
+<li><p>镜像历史</p>
+<p><code>docker history [镜像名]:[版本]</code></p>
+</li>
+<li><p>镜像详细信息</p>
+<p><code>docker image inspect [命令参数] [镜像名称]:[镜像版本]</code></p>
+<p><code>docker inspect [命令参数] [镜像id]</code> </p>
+</li>
+<li><p>镜像查看</p>
+<p>获取镜像</p>
+<p><code>cat 模板文件名.tar | docker import - [自定义镜像名]</code></p>
+</li>
+</ol>
+<h3 id="容器管理"><a href="#容器管理" class="headerlink" title="容器管理"></a>容器管理</h3><ol>
+<li><p>暂停</p>
+<p><code>docker pause [容器名]/[容器id]</code></p>
+</li>
+<li><p>取消暂停</p>
+<p><code>docker unpause [容器名]/[容器id]</code></p>
+</li>
+<li><p>重启</p>
+<p><code>docker restart [容器名]/[容器ID]</code></p>
+<p><code>-t、–time</code> ：设置延时，其中（s） </p>
+</li>
+<li><p>终止容器：强制将容器停止（建议使用stop）</p>
+<p><code>docker kill [容器名称]/[容器id]</code></p>
+</li>
+<li><p>删除容器</p>
+<p><code>docker rm [容器名称]/[容器id]</code></p>
+<p><code>docker  rm -f [容器名称]/[容器id]</code>：可使用<code>docker rm -f $(docker ps -s -p)​</code>删除所有的容器</p>
+</li>
+<li><p>生产环境进入容器脚本：docker_in.sh：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line"><span class="meta">#</span><span class="bash">定义进入仓库函数</span></span><br><span class="line">docker_in()&#123;</span><br><span class="line">	NAME_ID=$1</span><br><span class="line">	PID=$(docker inspect --format &#123;&#123;.State.Pid&#125;&#125; $NAME_ID)</span><br><span class="line">	nsenter --target $PID --mount --uts --ipc --net --pid</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">docker_in $1</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>镜像的构建</p>
+<p><code>docker commit -m “日志信息” -a “作者信息&quot; [容器id] 镜像名称:版本号</code></p>
+<p><code>docker export [容器id] &gt; 模板文件名.tar</code></p>
+<p><code>cat 模板.tar | docker import - 镜像名</code></p>
+</li>
+<li><p>日志</p>
+<p><code>docker logs [容器id]</code></p>
+</li>
+<li><p>容器信息</p>
+<p><code>docker inspect [容器名称]</code>  查看容器信息</p>
+</li>
+<li><p>查看容器的端口</p>
+<p><code>docker port [容器名称]</code></p>
+</li>
+<li><p>容器的重命名</p>
+<p><code>docker rename [容器id] [新容器名称]</code></p>
+</li>
+</ol>
+<h3 id="数据管理"><a href="#数据管理" class="headerlink" title="数据管理"></a>数据管理</h3><ol>
+<li><p>数据卷容器</p>
+<p><code>docker create -v [本地目录名称] --name [容器名称] [镜像]</code>：创建数据卷容器</p>
+<p> <code>docker run –volumes-from [数据卷容器id/name] -id --name [容器名] [镜像名] [命令]</code></p>
+</li>
+<li><p>数据备份</p>
+</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 1. 创建一个挂载数据卷容器的容器</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 2. 挂载宿主机本地目录作为备份数据卷</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 3. 将数据卷容器内容备份到宿主机本地目录挂载的数据卷中</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 4. 完成后销毁创建的容器</span></span><br><span class="line"></span><br><span class="line">docker run --rm --volumes-from [数据卷容器id/name] -v[宿主机目录]:[容器目录][镜像名称] tar -zcPf /backup/data.tar.gz /data-tmp</span><br></pre></td></tr></table></figure>
+
+<h3 id="网络管理"><a href="#网络管理" class="headerlink" title="网络管理"></a>网络管理</h3><ol>
+<li>端口映射：</li>
+</ol>
+<p>随机映射： –P</p>
+<p>指定映射：-p</p>
+<ol start="2">
+<li>网络管理：</li>
+</ol>
+<p><code>docker network create</code>：创建一个网络</p>
+<p>可选参数：</p>
+<ul>
+<li><code>--gateway</code> 设置网关</li>
+<li><code>--subnet</code>设置子网</li>
+<li><code>--driver</code> 设置网络模式</li>
+</ul>
+<p><code>docker network connect [网络] [容器]</code>：手动链接一个网络</p>
+<p><code>docker network diconnect [网络] [容器]</code>：断开一个网络</p>
+<p><code>docker network inspect</code>：查看网络内部信息</p>
+<p><code>docker network ls</code>：显示网络上单详细信息</p>
+<ol start="3">
+<li><p>网络模式：</p>
+<p>bridge：docker默认模式，所有模式都在同一个网络上</p>
+<p>host：用宿主机的资源，容器和宿主机共享网络</p>
+<p>container：新创建的容器间使用，与宿主机无关</p>
+<p>none模式：不提供任何网络服务</p>
+</li>
+<li><p>网桥配置：</p>
+<p><code>sudo apt install bridge-utils -y</code>：安装bridge管理工具</p>
+<p><code>brctl addbr br0</code>：新建br</p>
+<p><code>brctl show</code></p>
+<p><code>sudo ifconfig br0 192.168.99.1 netmask 255.255.255.0</code>：手动设置网段</p>
+<p><code>echo DOCKER_OPTS=“-b=[网桥名]”&gt;&gt;  /etc/default/docker</code>：添加默认使用的网桥</p>
+<hr>
+<p><code>mkdir -p /etc/systemed/system/docker.service.d</code></p>
+<p><code>vim /etc/systemed/system/docker.service.d/Using_Environment_File.conf</code>：写配置 </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[Service]</span><br><span class="line">EnvironmentFile=-/etc/default/docker</span><br><span class="line">ExecStart=</span><br><span class="line">ExecStart=/usr/bin/dockerd -H fd:// $DOCKER_OPTS</span><br></pre></td></tr></table></figure>
+
+<p><code>systemctl restart daemon-reload</code>重载配置文件</p>
+<p><code>systemctl restart docker</code>：重启docker服务</p>
+<hr>
+<p>此后创建的容器默认都为刚才配置的网桥</p>
+</li>
+<li><p>host模式</p>
+<p><code>docker run --net=host -itd --name [容器名称] 镜像名称</code></p>
+<p>可以使用当前ip地址直接访问容器内容</p>
+</li>
+</ol>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</article>
+
+
+
+    <!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <p class="copyright text-muted">
+          Theme By <a target="_blank" href="https://github.com/levblanc">Levblanc.</a>
+          Inspired By <a target="_blank" href="https://github.com/klugjo/hexo-theme-clean-blog">Clean Blog.</a>
+        <p class="copyright text-muted">
+          Powered By <a target="_blank" href="https://hexo.io/">Hexo.</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+    <!-- After Footer Scripts -->
+
+<script src="/js/highlight.pack.js"></script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function(event) {
+    var codeBlocks = Array.prototype.slice.call(document.getElementsByTagName('pre'))
+    codeBlocks.forEach(function(block, index) {
+      hljs.highlightBlock(block);
+    });
+  });
+</script>
+
+  </body>
+</html>
+

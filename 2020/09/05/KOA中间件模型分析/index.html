@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html>
+  <!-- Html Head Tag-->
+  <head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="kilic">
+  <!-- Open Graph Data -->
+  <meta property="og:title" content="Koa中间件模型分析"/>
+  <meta property="og:description" content="咸鱼游民" />
+  <meta property="og:site_name" content="kilic の 部落格"/>
+  <meta property="og:type" content="article" />
+  <meta property="og:image" content="http://kilic.site"/>
+  
+    <link rel="alternate" href="/atom.xml" title="kilic の 部落格" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+
+  <!-- Site Title -->
+  <title>kilic の 部落格</title>
+
+  <!-- Bootstrap CSS -->
+  
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+
+  <!-- Custom CSS -->
+  
+  
+<link rel="stylesheet" href="/css/style.dark.css">
+
+
+  <!-- Google Analytics -->
+  
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+  <body>
+    <!-- Page Header -->
+
+
+<header class="site-header header-background" style="background-image: url(/img/m5.jpg)">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="page-title with-background-image">
+          <p class="title">Koa中间件模型分析</p>
+          <p class="subtitle"></p>
+        </div>
+        <div class="site-menu with-background-image">
+          <ul>
+            
+              <li>
+                <a href="/">
+                  
+                  Home
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="/archives">
+                  
+                  Archives
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="https://github.com/kilicmu">
+                  
+                  Github
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="mailto:kilicmu3389@outlook.com">
+                  
+                  Email
+                  
+                </a>
+              </li>
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<article>
+  <div class="container typo">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="post-info text-muted">
+          
+            <!-- Author -->
+            <span class="author info">By kilic</span>
+          
+          <!-- Date -->
+          <span class="date-time info">On
+            <span class="date">2020-09-05</span>
+            <span class="time">00:42:16</span>
+          </span>
+          
+        </div>
+        <!-- Tags -->
+        
+          <div class="post-tags text-muted">
+            Tags: 
+
+<a class="tag" href="/tags/KOA/">#Koa</a>
+
+
+          </div>
+        
+        <!-- Post Main Content -->
+        <div class="post-content">
+          <p>koa的中间件原理是怎么回事呢？koa的中间件相信大家都很熟悉，但是koa的中间件原理是怎么回事呢，下面就让小编带大家一起了解吧。</p>
+<h3 id="section1"><a href="#section1" class="headerlink" title="section1"></a>section1</h3><p>koa的中间件原理，其实就是koa的中间件实现原理，大家可能会很惊讶koa的中间件怎么会有原理呢？但事实就是这样，小编也感到非常惊讶。</p>
+<p>这就是关于koa的中间件原理的事情了，大家有什么想法呢，欢迎在评论区告诉小编一起讨论哦！</p>
+<div align=center><img src="https://i.niupic.com/images/2020/09/05/8Dhb.jpg" /></div>
+
+<p>看到这里如果你想走？你真的想走？，不想多看看我的文章了解一些好康的？</p>
+<div align=center><img src="https://i.niupic.com/images/2020/09/05/8Dhd.jpg" align="center"></div>
+
+<p>好了，正经点，我的这博客是个本质上可是个传（自）播（娱）知（自）识（乐）的平台，怎么可能有什么乱七八糟的小编。下面我将正式带你了解了解Koa的中间件模型。</p>
+<h3 id="section-2"><a href="#section-2" class="headerlink" title="section 2"></a>section 2</h3><p>如果0202年还有前端老哥问Koa是个啥，我想这也不用混了。简单说Koa就是个高可扩展的node框架。而如果问Koa最迷人的地方，除了让人舒服的异步写法，那就是优雅的中间件处理了。</p>
+<p>以下默认读者了解Koa的圆葱模型，若是不知道也莫得问题，下面贴心的 <del>小编</del> 作者给你挂个图：</p>
+<div align=center><img src="data:image/jpeg;base64,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" style="margin: 0 auto;" /></div>
+
+<p>清晰明了简单易懂，这时候可能你就要问了：这么优雅的中间件处理是怎么实现的呢？</p>
+<div align=center><img src="https://i.niupic.com/images/2020/09/05/8Dhq.jpg" align="center"></div>
+
+<p>按照往常的习惯，遇事不决，手撕源码：</p>
+<h3 id="section-3"><a href="#section-3" class="headerlink" title="section 3"></a>section 3</h3><p>众所周知，想要看如何实现的前提是知道怎么用：（因为懒得下Koa了）我就简单写一些伪代码：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> app = requrie(<span class="string">'koa'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Todo others</span></span><br><span class="line"></span><br><span class="line">app.use(<span class="keyword">async</span> (ctx, next) =&gt; &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">1</span>);</span><br><span class="line">    <span class="keyword">await</span> next();</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">4</span>);</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">app.use(<span class="keyword">async</span> (ctx, next) =&gt; &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">2</span>);</span><br><span class="line">    <span class="keyword">await</span> next();</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">3</span>);</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// Todo others</span></span><br><span class="line"></span><br><span class="line">app.listen(<span class="number">3000</span>, ()=&gt;&#123;<span class="built_in">console</span>.log(<span class="string">'listen on 3000 port'</span>)&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>假装的测一下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl http://localhost:3000</span><br></pre></td></tr></table></figure>
+
+<p>下面是装作有输出：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">console =&gt;  </span><br><span class="line">// others.....</span><br><span class="line">// 1</span><br><span class="line">// 2</span><br><span class="line">// 3</span><br><span class="line">// 4</span><br><span class="line">// others.....</span><br></pre></td></tr></table></figure>
+
+<p>可以看到，Koa的使用优雅简单，简直吹爆好吗。对了，Koa是也是tj写的，小伙子又帅代码写的又好，让我这种码狗肥宅情何以堪。</p>
+<div align=center><img src="https://i.niupic.com/images/2020/09/05/8DhH.jpg" align="center"/></div>
+
+<p>下面正式从源码看看Koa对中间件的处理。</p>
+<h3 id="section-4"><a href="#section-4" class="headerlink" title="section 4"></a>section 4</h3><p>打开Koa项目目录：</p>
+<div align=center><img src="https://i.niupic.com/images/2020/09/05/8DhL.png"/></div>
+
+<p>纳尼？没有src？出于经验判断，放源码的应该是lib目录了，不过出于 <del>水文章</del> 专业性考虑，这里必须先看一下package.json。</p>
+<div align=center><img src="https://i.niupic.com/images/2020/09/05/8DhW.png"></div>
+
+<p>可以看到，项目入口确实是lib下的application.js。</p>
+<p>不多bb，直接打开它：</p>
+<div align=center><img src="https://i.niupic.com/images/2020/09/05/8DhZ.jpg" align="center"/></div>
+
+<p>因为这篇文章主要讲中间件，也不需要看没用的地方了，直接锁定use方法和middleware处理逻辑，无耻的我当然选择复制粘贴：</p>
+<p>use：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">use(fn) &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> fn !== <span class="string">'function'</span>) <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">TypeError</span>(<span class="string">'middleware must be a function!'</span>);</span><br><span class="line">    <span class="keyword">if</span> (isGeneratorFunction(fn)) &#123;</span><br><span class="line">      deprecate(<span class="string">'...'</span>);</span><br><span class="line">      fn = convert(fn);</span><br><span class="line">    &#125;</span><br><span class="line">    debug(<span class="string">'use %s'</span>, fn._name || fn.name || <span class="string">'-'</span>);</span><br><span class="line">    <span class="keyword">this</span>.middleware.push(fn);</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>虽然已经可以猜到，倒是use的逻辑就是如此简单：把中间件方法放到数组就OK了。下面那个东东才是本文重点</p>
+<p>callback：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">callback() &#123;</span><br><span class="line">    <span class="keyword">const</span> fn = compose(<span class="keyword">this</span>.middleware);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!<span class="keyword">this</span>.listenerCount(<span class="string">'error'</span>)) <span class="keyword">this</span>.on(<span class="string">'error'</span>, <span class="keyword">this</span>.onerror);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> handleRequest = <span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">const</span> ctx = <span class="keyword">this</span>.createContext(req, res);</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">this</span>.handleRequest(ctx, fn);</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> handleRequest;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这个compose是什么东东？知道函数式编程的铁汁们肯定都很大概都能猜到这是干啥子的了。我们看看它是哪里来的</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> compose = <span class="built_in">require</span>(<span class="string">'koa-compose'</span>);</span><br></pre></td></tr></table></figure>
+
+<p>纳尼，竟然是另一个项目引入的。好嘛，github直接搜索，可以看到这个项目：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">compose</span> (<span class="params">middleware</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (!<span class="built_in">Array</span>.isArray(middleware)) <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">TypeError</span>(<span class="string">'Middleware stack must be an array!'</span>)</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">const</span> fn <span class="keyword">of</span> middleware) &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> fn !== <span class="string">'function'</span>) <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">TypeError</span>(<span class="string">'Middleware must be composed of functions!'</span>)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@param <span class="type">&#123;Object&#125;</span> <span class="variable">context</span></span></span></span><br><span class="line"><span class="comment">   * <span class="doctag">@return <span class="type">&#123;Promise&#125;</span></span></span></span><br><span class="line"><span class="comment">   * <span class="doctag">@api <span class="variable">public</span></span></span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params">context, next</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// last called middleware #</span></span><br><span class="line">    <span class="keyword">let</span> index = <span class="number">-1</span></span><br><span class="line">    <span class="keyword">return</span> dispatch(<span class="number">0</span>)</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">dispatch</span> (<span class="params">i</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">if</span> (i &lt;= index) <span class="keyword">return</span> <span class="built_in">Promise</span>.reject(<span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'next() called multiple times'</span>))</span><br><span class="line">      index = i</span><br><span class="line">      <span class="keyword">let</span> fn = middleware[i]</span><br><span class="line">      <span class="keyword">if</span> (i === middleware.length) fn = next</span><br><span class="line">      <span class="keyword">if</span> (!fn) <span class="keyword">return</span> <span class="built_in">Promise</span>.resolve()</span><br><span class="line">      <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">Promise</span>.resolve(fn(context, dispatch.bind(<span class="literal">null</span>, i + <span class="number">1</span>)));</span><br><span class="line">      &#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">Promise</span>.reject(err)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>没错，就是这么短</p>
+<div align=center><img src="https://i.niupic.com/images/2020/09/05/8Di1.jpg" align="center"></div>
+
+<p>我们来看看他做了什么？简单说就是返回一个function，compose在函数式编程里作用本来就是固定原函数的部分参数，这里把middleware给用一个闭包保存，然后就可以在新获取的函数肆意发挥了。</p>
+<p>再来看看它返回的函数到底做了啥：</p>
+<p>嗯~，一个变量，一个return，构成了JS最本来的味道。</p>
+<div align=center><img src="https://i.niupic.com/images/2020/09/05/8DiA.jpg" width="300" align="center"></div>
+
+<p>index变量我理解是用来防止访问反向执行middleware数组属于对安全性的封装？（其实不太理解），不过无伤大局。这个dispatch函数显然才是重点：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">dispatch</span> (<span class="params">i</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">if</span> (i &lt;= index) <span class="keyword">return</span> <span class="built_in">Promise</span>.reject(<span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'next() called multiple times'</span>))</span><br><span class="line">      index = i</span><br><span class="line">      <span class="keyword">let</span> fn = middleware[i]</span><br><span class="line">      <span class="keyword">if</span> (i === middleware.length) fn = next</span><br><span class="line">      <span class="keyword">if</span> (!fn) <span class="keyword">return</span> <span class="built_in">Promise</span>.resolve()</span><br><span class="line">      <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">Promise</span>.resolve(fn(context, dispatch.bind(<span class="literal">null</span>, i + <span class="number">1</span>)));</span><br><span class="line">      &#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">Promise</span>.reject(err)</span><br><span class="line">      &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>没错，为了读者老爷着想，我又复制了一份，绝不是为了水长度哈。</p>
+<p>我们可以看到，这个dispatch函数本质上就是获取每个已经注册的中间件，然后把这个中间件执行的同时，把自己的参数（dispatch(i+1)）作为这个中间件的第二个参数（next）传入。</p>
+<p>那么我们可以想到，如果在这个执行的中间件中调用next方法，就等同于调用下一个中间件了。然后就造成了圆葱模型的效果。</p>
+<p>具体执行模拟可以看这段伪代码：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">middleware1</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="comment">// do something</span></span><br><span class="line">    middleware2()</span><br><span class="line">    <span class="comment">// do something</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">middleware2</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="comment">// do something</span></span><br><span class="line">    middleware3()</span><br><span class="line">    <span class="comment">// do something</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">middleware3</span></span>&#123;&#125;&#123;.....&#125;</span><br></pre></td></tr></table></figure>
+
+<p>肉眼可见的可扩展与优雅好吗。但是就我个人来讲，我还是不太喜欢这种写法，我在网上看到另一个人对这种原理的抽象，我很喜欢，所以想给你们康康：<a href="[https://www.ivweb.io/article.html?_id=100334#%E6%A8%A1%E5%9D%97%E4%B8%89%EF%BC%9A%E4%B8%AD%E9%97%B4%E4%BB%B6%E6%9C%BA%E5%88%B6%E5%92%8C%E5%89%A5%E6%B4%8B%E8%91%B1%E6%A8%A1%E5%9E%8B%E7%9A%84%E5%AE%9E%E7%8E%B0](https://www.ivweb.io/article.html?_id=100334#模块三：中间件机制和剥洋葱模型的实现)">原文地址</a></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">compose() &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">async</span> ctx =&gt; &#123;</span><br><span class="line">            <span class="function"><span class="keyword">function</span> <span class="title">createNext</span>(<span class="params">middleware, oldNext</span>) </span>&#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">                    <span class="keyword">await</span> middleware(ctx, oldNext);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">let</span> len = <span class="keyword">this</span>.middlewares.length;</span><br><span class="line">            <span class="keyword">let</span> next = <span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="built_in">Promise</span>.resolve();</span><br><span class="line">            &#125;;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">let</span> i = len - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">                <span class="keyword">let</span> currentMiddleware = <span class="keyword">this</span>.middlewares[i];</span><br><span class="line">                next = createNext(currentMiddleware, next);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">await</span> next();</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>我觉得这个compose更加符合我的直觉，当然，每个人有自己的看法，这段代码我也就不解释了，本质上它们还是做着同一个事情。</p>
+<div align=center><img src="https://i.niupic.com/images/2020/09/05/8Din.jpg" align="center"></div>
+
+<p>自己写一个测试一下，毕竟要有图有真相啊：</p>
+<div align=center><img src="https://i.niupic.com/images/2020/09/05/8Dit.png" /></div>
+
+<p>可见没啥毛病。</p>
+<div align=center><img src="https://i.niupic.com/images/2020/09/05/8DiC.jpg" align="center"></div>
+
+<p>那么在座的好学的小老弟可能会问了，这么好的写法我们那里可以用到呢？</p>
+<p>前一阵子看Vue-Router源码时候我发现，Vue-Router同样使用了这个思想。</p>
+<h3 id="section-forget（加餐）"><a href="#section-forget（加餐）" class="headerlink" title="section forget（加餐）"></a>section forget（加餐）</h3><p>用过Vue-Router的小伙伴一定会知道，Vue-Router有个叫守卫的东东，注册了一个router.beforeEach必须调用其中的next参数继续执行下一个守卫，下面代码来自官方文档：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// BAD</span></span><br><span class="line">router.beforeEach(<span class="function">(<span class="params">to, <span class="keyword">from</span>, next</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">if</span> (to.name !== <span class="string">'Login'</span> &amp;&amp; !isAuthenticated) next(&#123; <span class="attr">name</span>: <span class="string">'Login'</span> &#125;)</span><br><span class="line">  <span class="comment">// 如果用户未能验证身份，则 `next` 会被调用两次</span></span><br><span class="line">  next()</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>怎么样，是不是感觉似曾相识？</p>
+<div align=center><img src="https://i.niupic.com/images/2020/09/05/8DiG.gif" width="300" align="center"/></div>
+
+
+
+<p>无凭无据，不看代码怎敢章口就来？</p>
+<p>下面直接看源码：</p>
+<p>由于Vue-Router这部分处理有很多与本文主题无关的东西，我们不去纠结细节直接省略它们，同样这里我只粘需要看的地方：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> queue: <span class="built_in">Array</span>&lt;?NavigationGuard&gt; = [].concat(</span><br><span class="line">    <span class="comment">// ....</span></span><br><span class="line">    <span class="comment">// global before hooks</span></span><br><span class="line">    <span class="keyword">this</span>.router.beforeHooks,</span><br><span class="line">    <span class="comment">// in-component update hooks</span></span><br><span class="line">    extractUpdateHooks(updated),</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">runQueue(queue, iterator, () =&gt; &#123;</span><br><span class="line">      <span class="keyword">const</span> postEnterCbs = []</span><br><span class="line">      <span class="keyword">const</span> isValid = <span class="function"><span class="params">()</span> =&gt;</span> <span class="keyword">this</span>.current === route</span><br><span class="line">      <span class="comment">// wait until async components are resolved before</span></span><br><span class="line">      <span class="comment">// extracting in-component enter guards</span></span><br><span class="line">      <span class="keyword">const</span> enterGuards = extractEnterGuards(activated, postEnterCbs, isValid)</span><br><span class="line">      <span class="keyword">const</span> queue = enterGuards.concat(<span class="keyword">this</span>.router.resolveHooks)</span><br><span class="line">      runQueue(queue, iterator, () =&gt; &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">this</span>.pending !== route) &#123;</span><br><span class="line">          <span class="keyword">return</span> abort(createNavigationCancelledError(current, route))</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">this</span>.pending = <span class="literal">null</span></span><br><span class="line">        onComplete(route)</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">this</span>.router.app) &#123;</span><br><span class="line">          <span class="keyword">this</span>.router.app.$nextTick(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">            postEnterCbs.forEach(<span class="function"><span class="params">cb</span> =&gt;</span> &#123;</span><br><span class="line">              cb()</span><br><span class="line">            &#125;)</span><br><span class="line">          &#125;)</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>接下来我们再把runQueue拿过来：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">runQueue</span> (<span class="params">queue: Array&lt;?NavigationGuard&gt;, fn: Function, cb: Function</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> step = <span class="function"><span class="params">index</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (index &gt;= queue.length) &#123;</span><br><span class="line">      cb()</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="keyword">if</span> (queue[index]) &#123;</span><br><span class="line">        fn(queue[index], () =&gt; &#123;</span><br><span class="line">          step(index + <span class="number">1</span>)</span><br><span class="line">        &#125;)</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        step(index + <span class="number">1</span>)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  step(<span class="number">0</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我就问你他俩是不是一回事？</p>
+<div align=center><img src="https://i.niupic.com/images/2020/09/05/8DiM.jpg" width="300" align="center"></div>
+
+<p>下面我就简单解释一下这段代码：</p>
+<p>简单说就是遍历守卫每一项，把它传给iterator，不好意思，忘贴iterator了, 为了简化代码，我们假设路由的next函数不能传参数：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> iterator = <span class="function">(<span class="params">hook: NavigationGuard, next</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">if</span> (<span class="keyword">this</span>.pending !== route) &#123;</span><br><span class="line">        <span class="keyword">return</span> abort(createNavigationCancelledError(current, route))</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">try</span> &#123;</span><br><span class="line">        hook(route, current, (to: any) =&gt; &#123;</span><br><span class="line">         	<span class="comment">// 对有参数的判断处理</span></span><br><span class="line">            next(to)</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">      &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">        abort(e)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>发现了吗，每个守卫执行完场以后会直接去调用延迟执行的step(n+1)，一模一样好伐。等到所有的enter hooks执行结束以后，调用回调（cb），处理组件(onComplete)与其他守卫。</p>
+<div align=center><img src="https://i.niupic.com/images/2020/09/05/8DiO.jpg" align="center" /></div>
+
+<p>所以说看没看到，这种设计模式多么重要，前端小伙伴们赶快搞起。</p>
+<h3 id="section-1"><a href="#section-1" class="headerlink" title="section -1"></a>section -1</h3><p>如果对我的文章感兴趣记得<del>点赞投币三连</del>。啊，不对，走错片场了…..</p>
+<p>那么只要感谢CV大哥手下留情别盗我文章就好了。</p>
+<div align=center><img src="https://i.niupic.com/images/2020/09/06/8DiY.gif" align="center"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</article>
+
+
+
+    <!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <p class="copyright text-muted">
+          Theme By <a target="_blank" href="https://github.com/levblanc">Levblanc.</a>
+          Inspired By <a target="_blank" href="https://github.com/klugjo/hexo-theme-clean-blog">Clean Blog.</a>
+        <p class="copyright text-muted">
+          Powered By <a target="_blank" href="https://hexo.io/">Hexo.</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+    <!-- After Footer Scripts -->
+
+<script src="/js/highlight.pack.js"></script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function(event) {
+    var codeBlocks = Array.prototype.slice.call(document.getElementsByTagName('pre'))
+    codeBlocks.forEach(function(block, index) {
+      hljs.highlightBlock(block);
+    });
+  });
+</script>
+
+  </body>
+</html>
+
