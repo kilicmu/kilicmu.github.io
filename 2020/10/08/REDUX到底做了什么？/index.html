@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+  <!-- Html Head Tag-->
+  <head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="kilic">
+  <!-- Open Graph Data -->
+  <meta property="og:title" content="Redux到底做了什么？"/>
+  <meta property="og:description" content="咸鱼，无业游民" />
+  <meta property="og:site_name" content="kilic の 部落格"/>
+  <meta property="og:type" content="article" />
+  <meta property="og:image" content="http://kilic.site"/>
+  
+    <link rel="alternate" href="/atom.xml" title="kilic の 部落格" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+
+  <!-- Site Title -->
+  <title>kilic の 部落格</title>
+
+  <!-- Bootstrap CSS -->
+  
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+
+  <!-- Custom CSS -->
+  
+  
+<link rel="stylesheet" href="/css/style.dark.css">
+
+
+  <!-- Google Analytics -->
+  
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+  <body>
+    <!-- Page Header -->
+
+
+<header class="site-header header-background" style="background-image: url(/img/m2.jpg)">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="page-title with-background-image">
+          <p class="title">Redux到底做了什么？</p>
+          <p class="subtitle"></p>
+        </div>
+        <div class="site-menu with-background-image">
+          <ul>
+            
+              <li>
+                <a href="/">
+                  
+                  Home
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="/archives">
+                  
+                  Archives
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="https://github.com/kilicmu">
+                  
+                  Github
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="mailto:kilicmu3389@outlook.com">
+                  
+                  Email
+                  
+                </a>
+              </li>
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<article>
+  <div class="container typo">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="post-info text-muted">
+          
+            <!-- Author -->
+            <span class="author info">By kilic</span>
+          
+          <!-- Date -->
+          <span class="date-time info">On
+            <span class="date">2020-10-08</span>
+            <span class="time">06:06:20</span>
+          </span>
+          
+        </div>
+        <!-- Tags -->
+        
+          <div class="post-tags text-muted">
+            Tags: 
+
+<a class="tag" href="/tags/REDUX/">#redux</a>
+
+
+          </div>
+        
+        <!-- Post Main Content -->
+        <div class="post-content">
+          <p>不废话，对赌爆更第二篇。这里选择解析Redux的源码，本篇文章将从源码角度为你揭露Redux到底做了什么。</p>
+<a id="more"></a>
+
+<h2 id="objective-为什么写这篇文章？"><a href="#objective-为什么写这篇文章？" class="headerlink" title="objective 为什么写这篇文章？"></a>objective 为什么写这篇文章？</h2><p>我希望了解一个状态管理工具，而Redux是一个比较知名的且比较简洁的状态管理容器。不考虑作者水平存在的争议性，Redux仍是具有很多值得学习的东西。并且Redux的源码很短，<del>可以快速水一篇文章</del>（大雾）。</p>
+<p>这里简单整理一下这个状态管理容器的实现思路。</p>
+<h2 id="section1-使用"><a href="#section1-使用" class="headerlink" title="section1 使用"></a>section1 使用</h2><p>文档有点多，直接看官网给的例子好了，这里选了一个比较简单的计数器<a href="https://github.com/reduxjs/redux/tree/master/examples/counter/src">demo地址</a>，这里使用这个例子讲解redux的使用。</p>
+<ol>
+<li><p>定义一个reducer</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> (state = <span class="number">0</span>, action) =&gt; &#123;</span><br><span class="line">  <span class="keyword">switch</span> (action.type) &#123;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">'INCREMENT'</span>:</span><br><span class="line">      <span class="keyword">return</span> state + <span class="number">1</span></span><br><span class="line">    <span class="keyword">case</span> <span class="string">'DECREMENT'</span>:</span><br><span class="line">      <span class="keyword">return</span> state - <span class="number">1</span></span><br><span class="line">    <span class="keyword">default</span>:</span><br><span class="line">      <span class="keyword">return</span> state</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用这个reducer来创建一个store</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> counter <span class="keyword">from</span> <span class="string">'./reducers'</span></span><br><span class="line"><span class="keyword">const</span> store = createStore(counter)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>通过这个store来dispatch相应的action</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">store.dispatch(&#123; <span class="attr">type</span>: <span class="string">'INCREMENT'</span> &#125;)</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<p>上面的使用方法很简单，不考虑React中结合使用和比如异步等情况，Redux的使用非常简洁，并且会给了你一种你上你也行的感觉。</p>
+<p>事实上，真的是你上你也行。</p>
+<h2 id="section2-我的看法"><a href="#section2-我的看法" class="headerlink" title="section2 我的看法"></a>section2 我的看法</h2><p>因为我对React使用的不算很多，并且少React的我也很少接触Redux生态。所以，这里说说我对Redux的认知，如果不对可以联系我指正。</p>
+<p>从官网第一句：Redux 是 JavaScript 状态容器，提供<strong>可预测化</strong>的状态管理。</p>
+<p>这个可预测性才是Redux的核心。</p>
+<p>Redux通过以下三点实现了数据的可预测化：</p>
+<ul>
+<li>单一数据源（Single Source of Truth）</li>
+<li>数据readonly，仅可以通过action改变</li>
+<li>action处理后必须返回一个全新的state（reducer必须pure）</li>
+</ul>
+<p>reducer保持pure的优势：</p>
+<ol>
+<li>方便测试</li>
+<li>减少state比较开销</li>
+</ol>
+<p>下面开始看代码：</p>
+<h2 id="section3-源码"><a href="#section3-源码" class="headerlink" title="section3 源码"></a>section3 源码</h2><p>代码位置哈：<a href="https://github.com/reduxjs/redux/blob/master/src/createStore.ts">createStore</a></p>
+<p>一下代码会去掉一些类型标注，可以自己点上面的链接看源码</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">createStore</span>(<span class="params">reducer,preloadedState,enhancer</span>)</span>&#123;</span><br><span class="line">    <span class="comment">// 扩展相关与错误处理。。。</span></span><br><span class="line">	<span class="keyword">let</span> currentReducer = reducer</span><br><span class="line">  	<span class="keyword">let</span> currentState = preloadedState <span class="keyword">as</span> S</span><br><span class="line">  	<span class="keyword">let</span> currentListeners: <span class="function">(<span class="params">(<span class="params"></span>) =&gt; <span class="built_in">void</span></span>)[] | <span class="params">null</span> = []</span></span><br><span class="line"><span class="function">  	<span class="params">let</span> <span class="params">nextListeners</span> = <span class="params">currentListeners</span></span></span><br><span class="line"><span class="function">  	<span class="params">let</span> <span class="params">isDispatching</span> = <span class="params">false</span></span></span><br><span class="line"><span class="function">    </span></span><br><span class="line"><span class="function">    /* ... 先省略这部分直接看这个方法返回了什么*/</span></span><br><span class="line"><span class="function">  	</span></span><br><span class="line"><span class="function">    <span class="params">const</span> <span class="params">store</span> = (<span class="params">&#123;</span></span></span><br><span class="line"><span class="function"><span class="params">    	dispatch: dispatch <span class="keyword">as</span> Dispatch&lt;A&gt;,</span></span></span><br><span class="line"><span class="function"><span class="params">    	subscribe,</span></span></span><br><span class="line"><span class="function"><span class="params">    	getState,</span></span></span><br><span class="line"><span class="function"><span class="params">    	replaceReducer,</span></span></span><br><span class="line"><span class="function"><span class="params">    	[$$observable]: observable</span></span></span><br><span class="line"><span class="function"><span class="params">  	&#125; <span class="keyword">as</span> unknown</span>) </span></span><br><span class="line"><span class="function">    </span></span><br><span class="line"><span class="function">  	<span class="params">return</span> <span class="params">store</span></span></span><br><span class="line"><span class="function">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>这里挺容易理解，返回一个带有一些方法的store，store中持有单一数据源（state）</p>
+<p>一个个看吧：</p>
+<p>dispatch：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"> <span class="function"><span class="keyword">function</span> <span class="title">dispatch</span>(<span class="params">action: A</span>) </span>&#123;</span><br><span class="line">   <span class="comment">/*handle error*/</span></span><br><span class="line"><span class="keyword">if</span> (isDispatching) &#123;</span><br><span class="line">     <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'Reducers may not dispatch actions.'</span>)</span><br><span class="line">   &#125; </span><br><span class="line">   <span class="keyword">try</span> &#123;</span><br><span class="line">     isDispatching = <span class="literal">true</span></span><br><span class="line">     currentState = currentReducer(currentState, action)</span><br><span class="line">   &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">     isDispatching = <span class="literal">false</span></span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="keyword">const</span> listeners = (currentListeners = nextListeners)</span><br><span class="line">   <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; listeners.length; i++) &#123;</span><br><span class="line">     <span class="keyword">const</span> listener = listeners[i]</span><br><span class="line">     listener()</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">return</span> action</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里简单说说isDispatching，我猜测这个变量应该是用来防止异步的Reducer造成数据的混乱。</p>
+<p>然后就是正常的指定reducer获取新的state，执行所有的listener回调。</p>
+<p>subscribe：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">subscribe</span>(<span class="params">listener: () =&gt; <span class="built_in">void</span></span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (isDispatching) &#123; <span class="comment">/*这里防止非reducer前的listener执行错误*/</span></span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>()</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">let</span> isSubscribed = <span class="literal">true</span></span><br><span class="line"></span><br><span class="line">  ensureCanMutateNextListeners()</span><br><span class="line">  nextListeners.push(listener)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> <span class="title">unsubscribe</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (!isSubscribed) &#123;</span><br><span class="line">      <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (isDispatching) &#123;</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>()</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    isSubscribed = <span class="literal">false</span></span><br><span class="line"></span><br><span class="line">    ensureCanMutateNextListeners()</span><br><span class="line">    <span class="keyword">const</span> index = nextListeners.indexOf(listener)</span><br><span class="line">    nextListeners.splice(index, <span class="number">1</span>)</span><br><span class="line">    currentListeners = <span class="literal">null</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>看一下ensureCanMutateNextListeners:</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"> <span class="function"><span class="keyword">function</span> <span class="title">ensureCanMutateNextListeners</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (nextListeners === currentListeners) &#123;</span><br><span class="line">    nextListeners = currentListeners.slice()</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这个方法将用于确保nextListener与currentListeners两个引用指向不会指向同一空间。</p>
+<p>也就是说nextListeners相当于一个缓冲区，如果在dispatch前listener的监听发生变化，则改变nextListeners即可，然后在dispatch完成调用回调的时候将currentListeners指向nextListeners空间。然后继续收集listener则会在新的nextListeners收集。</p>
+<p>再看replaceReducer：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">replaceReducer</span>&lt;<span class="title">NewState</span>, <span class="title">NewActions</span> <span class="title">extends</span> <span class="title">A</span>&gt;(<span class="params"></span></span></span><br><span class="line"><span class="function"><span class="params">    nextReducer: Reducer&lt;NewState, NewActions&gt;</span></span></span><br><span class="line"><span class="function"><span class="params">  </span>): <span class="title">Store</span>&lt;<span class="title">ExtendState</span>&lt;<span class="title">NewState</span>, <span class="title">StateExt</span>&gt;, <span class="title">NewActions</span>, <span class="title">StateExt</span>, <span class="title">Ext</span>&gt; &amp; <span class="title">Ext</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> nextReducer !== <span class="string">'function'</span>) &#123;</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'Expected the nextReducer to be a function.'</span>)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// <span class="doctag">TODO:</span> do this more elegantly</span></span><br><span class="line">    ;((currentReducer <span class="keyword">as</span> unknown) <span class="keyword">as</span> Reducer&lt;</span><br><span class="line">      NewState,</span><br><span class="line">      NewActions</span><br><span class="line">    &gt;) = nextReducer</span><br><span class="line"></span><br><span class="line">    dispatch(&#123; <span class="keyword">type</span>: ActionTypes.REPLACE &#125; <span class="keyword">as</span> A)</span><br><span class="line">    <span class="comment">// change the type of the store by casting it to the new store</span></span><br><span class="line">    <span class="keyword">return</span> (store <span class="keyword">as</span> unknown) <span class="keyword">as</span> Store&lt;</span><br><span class="line">      ExtendState&lt;NewState, StateExt&gt;,</span><br><span class="line">      NewActions,</span><br><span class="line">      StateExt,</span><br><span class="line">      Ext</span><br><span class="line">    &gt; &amp;</span><br><span class="line">      Ext</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以看到这里用新的reducer直接替换的老的reducer。</p>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</article>
+
+
+
+    <!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <p class="copyright text-muted">
+          Theme By <a target="_blank" href="https://github.com/levblanc">Levblanc.</a>
+          Inspired By <a target="_blank" href="https://github.com/klugjo/hexo-theme-clean-blog">Clean Blog.</a>
+        <p class="copyright text-muted">
+          Powered By <a target="_blank" href="https://hexo.io/">Hexo.</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+    <!-- After Footer Scripts -->
+
+<script src="/js/highlight.pack.js"></script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function(event) {
+    var codeBlocks = Array.prototype.slice.call(document.getElementsByTagName('pre'))
+    codeBlocks.forEach(function(block, index) {
+      hljs.highlightBlock(block);
+    });
+  });
+</script>
+
+  </body>
+</html>
+
