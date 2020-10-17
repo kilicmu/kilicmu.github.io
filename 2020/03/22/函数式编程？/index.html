@@ -1,207 +1,425 @@
+
+
 <!DOCTYPE html>
-<html>
-  <!-- Html Head Tag-->
-  <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="">
-  <meta name="author" content="kilic">
-  <!-- Open Graph Data -->
-  <meta property="og:title" content="函数式编程？"/>
-  <meta property="og:description" content="咸鱼，无业游民" />
-  <meta property="og:site_name" content="kilic の 部落格"/>
-  <meta property="og:type" content="article" />
-  <meta property="og:image" content="http://kilic.site"/>
+<html lang="zh-CN">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>函数式编程？ - kilic の 部落格</title>
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="google" content="notranslate" />
+
   
-    <link rel="alternate" href="/atom.xml" title="kilic の 部落格" type="application/atom+xml">
+  <meta name="keywords" content="golang,前端,移动端,区块链,智能合约,混吃等死,nodejs,运维,python"> 
+  
+  <meta name="description" content="我最先了解函数式编程是以前在油管上面看了一个小姐姐的分..."> 
+  
+  <meta name="author" content="kilic"> 
+
+  
+    <link rel="icon" href="/images/icons/favicon-16x16.png" type="image/png" sizes="16x16">
   
   
-    <link rel="icon" href="/favicon.png">
+    <link rel="icon" href="/images/icons/favicon-32x32.png" type="image/png" sizes="32x32">
+  
+  
+    <link rel="apple-touch-icon" href="/images/icons/apple-touch-icon.png" sizes="180x180">
+  
+  
+    <meta rel="mask-icon" href="/images/icons/stun-logo.svg" color="#333333">
+  
+  
+    <meta rel="msapplication-TileImage" content="/images/icons/favicon-144x144.png">
+    <meta rel="msapplication-TileColor" content="#000000">
   
 
-  <!-- Site Title -->
-  <title>kilic の 部落格</title>
-
-  <!-- Bootstrap CSS -->
   
-<link rel="stylesheet" href="/css/bootstrap.min.css">
+<link rel="stylesheet" href="/css/style.css">
 
-  <!-- Custom CSS -->
+
   
   
-<link rel="stylesheet" href="/css/style.dark.css">
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1445822_h1619vhl1nr.css">
 
-
-  <!-- Google Analytics -->
   
 
+  
+  
+  
+<link rel="stylesheet" href="https://cdn.bootcss.com/fancybox/3.5.7/jquery.fancybox.min.css">
+
+  
+
+  
+  
+  
+<link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.18.1/styles/xcode.min.css">
+
+  
+
+  <script>
+    var CONFIG = window.CONFIG || {};
+    var ZHAOO = window.ZHAOO || {};
+    CONFIG = {
+      isHome: false,
+      fancybox: true,
+      pjax: false,
+      lazyload: {
+        enable: true,
+        loadingImage: '',
+      },
+      donate: {
+        enable: true,
+        alipay: '/images/others/alipay.jpg',
+        wechat: '/images/others/wechat.jpg'
+      },
+      motto: {
+        api: '',
+        default: 'fading is true while flowering is past。'
+      },
+      galleries: {
+        enable: true
+      },
+      fab: {
+        enable: true,
+        alwaysShow: false
+      },
+      carrier: {
+        enable: true
+      },
+      daovoice: {
+        enable: true
+      }
+    }
+  </script>
+
+  
+
+  
 <meta name="generator" content="Hexo 4.2.0"></head>
+<body class="lock-screen">
+  <div class="loading"></div>
+  
 
-  <body>
-    <!-- Page Header -->
 
+<nav class="navbar">
+  <div class="left"></div>
+  <div class="center">函数式编程？</div>
+  <div class="right">
+    <i class="iconfont iconmenu j-navbar-menu"></i>
+  </div>
+</nav>
 
-<header class="site-header header-background" style="background-image: url(/img/m2.jpg)">
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-        <div class="page-title with-background-image">
-          <p class="title">函数式编程？</p>
-          <p class="subtitle"></p>
-        </div>
-        <div class="site-menu with-background-image">
-          <ul>
-            
-              <li>
-                <a href="/">
-                  
-                  Home
-                  
-                </a>
-              </li>
-            
-              <li>
-                <a href="/archives">
-                  
-                  Archives
-                  
-                </a>
-              </li>
-            
-              <li>
-                <a href="https://github.com/kilicmu">
-                  
-                  Github
-                  
-                </a>
-              </li>
-            
-              <li>
-                <a href="mailto:kilicmu3389@outlook.com">
-                  
-                  Email
-                  
-                </a>
-              </li>
-            
-          </ul>
-        </div>
-      </div>
+  <nav class="menu">
+  <div class="menu-wrap">
+    <div class="menu-close">
+      <i class="iconfont iconbaseline-close-px"></i>
+    </div>
+    <ul class="menu-content">
+      
+      
+      
+      
+      <li class="menu-item"><a href="/ " class="underline"> 首页</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/galleries " class="underline"> 摄影</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/archives " class="underline"> 归档</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/tags " class="underline"> 标签</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/categories " class="underline"> 分类</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/about " class="underline"> 关于</a></li>
+      
+    </ul>
+    <div class="menu-copyright"><p>Powered by <a target="_blank" href="https://hexo.io">Hexo</a>  |  Theme - <a target="_blank" href="https://github.com/izhaoo/hexo-theme-zhaoo">zhaoo</a></p></div>
+  </div>
+</nav>
+  <main id="main">
+  <div class="container" id="container">
+    <article class="article">
+  <div class="wrap">
+    <section class="head">
+  <img   class="lazyload" data-original="https://i.niupic.com/images/2020/10/18/8T2R.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  draggable="false">
+  <div class="head-mask">
+    <h1 class="head-title">函数式编程？</h1>
+    <div class="head-info">
+      <span class="post-info-item"><i class="iconfont iconcalendar"></i>March 22, 2020</span
+        class="post-info-item">
+      
+      <span class="post-info-item"><i class="iconfont iconfont-size"></i>2492</span>
     </div>
   </div>
-</header>
-
-<article>
-  <div class="container typo">
-    <div class="row">
-      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-        <div class="post-info text-muted">
-          
-            <!-- Author -->
-            <span class="author info">By kilic</span>
-          
-          <!-- Date -->
-          <span class="date-time info">On
-            <span class="date">2020-03-22</span>
-            <span class="time">06:06:20</span>
-          </span>
-          
-        </div>
-        <!-- Tags -->
-        
-          <div class="post-tags text-muted">
-            Tags: 
-
-<a class="tag" href="/tags/JAVASCRIPT/">#JavaScript</a> <a class="tag" href="/tags/%E5%87%BD%E6%95%B0%E5%BC%8F/">#函数式</a>
-
-
-          </div>
-        
-        <!-- Post Main Content -->
-        <div class="post-content">
-          <p>我最先了解函数式编程是以前在油管上面看了一个小姐姐的分享视频：<a href="https://www.youtube.com/watch?v=e-5obm1G_FY">使用JavaScript学习函数式编程</a>。</p>
+</section>
+    <section class="main">
+      <section class="content">
+        <p>我最先了解函数式编程是以前在油管上面看了一个小姐姐的分享视频：<a href="https://www.youtube.com/watch?v=e-5obm1G_FY">使用 JavaScript 学习函数式编程</a>。</p>
 <p>我承认我看这个视频的初衷真的是小姐姐很漂亮(｡・`ω´･)。但是看过以后也就基本忘了，只记得小姐姐分享的，推荐尽量去使用函数代替其他操作，同样的输入要产生同样的相同输出，不要产生副作用等等。</p>
 <p>我知道作为一个在学界很受欢迎的编程范式，函数式编程的知识与智慧绝对不仅仅与这些，但是事实上我实在是精力有限，每天瞎忙，还没有钱。所以也没有取深入了解它。</p>
-<p>不过在19年初期更新的React 16.8引入hooks概念，并在19年下半年愈加流行。我就知道，应该把这东西拿起来了解一下了，下面的内容与其所是博客，我认为它算是对《JS函数式编程指南整理》的总结与理解。由于本人水平有限，理解可能存在问题，不喜勿喷。</p>
+<p>不过在 19 年初期更新的 React 16.8 引入 hooks 概念，并在 19 年下半年愈加流行。我就知道，应该把这东西拿起来了解一下了，下面的内容与其所是博客，我认为它算是对《JS 函数式编程指南整理》的总结与理解。由于本人水平有限，理解可能存在问题，不喜勿喷。</p>
 <h2 id="简单了解一下函数式编程"><a href="#简单了解一下函数式编程" class="headerlink" title="简单了解一下函数式编程"></a>简单了解一下函数式编程</h2><h3 id="与命令式编程比较："><a href="#与命令式编程比较：" class="headerlink" title="与命令式编程比较："></a>与命令式编程比较：</h3><p>看下面的代码：</p>
 <ol>
 <li>命令式编程</li>
 </ol>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//为每个数组成员平方</span></span><br><span class="line"><span class="keyword">let</span> arr = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>]</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">let</span> i <span class="keyword">in</span> arr)&#123;</span><br><span class="line">    arr[i] = arr[i]**<span class="number">2</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(arr);</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">//为每个数组成员平方</span><br><span class="hljs-keyword">let</span> arr = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>];<br><span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> i <span class="hljs-keyword">in</span> arr) &#123;<br>  arr[i] = arr[i] ** <span class="hljs-number">2</span>;<br>&#125;<br><span class="hljs-built_in">console</span>.log(arr);<br></code></pre></td></tr></table></figure>
 
 <p>上面的代码显然存在一些问题，如死板，复用性差。我们可以对他做一些提取与封装：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> handleArr = <span class="function">(<span class="params">arr, todo</span>)=&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> tmp = []</span><br><span class="line">    <span class="keyword">switch</span>(todo)&#123;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">'power'</span>:</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">let</span> item <span class="keyword">of</span> arr)&#123;</span><br><span class="line">                tmp.push(item**<span class="number">2</span>)</span><br><span class="line">            &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> tmp;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//main.js</span></span><br><span class="line"><span class="keyword">let</span> arr=[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>]</span><br><span class="line">arr = handleArr(arr, <span class="string">'power'</span>); =&gt; [<span class="number">1</span>,<span class="number">4</span>,<span class="number">9</span>,<span class="number">16</span>]</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">let</span> handleArr = <span class="hljs-function">(<span class="hljs-params">arr, todo</span>)=&gt;</span>&#123;<br>    <span class="hljs-keyword">let</span> tmp = []<br>    <span class="hljs-keyword">switch</span>(todo)&#123;<br>        <span class="hljs-keyword">case</span> <span class="hljs-string">'power'</span>:<br>            <span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> item <span class="hljs-keyword">of</span> arr)&#123;<br>                tmp.push(item**<span class="hljs-number">2</span>)<br>            &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> tmp;<br>&#125;<br><span class="hljs-comment">//main.js</span><br><span class="hljs-keyword">let</span> arr=[<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>]<br>arr = handleArr(arr, <span class="hljs-string">'power'</span>); =&gt; [<span class="hljs-number">1</span>,<span class="hljs-number">4</span>,<span class="hljs-number">9</span>,<span class="hljs-number">16</span>]<br></code></pre></td></tr></table></figure>
 
 <p>有些类似于公共代码的提取。</p>
 <p><strong>函数式编程的核心就是将一系列操作分解为简单的函数，然后将一系列过程简化为函数嵌套</strong></p>
-<p>在JS中函数作为一等公民显然很适合来做函数式编程，在JS中函数可以如任何基本数据类型一样操作，这带来了相当优秀的灵活性。</p>
-<p>总结就是使用函数式编程可以简化代码，降低耦合，避免this的使用。</p>
+<p>在 JS 中函数作为一等公民显然很适合来做函数式编程，在 JS 中函数可以如任何基本数据类型一样操作，这带来了相当优秀的灵活性。</p>
+<p>总结就是使用函数式编程可以简化代码，降低耦合，避免 this 的使用。</p>
 <h3 id="性能问题"><a href="#性能问题" class="headerlink" title="性能问题"></a>性能问题</h3><p>不得不说，函数式编程存在一些性能问题，可以参考：<a href="https://www.zhihu.com/question/54637225">JavaScript 函数式编程存在性能问题么？</a></p>
 <p>不过引入函数式编程本来也不是为了锱铢必较性能。而是要开发者把优化交给引擎，更多去保证代码的把可读性，可维护性，可测试性。</p>
 <p>下面我们将打开函数式编程的大门。</p>
 <h2 id="几个概念"><a href="#几个概念" class="headerlink" title="几个概念"></a>几个概念</h2><h3 id="纯函数"><a href="#纯函数" class="headerlink" title="纯函数"></a>纯函数</h3><p>特点：执行期间不依赖任何函数外部的数据或状态变化，<strong>必须</strong>仅仅依赖函数的输入决定输出。即相同输入对应相同输出，且不应去改变输入。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> xs = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>]</span><br><span class="line"><span class="comment">//纯的</span></span><br><span class="line">xs.slice(<span class="number">0</span>,<span class="number">3</span>)   <span class="comment">//=&gt; [1,2,3]</span></span><br><span class="line">xs.slice(<span class="number">0</span>,<span class="number">3</span>)   <span class="comment">//=&gt; [1,2,3]</span></span><br><span class="line"><span class="comment">//不纯的</span></span><br><span class="line">xs.splice(<span class="number">0</span>,<span class="number">3</span>);   <span class="comment">//=&gt; [1,2,3]</span></span><br><span class="line">xs.splice(<span class="number">0</span>,<span class="number">3</span>);   <span class="comment">//=&gt; [4,5]</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">let</span> xs = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>];<br><span class="hljs-comment">//纯的</span><br>xs.slice(<span class="hljs-number">0</span>, <span class="hljs-number">3</span>); <span class="hljs-comment">//=&gt; [1,2,3]</span><br>xs.slice(<span class="hljs-number">0</span>, <span class="hljs-number">3</span>); <span class="hljs-comment">//=&gt; [1,2,3]</span><br><span class="hljs-comment">//不纯的</span><br>xs.splice(<span class="hljs-number">0</span>, <span class="hljs-number">3</span>); <span class="hljs-comment">//=&gt; [1,2,3]</span><br>xs.splice(<span class="hljs-number">0</span>, <span class="hljs-number">3</span>); <span class="hljs-comment">//=&gt; [4,5]</span><br></code></pre></td></tr></table></figure>
 
-<h4 id="为什么要追求使用纯函数？"><a href="#为什么要追求使用纯函数？" class="headerlink" title="为什么要追求使用纯函数？"></a>为什么要追求使用纯函数？</h4><h5 id="Cacheable"><a href="#Cacheable" class="headerlink" title="Cacheable"></a>Cacheable</h5><p>纯函数可以根据input做一些缓存：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> memoize = <span class="function"><span class="keyword">function</span>(<span class="params">f</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> cache = &#123;&#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">...args</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">let</span> argStr = <span class="built_in">JSON</span>.stringify(args) </span><br><span class="line">        cache[argStr] = cache[argStr] || f.apply(f, args)</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">catch</span>[argStr]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="为什么要追求使用纯函数？"><a href="#为什么要追求使用纯函数？" class="headerlink" title="为什么要追求使用纯函数？"></a>为什么要追求使用纯函数？</h4><h5 id="Cacheable"><a href="#Cacheable" class="headerlink" title="Cacheable"></a>Cacheable</h5><p>纯函数可以根据 input 做一些缓存：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs JavaScript"><span class="hljs-keyword">let</span> memoize = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">f</span>)</span>&#123;<br>    <span class="hljs-keyword">let</span> cache = &#123;&#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">...args</span>)</span>&#123;<br>        <span class="hljs-keyword">let</span> argStr = <span class="hljs-built_in">JSON</span>.stringify(args)<br>        cache[argStr] = cache[argStr] || f.apply(f, args)<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">catch</span>[argStr]<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
-<p>我们可以在请求http的过程对请求函数进行缓存：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> pureHttpCall = memoize(<span class="function"><span class="keyword">function</span>(<span class="params">url</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; <span class="keyword">return</span> fetch(url); &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>我们可以在请求 http 的过程对请求函数进行缓存：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">let</span> pureHttpCall = memoize(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">url</span>) </span>&#123;<br>  <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>&#123;<br>    <span class="hljs-keyword">return</span> fetch(url);<br>  &#125;;<br>&#125;);<br></code></pre></td></tr></table></figure>
 
-<h5 id="可移植性"><a href="#可移植性" class="headerlink" title="可移植性"></a>可移植性</h5><p> JavaScript 的设定中，可移植性可以意味着把函数序列化（serializing）并通过 socket 发送。也可以意味着代码能够在 web workers 中运行。</p>
+<h5 id="可移植性"><a href="#可移植性" class="headerlink" title="可移植性"></a>可移植性</h5><p>JavaScript 的设定中，可移植性可以意味着把函数序列化（serializing）并通过 socket 发送。也可以意味着代码能够在 web workers 中运行。</p>
 <p>纯函数与命令式编程不同，它与环境无关，只要我们愿意，可以在任何地方运行它。</p>
 <h5 id="自文档化"><a href="#自文档化" class="headerlink" title="自文档化"></a>自文档化</h5><p>由于纯函数依赖单一，所以可以通过函数签名（函数名）来获取足够的信息。</p>
 <h5 id="可测试性"><a href="#可测试性" class="headerlink" title="可测试性"></a>可测试性</h5><p>由于纯函数的特性可以使用一个最真实的断言来判断函数的正确性。</p>
 <h5 id="合理性"><a href="#合理性" class="headerlink" title="合理性"></a>合理性</h5><p>纯函数具有引用透明性的性质，如果一段代码可以替换成它执行所得的结果，而且是在不改变整个程序行为的前提下替换的，那么我们就说这段代码是引用透明的。</p>
 <h5 id="并行代码"><a href="#并行代码" class="headerlink" title="并行代码"></a>并行代码</h5><p>纯函数也不会因副作用而进入竞争态，所以可以进行大量的并行操作而不用考虑资源问题。</p>
 <hr>
-<h4 id="转化为纯函数"><a href="#转化为纯函数" class="headerlink" title="转化为纯函数"></a>转化为纯函数</h4><h5 id="推迟执行"><a href="#推迟执行" class="headerlink" title="推迟执行"></a>推迟执行</h5><p>我们有一个http请求的例子：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> httpRequire = <span class="function">(<span class="params">url</span>)=&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> fetch(url).then(</span><br><span class="line">    	res=&gt;res.json()</span><br><span class="line">    )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="转化为纯函数"><a href="#转化为纯函数" class="headerlink" title="转化为纯函数"></a>转化为纯函数</h4><h5 id="推迟执行"><a href="#推迟执行" class="headerlink" title="推迟执行"></a>推迟执行</h5><p>我们有一个 http 请求的例子：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">let</span> httpRequire = <span class="hljs-function">(<span class="hljs-params">url</span>) =&gt;</span> &#123;<br>  <span class="hljs-keyword">return</span> fetch(url).then(<span class="hljs-function">(<span class="hljs-params">res</span>) =&gt;</span> res.json());<br>&#125;;<br></code></pre></td></tr></table></figure>
 
-<p>简单的请求一个json数据，显然这是一个不纯的函数，其中我们可以将存在副作用的函数封装后，推迟执行：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> httpRequire = <span class="function">(<span class="params">url</span>)=&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> fetch(url).then(</span><br><span class="line">        	res=&gt;res.json()</span><br><span class="line">        )</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>简单的请求一个 json 数据，显然这是一个不纯的函数，其中我们可以将存在副作用的函数封装后，推迟执行：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">let</span> httpRequire = <span class="hljs-function">(<span class="hljs-params">url</span>) =&gt;</span> &#123;<br>  <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>&#123;<br>    <span class="hljs-keyword">return</span> fetch(url).then(<span class="hljs-function">(<span class="hljs-params">res</span>) =&gt;</span> res.json());<br>  &#125;;<br>&#125;;<br></code></pre></td></tr></table></figure>
 
-<p>可以看到，httpRequire函数已经变为一个纯函数。</p>
+<p>可以看到，httpRequire 函数已经变为一个纯函数。</p>
 <h5 id="TODO"><a href="#TODO" class="headerlink" title="//TODO"></a>//TODO</h5>
-        </div>
-      </div>
-    </div>
+      </section>
+      <section class="extra">
+        
+        <ul class="copyright">
+  
+  <li><strong>本文作者：</strong>kilic</li>
+  <li><strong>本文链接：</strong><a href="http://kilic.site/2020/03/22/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%EF%BC%9F/index.html">http://kilic.site/2020/03/22/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%EF%BC%9F/index.html</a></li>
+  <li><strong>版权声明：</strong>本博客所有文章均采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh"
+      rel="external nofollow" target="_blank"> BY-NC-SA </a>许可协议，转载请注明出处！</li>
+  
+</ul>
+        
+        
+        <section class="donate">
+  <div class="qrcode">
+    <img   class="lazyload" data-original="/images/others/alipay.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" >
+  </div>
+  <div class="icon">
+    <a href="javascript:;" id="alipay"><i class="iconfont iconalipay"></i></a>
+    <a href="javascript:;" id="wechat"><i class="iconfont iconwechat-fill"></i></a>
+  </div>
+</section>
+        
+        
+  <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVASCRIPT/" rel="tag">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%87%BD%E6%95%B0%E5%BC%8F/" rel="tag">函数式</a></li></ul>
+
+        
+<nav class="nav">
+  
+    <a href="/2020/04/26/KOA-BODY%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%96%B9%E6%A1%88/"><i class="iconfont iconleft"></i>Koa-Body文件上传方案</a>
+  
+  
+    <a href="/2020/03/18/%E5%88%9D%E8%AF%86GO-WEBASSEMBLY/">初识Go WebAssembly<i class="iconfont iconright"></i></a>
+  
+</nav>
+
+      </section>
+      
+      <section class="comments">
+  
+  <div class="btn" id="comments-btn">查看评论</div>
+  
+  
+</section>
+      
+    </section>
   </div>
 </article>
-
-
-
-    <!-- Footer -->
-<footer>
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-        <p class="copyright text-muted">
-          Theme By <a target="_blank" href="https://github.com/levblanc">Levblanc.</a>
-          Inspired By <a target="_blank" href="https://github.com/klugjo/hexo-theme-clean-blog">Clean Blog.</a>
-        <p class="copyright text-muted">
-          Powered By <a target="_blank" href="https://hexo.io/">Hexo.</a>
-        </p>
-      </div>
-    </div>
   </div>
+</main>
+  <footer class="footer">
+  <div class="footer-social">
+    
+    
+    
+    
+    
+    <a href="tencent://message/?Menu=yes&uin=102483678 " target="_blank" onMouseOver="this.style.color= '#12B7F5'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconQQ "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="javascript:; " target="_blank" onMouseOver="this.style.color= '#09BB07'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconwechat-fill "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="https://www.instagram.com/kilicmu3/ " target="_blank" onMouseOver="this.style.color= '#DA2E76'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconinstagram "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="https://github.com/kilicmu " target="_blank" onMouseOver="this.style.color= '#24292E'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  icongithub-fill "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="kilicmu3389@outlook.com " target="_blank" onMouseOver="this.style.color='#FFBE5B'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconmail"></i>
+    </a>
+    
+  </div>
+  <div class="footer-copyright"><p>Powered by <a target="_blank" href="https://hexo.io">Hexo</a>  |  Theme - <a target="_blank" href="https://github.com/izhaoo/hexo-theme-zhaoo">zhaoo</a></p></div>
 </footer>
+  
+      <div class="fab fab-plus">
+    <i class="iconfont iconplus"></i>
+  </div>
+  
+  <div class="fab fab-daovoice">
+    <i class="iconfont iconcomment"></i>
+  </div>
+  
+  <div class="fab fab-up">
+    <i class="iconfont iconcaret-up"></i>
+  </div>
+  
+</body>
 
 
-    <!-- After Footer Scripts -->
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
 
-<script src="/js/highlight.pack.js"></script>
+
+
+
+
+
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+
+
+
+
+
+<script src="https://cdn.bootcss.com/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+
+
+
+
+
+
+<script src="/js/utils.js"></script>
+<script src="/js/modules.js"></script>
+<script src="/js/zui.js"></script>
+<script src="/js/script.js"></script>
+
+
+
+
 
 <script>
-  document.addEventListener("DOMContentLoaded", function(event) {
-    var codeBlocks = Array.prototype.slice.call(document.getElementsByTagName('pre'))
-    codeBlocks.forEach(function(block, index) {
-      hljs.highlightBlock(block);
-    });
+  (function (i, s, o, g, r, a, m) {
+    i["DaoVoiceObject"] = r;
+    i[r] = i[r] || function () {
+      (i[r].q = i[r].q || []).push(arguments)
+    }, i[r].l = 1 * new Date();
+    a = s.createElement(o), m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    a.charset = "utf-8";
+    m.parentNode.insertBefore(a, m)
+  })(window, document, "script", ('https:' == document.location.protocol ? 'https:' : 'http:') +
+    "//widget.daovoice.io/widget/0f81ff2f.js", "daovoice")
+  daovoice('init', {
+    app_id: "abcdefg"
+  }, {
+    launcher: {
+      disableLauncherIcon: true,
+    },
   });
+  daovoice('update');
 </script>
 
-  </body>
-</html>
 
+
+<script>
+  (function () {
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    } else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+<script>
+  var _hmt = _hmt || [];
+  (function () {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?4c204d8bc027a0455b5fc642ac334ca8";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+
+
+
+
+
+
+
+
+
+</html>

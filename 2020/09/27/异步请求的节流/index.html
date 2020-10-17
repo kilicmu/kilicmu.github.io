@@ -1,132 +1,181 @@
+
+
 <!DOCTYPE html>
-<html>
-  <!-- Html Head Tag-->
-  <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="">
-  <meta name="author" content="kilic">
-  <!-- Open Graph Data -->
-  <meta property="og:title" content="异步请求的节流"/>
-  <meta property="og:description" content="咸鱼，无业游民" />
-  <meta property="og:site_name" content="kilic の 部落格"/>
-  <meta property="og:type" content="article" />
-  <meta property="og:image" content="http://kilic.site"/>
+<html lang="zh-CN">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>异步请求的节流 - kilic の 部落格</title>
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="google" content="notranslate" />
+
   
-    <link rel="alternate" href="/atom.xml" title="kilic の 部落格" type="application/atom+xml">
+  <meta name="keywords" content="golang,前端,移动端,区块链,智能合约,混吃等死,nodejs,运维,python"> 
+  
+  <meta name="description" content="​ 最近有点忙，直入主题吧。开始说说对异步请求的节流实..."> 
+  
+  <meta name="author" content="kilic"> 
+
+  
+    <link rel="icon" href="/images/icons/favicon-16x16.png" type="image/png" sizes="16x16">
   
   
-    <link rel="icon" href="/favicon.png">
+    <link rel="icon" href="/images/icons/favicon-32x32.png" type="image/png" sizes="32x32">
+  
+  
+    <link rel="apple-touch-icon" href="/images/icons/apple-touch-icon.png" sizes="180x180">
+  
+  
+    <meta rel="mask-icon" href="/images/icons/stun-logo.svg" color="#333333">
+  
+  
+    <meta rel="msapplication-TileImage" content="/images/icons/favicon-144x144.png">
+    <meta rel="msapplication-TileColor" content="#000000">
   
 
-  <!-- Site Title -->
-  <title>kilic の 部落格</title>
-
-  <!-- Bootstrap CSS -->
   
-<link rel="stylesheet" href="/css/bootstrap.min.css">
+<link rel="stylesheet" href="/css/style.css">
 
-  <!-- Custom CSS -->
+
   
   
-<link rel="stylesheet" href="/css/style.dark.css">
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1445822_h1619vhl1nr.css">
 
-
-  <!-- Google Analytics -->
   
 
+  
+  
+  
+<link rel="stylesheet" href="https://cdn.bootcss.com/fancybox/3.5.7/jquery.fancybox.min.css">
+
+  
+
+  
+  
+  
+<link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.18.1/styles/xcode.min.css">
+
+  
+
+  <script>
+    var CONFIG = window.CONFIG || {};
+    var ZHAOO = window.ZHAOO || {};
+    CONFIG = {
+      isHome: false,
+      fancybox: true,
+      pjax: false,
+      lazyload: {
+        enable: true,
+        loadingImage: '',
+      },
+      donate: {
+        enable: true,
+        alipay: '/images/others/alipay.jpg',
+        wechat: '/images/others/wechat.jpg'
+      },
+      motto: {
+        api: '',
+        default: 'fading is true while flowering is past。'
+      },
+      galleries: {
+        enable: true
+      },
+      fab: {
+        enable: true,
+        alwaysShow: false
+      },
+      carrier: {
+        enable: true
+      },
+      daovoice: {
+        enable: true
+      }
+    }
+  </script>
+
+  
+
+  
 <meta name="generator" content="Hexo 4.2.0"></head>
+<body class="lock-screen">
+  <div class="loading"></div>
+  
 
-  <body>
-    <!-- Page Header -->
 
+<nav class="navbar">
+  <div class="left"></div>
+  <div class="center">异步请求的节流</div>
+  <div class="right">
+    <i class="iconfont iconmenu j-navbar-menu"></i>
+  </div>
+</nav>
 
-<header class="site-header header-background" style="background-image: url(/img/m2.jpg)">
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-        <div class="page-title with-background-image">
-          <p class="title">异步请求的节流</p>
-          <p class="subtitle"></p>
-        </div>
-        <div class="site-menu with-background-image">
-          <ul>
-            
-              <li>
-                <a href="/">
-                  
-                  Home
-                  
-                </a>
-              </li>
-            
-              <li>
-                <a href="/archives">
-                  
-                  Archives
-                  
-                </a>
-              </li>
-            
-              <li>
-                <a href="https://github.com/kilicmu">
-                  
-                  Github
-                  
-                </a>
-              </li>
-            
-              <li>
-                <a href="mailto:kilicmu3389@outlook.com">
-                  
-                  Email
-                  
-                </a>
-              </li>
-            
-          </ul>
-        </div>
-      </div>
+  <nav class="menu">
+  <div class="menu-wrap">
+    <div class="menu-close">
+      <i class="iconfont iconbaseline-close-px"></i>
+    </div>
+    <ul class="menu-content">
+      
+      
+      
+      
+      <li class="menu-item"><a href="/ " class="underline"> 首页</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/galleries " class="underline"> 摄影</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/archives " class="underline"> 归档</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/tags " class="underline"> 标签</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/categories " class="underline"> 分类</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/about " class="underline"> 关于</a></li>
+      
+    </ul>
+    <div class="menu-copyright"><p>Powered by <a target="_blank" href="https://hexo.io">Hexo</a>  |  Theme - <a target="_blank" href="https://github.com/izhaoo/hexo-theme-zhaoo">zhaoo</a></p></div>
+  </div>
+</nav>
+  <main id="main">
+  <div class="container" id="container">
+    <article class="article">
+  <div class="wrap">
+    <section class="head">
+  <img   class="lazyload" data-original="https://i.niupic.com/images/2020/10/18/8T2H.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  draggable="false">
+  <div class="head-mask">
+    <h1 class="head-title">异步请求的节流</h1>
+    <div class="head-info">
+      <span class="post-info-item"><i class="iconfont iconcalendar"></i>September 27, 2020</span
+        class="post-info-item">
+      
+      <span class="post-info-item"><i class="iconfont iconfont-size"></i>3347</span>
     </div>
   </div>
-</header>
-
-<article>
-  <div class="container typo">
-    <div class="row">
-      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-        <div class="post-info text-muted">
-          
-            <!-- Author -->
-            <span class="author info">By kilic</span>
-          
-          <!-- Date -->
-          <span class="date-time info">On
-            <span class="date">2020-09-27</span>
-            <span class="time">06:06:20</span>
-          </span>
-          
-        </div>
-        <!-- Tags -->
-        
-          <div class="post-tags text-muted">
-            Tags: 
-
-<a class="tag" href="/tags/NODEJS/">#nodejs</a>
-
-
-          </div>
-        
-        <!-- Post Main Content -->
-        <div class="post-content">
-          <p>​    最近有点忙，直入主题吧。开始说说对异步请求的节流实现</p>
-<a id="more"></a>
-
-<h3 id="section1"><a href="#section1" class="headerlink" title="section1"></a>section1</h3><p>为什么要限制异步请求数量？</p>
-<p>如果做过爬虫的小老弟可能知道，如果对服务器依次发出大量的HTTP请求，即使不考虑目标服务器是否会宕机，大量的请求也可能会使自己的服务器浪费大量资源甚至宕机，不利于对其他任务的处理，</p>
-<p>同时也要预防对方封掉自己的IP，所以对异步请求限流是一个十分重要的需求。</p>
-<p>ES6以后，JS为用户提供了链式处理异步的Promise，可以帮助我们更好的处理这个需求，本文参考<a href="https://github.com/rxaviers/async-pool">async-pool</a></p>
+</section>
+    <section class="main">
+      <section class="content">
+        <h3 id="section1"><a href="#section1" class="headerlink" title="section1"></a>section1</h3><p>为什么要限制异步请求数量？</p>
+<p>如果做过爬虫的小老弟可能知道，如果对服务器依次发出大量的 HTTP 请求，即使不考虑目标服务器是否会宕机，大量的请求也可能会使自己的服务器浪费大量资源甚至宕机，不利于对其他任务的处理，</p>
+<p>同时也要预防对方封掉自己的 IP，所以对异步请求限流是一个十分重要的需求。</p>
+<p>ES6 以后，JS 为用户提供了链式处理异步的 Promise，可以帮助我们更好的处理这个需求，本文参考<a href="https://github.com/rxaviers/async-pool">async-pool</a></p>
 <p>通过讲解<a href="https://github.com/rxaviers/async-pool">async-pool</a>的源码，来论证这个处理过程。</p>
 <h3 id="section2"><a href="#section2" class="headerlink" title="section2"></a>section2</h3><p>依旧测试驱动开发：</p>
 <p>我们先整理需求：</p>
@@ -135,82 +184,247 @@
 </ul>
 <p>然后我们整理思路：</p>
 <ol>
-<li>如果直接生成大量Promise显然无法对其中的请求进行限制</li>
-<li>所以这里我们需要动态生成Promise</li>
+<li>如果直接生成大量 Promise 显然无法对其中的请求进行限制</li>
+<li>所以这里我们需要动态生成 Promise</li>
 <li>其次需要一个队列，同时限制这个队列长度</li>
-<li>依次生成Promise，塞入执行中的Promise的队列</li>
-<li>如果队列长度超过这个限制值，则阻塞继续生成Promise对象</li>
-<li>当有任务完成时候，需要解除阻塞，继续4，直到所有请求完成</li>
+<li>依次生成 Promise，塞入执行中的 Promise 的队列</li>
+<li>如果队列长度超过这个限制值，则阻塞继续生成 Promise 对象</li>
+<li>当有任务完成时候，需要解除阻塞，继续 4，直到所有请求完成</li>
 <li>使用返回所有获取的数据</li>
 </ol>
 <p>所以我们需要调用的效果是这样的:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> result = <span class="keyword">await</span> requestThrottle([url1,url2....], <span class="number">5</span>, requestFn)</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> result = <span class="hljs-keyword">await</span> requestThrottle([url1,url2....], <span class="hljs-number">5</span>, requestFn)<br></code></pre></td></tr></table></figure>
 
 <h3 id="section3"><a href="#section3" class="headerlink" title="section3"></a>section3</h3><p>照例先贴代码吧：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">requestThrottle</span> (<span class="params">arr, max, cb</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> ret = []</span><br><span class="line">  <span class="keyword">const</span> execating = []</span><br><span class="line">  <span class="keyword">if</span> (max &lt; arr.length) &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> item <span class="keyword">of</span> arr) &#123;</span><br><span class="line">      <span class="keyword">const</span> p = <span class="built_in">Promise</span>.resolve(cb(item))</span><br><span class="line">      ret.push(p);</span><br><span class="line">      <span class="keyword">if</span> (execating.length &lt; max) &#123;</span><br><span class="line">        <span class="keyword">const</span> e = p.then(<span class="function"><span class="params">()</span> =&gt;</span> execating.splice(execating.indexOf(e), <span class="number">1</span>))</span><br><span class="line">        execating.push(e);</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">if</span> (execating.length &gt;= max) &#123;</span><br><span class="line">        <span class="keyword">await</span> <span class="built_in">Promise</span>.race(execating);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">Promise</span>.all(ret);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">requestThrottle</span>(<span class="hljs-params">arr, max, cb</span>) </span>&#123;<br>  <span class="hljs-keyword">const</span> ret = [];<br>  <span class="hljs-keyword">const</span> execating = [];<br>  <span class="hljs-keyword">if</span> (max &lt; arr.length) &#123;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> item <span class="hljs-keyword">of</span> arr) &#123;<br>      <span class="hljs-keyword">const</span> p = <span class="hljs-built_in">Promise</span>.resolve(cb(item));<br>      ret.push(p);<br>      <span class="hljs-keyword">if</span> (execating.length &lt; max) &#123;<br>        <span class="hljs-keyword">const</span> e = p.then(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> execating.splice(execating.indexOf(e), <span class="hljs-number">1</span>));<br>        execating.push(e);<br>      &#125;<br>      <span class="hljs-keyword">if</span> (execating.length &gt;= max) &#123;<br>        <span class="hljs-keyword">await</span> <span class="hljs-built_in">Promise</span>.race(execating);<br>      &#125;<br>    &#125;<br>  &#125;<br><br>  <span class="hljs-keyword">return</span> <span class="hljs-built_in">Promise</span>.all(ret);<br>&#125;<br></code></pre></td></tr></table></figure>
 
-<p>其实挺短的，但是要求对Promise有一定深入的了解，如果不了解Promise的实现，可以去看我以前的一篇博客。手把手教你写一个符合PromiseA+规范的Promise。</p>
+<p>其实挺短的，但是要求对 Promise 有一定深入的了解，如果不了解 Promise 的实现，可以去看我以前的一篇博客。手把手教你写一个符合 PromiseA+规范的 Promise。</p>
 <p>下面开始说说我第一次看想到的几个问题：</p>
-<p>其他地方都满好理解的，但是那个e的处理是如何解释?</p>
-<p>事实上，then中的函数在上一个Promise没有执行结束时候，返回的是个Pending状态的Promise</p>
+<p>其他地方都满好理解的，但是那个 e 的处理是如何解释?</p>
+<p>事实上，then 中的函数在上一个 Promise 没有执行结束时候，返回的是个 Pending 状态的 Promise</p>
 <p>贴个图，应该可以看出来：</p>
-<p><img src="https://i.niupic.com/images/2020/09/19/8Hhh.png" alt="promise"></p>
-<p>所以在异步请求resolve之前，e是一个pending状态的回调。</p>
-<p>这个e中，接到的值是什么无所谓，他的作用使用控制什么时候应该初始化新的Promise，这里用Promise.race监控了p调用then的时机。当p的then被调用时候，就把e从数组中移除，为数组空出新的空间。然后继续初始化Promise做出新的请求。</p>
-<p>最后，使用Promise.all包裹所有的Promise请求(包含pending的Promise)</p>
-<p>返回Promise.all的值即可。</p>
+<p><img   class="lazyload" data-original="https://i.niupic.com/images/2020/09/19/8Hhh.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="promise"></p>
+<p>所以在异步请求 resolve 之前，e 是一个 pending 状态的回调。</p>
+<p>这个 e 中，接到的值是什么无所谓，他的作用使用控制什么时候应该初始化新的 Promise，这里用 Promise.race 监控了 p 调用 then 的时机。当 p 的 then 被调用时候，就把 e 从数组中移除，为数组空出新的空间。然后继续初始化 Promise 做出新的请求。</p>
+<p>最后，使用 Promise.all 包裹所有的 Promise 请求(包含 pending 的 Promise)</p>
+<p>返回 Promise.all 的值即可。</p>
 <p>效果看图：</p>
-<p><img src="https://i.niupic.com/images/2020/09/19/8Hhj.png" alt="数组"></p>
-<h3 id="section4"><a href="#section4" class="headerlink" title="section4"></a>section4</h3><p>如果你对上面的理解了，我这里再贴一个我自己实现的思路，虽然没有async-pool活用race那么精巧，不过也可以当是为看官活跃一下思路吧。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SyncValve</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(max) &#123;</span><br><span class="line">    <span class="keyword">this</span>.cache = [];</span><br><span class="line">    <span class="keyword">this</span>.ret = [];</span><br><span class="line">    <span class="keyword">this</span>.count = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">this</span>.blocking = <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">this</span>.max = max</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  addTask(task, cb) &#123;</span><br><span class="line">    <span class="keyword">this</span>.cache.push(<span class="function"><span class="params">()</span> =&gt;</span> cb(task))</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">async</span> run() &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i <span class="keyword">of</span> <span class="keyword">this</span>.cache) &#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="keyword">this</span>.count)</span><br><span class="line">      <span class="keyword">this</span>.count++;</span><br><span class="line">      <span class="keyword">this</span>.ret.push(i().then(<span class="function"><span class="params">d</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">this</span>.count--;</span><br><span class="line">        <span class="keyword">this</span>.blocking &amp;&amp; <span class="keyword">this</span>.blocking();</span><br><span class="line">        <span class="keyword">this</span>.blocking = <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">return</span> d;</span><br><span class="line">      &#125;))</span><br><span class="line"></span><br><span class="line">      <span class="keyword">if</span> (<span class="keyword">this</span>.count &lt; <span class="keyword">this</span>.max) &#123;</span><br><span class="line">        <span class="keyword">continue</span></span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">await</span> <span class="keyword">this</span>.getBlocking();</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.ret);</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">Promise</span>.all(<span class="keyword">this</span>.ret)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  getBlocking() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">res, rej</span>) =&gt;</span> &#123; <span class="keyword">this</span>.blocking = res &#125;)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img   class="lazyload" data-original="https://i.niupic.com/images/2020/09/19/8Hhj.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="数组"></p>
+<h3 id="section4"><a href="#section4" class="headerlink" title="section4"></a>section4</h3><p>如果你对上面的理解了，我这里再贴一个我自己实现的思路，虽然没有 async-pool 活用 race 那么精巧，不过也可以当是为看官活跃一下思路吧。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">SyncValve</span> </span>&#123;<br>  <span class="hljs-keyword">constructor</span>(max) &#123;<br>    <span class="hljs-keyword">this</span>.cache = [];<br>    <span class="hljs-keyword">this</span>.ret = [];<br>    <span class="hljs-keyword">this</span>.count = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">this</span>.blocking = <span class="hljs-literal">null</span>;<br>    <span class="hljs-keyword">this</span>.max = max;<br>  &#125;<br><br>  addTask(task, cb) &#123;<br>    <span class="hljs-keyword">this</span>.cache.push(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> cb(task));<br>  &#125;<br><br>  <span class="hljs-keyword">async</span> run() &#123;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> i <span class="hljs-keyword">of</span> <span class="hljs-keyword">this</span>.cache) &#123;<br>      <span class="hljs-built_in">console</span>.log(<span class="hljs-keyword">this</span>.count);<br>      <span class="hljs-keyword">this</span>.count++;<br>      <span class="hljs-keyword">this</span>.ret.push(<br>        i().then(<span class="hljs-function">(<span class="hljs-params">d</span>) =&gt;</span> &#123;<br>          <span class="hljs-keyword">this</span>.count--;<br>          <span class="hljs-keyword">this</span>.blocking &amp;&amp; <span class="hljs-keyword">this</span>.blocking();<br>          <span class="hljs-keyword">this</span>.blocking = <span class="hljs-literal">null</span>;<br>          <span class="hljs-keyword">return</span> d;<br>        &#125;)<br>      );<br><br>      <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.count &lt; <span class="hljs-keyword">this</span>.max) &#123;<br>        <span class="hljs-keyword">continue</span>;<br>      &#125; <span class="hljs-keyword">else</span> &#123;<br>        <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.getBlocking();<br>      &#125;<br>    &#125;<br>    <span class="hljs-built_in">console</span>.log(<span class="hljs-keyword">this</span>.ret);<br>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">Promise</span>.all(<span class="hljs-keyword">this</span>.ret);<br>  &#125;<br><br>  getBlocking() &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Promise</span>(<span class="hljs-function">(<span class="hljs-params">res, rej</span>) =&gt;</span> &#123;<br>      <span class="hljs-keyword">this</span>.blocking = res;<br>    &#125;);<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
-<p>这里利用了Promise的特性，通过保存延迟执行Promise的行为来实现了对主线程的阻塞。</p>
-<p>这个Promise的使用技巧应当是可以使用在很多地方，这里有待看官自己发掘了</p>
+<p>这里利用了 Promise 的特性，通过保存延迟执行 Promise 的行为来实现了对主线程的阻塞。</p>
+<p>这个 Promise 的使用技巧应当是可以使用在很多地方，这里有待看官自己发掘了</p>
 <p>写个测试用例：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">request</span>(<span class="params">time</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">    setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">      resolve(time);</span><br><span class="line">    &#125;, time);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">main</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> sv = <span class="keyword">new</span> SyncValve(<span class="number">3</span>);</span><br><span class="line">  <span class="keyword">const</span> p = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">res, rej</span>) =&gt;</span> &#123;</span><br><span class="line">    [<span class="number">1000</span>, <span class="number">2000</span>, <span class="number">3000</span>, <span class="number">2000</span>, <span class="number">5000</span>].forEach(<span class="function">(<span class="params">it</span>) =&gt;</span> &#123;</span><br><span class="line">      sv.addTask(it, request);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;);</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> ret = <span class="keyword">await</span> sv.run()</span><br><span class="line">    <span class="built_in">console</span>.log(ret);</span><br><span class="line">  &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(e)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">main()</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">request</span>(<span class="hljs-params">time</span>) </span>&#123;<br>  <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Promise</span>(<span class="hljs-function">(<span class="hljs-params">resolve, reject</span>) =&gt;</span> &#123;<br>    setTimeout(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> &#123;<br>      resolve(time);<br>    &#125;, time);<br>  &#125;);<br>&#125;<br><br><span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">main</span>(<span class="hljs-params"></span>) </span>&#123;<br>  <span class="hljs-keyword">const</span> sv = <span class="hljs-keyword">new</span> SyncValve(<span class="hljs-number">3</span>);<br>  <span class="hljs-keyword">const</span> p = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Promise</span>(<span class="hljs-function">(<span class="hljs-params">res, rej</span>) =&gt;</span> &#123;<br>    [<span class="hljs-number">1000</span>, <span class="hljs-number">2000</span>, <span class="hljs-number">3000</span>, <span class="hljs-number">2000</span>, <span class="hljs-number">5000</span>].forEach(<span class="hljs-function">(<span class="hljs-params">it</span>) =&gt;</span> &#123;<br>      sv.addTask(it, request);<br>    &#125;);<br>  &#125;);<br>  <span class="hljs-keyword">try</span> &#123;<br>    <span class="hljs-keyword">const</span> ret = <span class="hljs-keyword">await</span> sv.run();<br>    <span class="hljs-built_in">console</span>.log(ret);<br>  &#125; <span class="hljs-keyword">catch</span> (e) &#123;<br>    <span class="hljs-built_in">console</span>.log(e);<br>  &#125;<br>&#125;<br><br>main();<br></code></pre></td></tr></table></figure>
 
 <p>跑一下证明证明：</p>
-<p><img src="https://i.niupic.com/images/2020/09/29/8Kc9.png" alt=""></p>
+<p><img   class="lazyload" data-original="https://i.niupic.com/images/2020/09/29/8Kc9.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt=""></p>
 <h3 id="section-end"><a href="#section-end" class="headerlink" title="section end"></a>section end</h3><p>以上</p>
+      </section>
+      <section class="extra">
+        
+        <ul class="copyright">
+  
+  <li><strong>本文作者：</strong>kilic</li>
+  <li><strong>本文链接：</strong><a href="http://kilic.site/2020/09/27/%E5%BC%82%E6%AD%A5%E8%AF%B7%E6%B1%82%E7%9A%84%E8%8A%82%E6%B5%81/index.html">http://kilic.site/2020/09/27/%E5%BC%82%E6%AD%A5%E8%AF%B7%E6%B1%82%E7%9A%84%E8%8A%82%E6%B5%81/index.html</a></li>
+  <li><strong>版权声明：</strong>本博客所有文章均采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh"
+      rel="external nofollow" target="_blank"> BY-NC-SA </a>许可协议，转载请注明出处！</li>
+  
+</ul>
+        
+        
+        <section class="donate">
+  <div class="qrcode">
+    <img   class="lazyload" data-original="/images/others/alipay.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" >
+  </div>
+  <div class="icon">
+    <a href="javascript:;" id="alipay"><i class="iconfont iconalipay"></i></a>
+    <a href="javascript:;" id="wechat"><i class="iconfont iconwechat-fill"></i></a>
+  </div>
+</section>
+        
+        
+  <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/NODEJS/" rel="tag">nodejs</a></li></ul>
 
-        </div>
-      </div>
-    </div>
+        
+<nav class="nav">
+  
+    <a href="/2020/10/07/VUE3%E5%AF%B9PATCH-DIFF-%E7%9A%84%E4%BC%98%E5%8C%96/"><i class="iconfont iconleft"></i>Vue3对patch(diff)的优化</a>
+  
+  
+    <a href="/2020/09/05/KOA%E4%B8%AD%E9%97%B4%E4%BB%B6%E6%A8%A1%E5%9E%8B%E5%88%86%E6%9E%90/">Koa中间件模型分析<i class="iconfont iconright"></i></a>
+  
+</nav>
+
+      </section>
+      
+      <section class="comments">
+  
+  <div class="btn" id="comments-btn">查看评论</div>
+  
+  
+</section>
+      
+    </section>
   </div>
 </article>
-
-
-
-    <!-- Footer -->
-<footer>
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-        <p class="copyright text-muted">
-          Theme By <a target="_blank" href="https://github.com/levblanc">Levblanc.</a>
-          Inspired By <a target="_blank" href="https://github.com/klugjo/hexo-theme-clean-blog">Clean Blog.</a>
-        <p class="copyright text-muted">
-          Powered By <a target="_blank" href="https://hexo.io/">Hexo.</a>
-        </p>
-      </div>
-    </div>
   </div>
+</main>
+  <footer class="footer">
+  <div class="footer-social">
+    
+    
+    
+    
+    
+    <a href="tencent://message/?Menu=yes&uin=102483678 " target="_blank" onMouseOver="this.style.color= '#12B7F5'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconQQ "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="javascript:; " target="_blank" onMouseOver="this.style.color= '#09BB07'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconwechat-fill "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="https://www.instagram.com/kilicmu3/ " target="_blank" onMouseOver="this.style.color= '#DA2E76'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconinstagram "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="https://github.com/kilicmu " target="_blank" onMouseOver="this.style.color= '#24292E'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  icongithub-fill "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="kilicmu3389@outlook.com " target="_blank" onMouseOver="this.style.color='#FFBE5B'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconmail"></i>
+    </a>
+    
+  </div>
+  <div class="footer-copyright"><p>Powered by <a target="_blank" href="https://hexo.io">Hexo</a>  |  Theme - <a target="_blank" href="https://github.com/izhaoo/hexo-theme-zhaoo">zhaoo</a></p></div>
 </footer>
+  
+      <div class="fab fab-plus">
+    <i class="iconfont iconplus"></i>
+  </div>
+  
+  <div class="fab fab-daovoice">
+    <i class="iconfont iconcomment"></i>
+  </div>
+  
+  <div class="fab fab-up">
+    <i class="iconfont iconcaret-up"></i>
+  </div>
+  
+</body>
 
 
-    <!-- After Footer Scripts -->
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
 
-<script src="/js/highlight.pack.js"></script>
+
+
+
+
+
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+
+
+
+
+
+<script src="https://cdn.bootcss.com/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+
+
+
+
+
+
+<script src="/js/utils.js"></script>
+<script src="/js/modules.js"></script>
+<script src="/js/zui.js"></script>
+<script src="/js/script.js"></script>
+
+
+
+
 
 <script>
-  document.addEventListener("DOMContentLoaded", function(event) {
-    var codeBlocks = Array.prototype.slice.call(document.getElementsByTagName('pre'))
-    codeBlocks.forEach(function(block, index) {
-      hljs.highlightBlock(block);
-    });
+  (function (i, s, o, g, r, a, m) {
+    i["DaoVoiceObject"] = r;
+    i[r] = i[r] || function () {
+      (i[r].q = i[r].q || []).push(arguments)
+    }, i[r].l = 1 * new Date();
+    a = s.createElement(o), m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    a.charset = "utf-8";
+    m.parentNode.insertBefore(a, m)
+  })(window, document, "script", ('https:' == document.location.protocol ? 'https:' : 'http:') +
+    "//widget.daovoice.io/widget/0f81ff2f.js", "daovoice")
+  daovoice('init', {
+    app_id: "abcdefg"
+  }, {
+    launcher: {
+      disableLauncherIcon: true,
+    },
   });
+  daovoice('update');
 </script>
 
-  </body>
-</html>
 
+
+<script>
+  (function () {
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    } else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+<script>
+  var _hmt = _hmt || [];
+  (function () {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?4c204d8bc027a0455b5fc642ac334ca8";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+
+
+
+
+
+
+
+
+
+</html>

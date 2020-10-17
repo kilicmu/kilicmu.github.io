@@ -1,289 +1,500 @@
+
+
 <!DOCTYPE html>
-<html>
-  <!-- Html Head Tag-->
-  <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="">
-  <meta name="author" content="kilic">
-  <!-- Open Graph Data -->
-  <meta property="og:title" content="详解WebSocket"/>
-  <meta property="og:description" content="咸鱼，无业游民" />
-  <meta property="og:site_name" content="kilic の 部落格"/>
-  <meta property="og:type" content="article" />
-  <meta property="og:image" content="http://kilic.site"/>
+<html lang="zh-CN">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>详解WebSocket - kilic の 部落格</title>
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="google" content="notranslate" />
+
   
-    <link rel="alternate" href="/atom.xml" title="kilic の 部落格" type="application/atom+xml">
+  <meta name="keywords" content="golang,前端,移动端,区块链,智能合约,混吃等死,nodejs,运维,python"> 
+  
+  <meta name="description" content="最近学校的事情非常多，每天为着各种不知所谓的作业脚打后..."> 
+  
+  <meta name="author" content="kilic"> 
+
+  
+    <link rel="icon" href="/images/icons/favicon-16x16.png" type="image/png" sizes="16x16">
   
   
-    <link rel="icon" href="/favicon.png">
+    <link rel="icon" href="/images/icons/favicon-32x32.png" type="image/png" sizes="32x32">
+  
+  
+    <link rel="apple-touch-icon" href="/images/icons/apple-touch-icon.png" sizes="180x180">
+  
+  
+    <meta rel="mask-icon" href="/images/icons/stun-logo.svg" color="#333333">
+  
+  
+    <meta rel="msapplication-TileImage" content="/images/icons/favicon-144x144.png">
+    <meta rel="msapplication-TileColor" content="#000000">
   
 
-  <!-- Site Title -->
-  <title>kilic の 部落格</title>
-
-  <!-- Bootstrap CSS -->
   
-<link rel="stylesheet" href="/css/bootstrap.min.css">
+<link rel="stylesheet" href="/css/style.css">
 
-  <!-- Custom CSS -->
+
   
   
-<link rel="stylesheet" href="/css/style.dark.css">
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1445822_h1619vhl1nr.css">
 
-
-  <!-- Google Analytics -->
   
 
+  
+  
+  
+<link rel="stylesheet" href="https://cdn.bootcss.com/fancybox/3.5.7/jquery.fancybox.min.css">
+
+  
+
+  
+  
+  
+<link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.18.1/styles/xcode.min.css">
+
+  
+
+  <script>
+    var CONFIG = window.CONFIG || {};
+    var ZHAOO = window.ZHAOO || {};
+    CONFIG = {
+      isHome: false,
+      fancybox: true,
+      pjax: false,
+      lazyload: {
+        enable: true,
+        loadingImage: '',
+      },
+      donate: {
+        enable: true,
+        alipay: '/images/others/alipay.jpg',
+        wechat: '/images/others/wechat.jpg'
+      },
+      motto: {
+        api: '',
+        default: 'fading is true while flowering is past。'
+      },
+      galleries: {
+        enable: true
+      },
+      fab: {
+        enable: true,
+        alwaysShow: false
+      },
+      carrier: {
+        enable: true
+      },
+      daovoice: {
+        enable: true
+      }
+    }
+  </script>
+
+  
+
+  
 <meta name="generator" content="Hexo 4.2.0"></head>
+<body class="lock-screen">
+  <div class="loading"></div>
+  
 
-  <body>
-    <!-- Page Header -->
 
+<nav class="navbar">
+  <div class="left"></div>
+  <div class="center">详解WebSocket</div>
+  <div class="right">
+    <i class="iconfont iconmenu j-navbar-menu"></i>
+  </div>
+</nav>
 
-<header class="site-header header-background" style="background-image: url(/img/m2.jpg)">
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-        <div class="page-title with-background-image">
-          <p class="title">详解WebSocket</p>
-          <p class="subtitle"></p>
-        </div>
-        <div class="site-menu with-background-image">
-          <ul>
-            
-              <li>
-                <a href="/">
-                  
-                  Home
-                  
-                </a>
-              </li>
-            
-              <li>
-                <a href="/archives">
-                  
-                  Archives
-                  
-                </a>
-              </li>
-            
-              <li>
-                <a href="https://github.com/kilicmu">
-                  
-                  Github
-                  
-                </a>
-              </li>
-            
-              <li>
-                <a href="mailto:kilicmu3389@outlook.com">
-                  
-                  Email
-                  
-                </a>
-              </li>
-            
-          </ul>
-        </div>
-      </div>
+  <nav class="menu">
+  <div class="menu-wrap">
+    <div class="menu-close">
+      <i class="iconfont iconbaseline-close-px"></i>
+    </div>
+    <ul class="menu-content">
+      
+      
+      
+      
+      <li class="menu-item"><a href="/ " class="underline"> 首页</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/galleries " class="underline"> 摄影</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/archives " class="underline"> 归档</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/tags " class="underline"> 标签</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/categories " class="underline"> 分类</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/about " class="underline"> 关于</a></li>
+      
+    </ul>
+    <div class="menu-copyright"><p>Powered by <a target="_blank" href="https://hexo.io">Hexo</a>  |  Theme - <a target="_blank" href="https://github.com/izhaoo/hexo-theme-zhaoo">zhaoo</a></p></div>
+  </div>
+</nav>
+  <main id="main">
+  <div class="container" id="container">
+    <article class="article">
+  <div class="wrap">
+    <section class="head">
+  <img   class="lazyload" data-original="https://i.niupic.com/images/2020/10/18/8T2J.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  draggable="false">
+  <div class="head-mask">
+    <h1 class="head-title">详解WebSocket</h1>
+    <div class="head-info">
+      <span class="post-info-item"><i class="iconfont iconcalendar"></i>May 17, 2020</span
+        class="post-info-item">
+      
+      <span class="post-info-item"><i class="iconfont iconfont-size"></i>9274</span>
     </div>
   </div>
-</header>
-
-<article>
-  <div class="container typo">
-    <div class="row">
-      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-        <div class="post-info text-muted">
-          
-            <!-- Author -->
-            <span class="author info">By kilic</span>
-          
-          <!-- Date -->
-          <span class="date-time info">On
-            <span class="date">2020-05-17</span>
-            <span class="time">06:06:20</span>
-          </span>
-          
-        </div>
-        <!-- Tags -->
-        
-          <div class="post-tags text-muted">
-            Tags: 
-
-<a class="tag" href="/tags/WEBSOCKET/">#websocket</a>
-
-
-          </div>
-        
-        <!-- Post Main Content -->
-        <div class="post-content">
-          <p>最近学校的事情非常多，每天为着各种不知所谓的作业脚打后脑勺。但是也不能忽略准备实习。所以，最近准备搞一些底层的分析文章。</p>
-<p>今天就先拿WebSocket下手。</p>
-<a id="more"></a>
-
-<h2 id="什么是WebSocket？"><a href="#什么是WebSocket？" class="headerlink" title="什么是WebSocket？"></a>什么是WebSocket？</h2><p>以下摘自MDN：</p>
+</section>
+    <section class="main">
+      <section class="content">
+        <h2 id="什么是-WebSocket？"><a href="#什么是-WebSocket？" class="headerlink" title="什么是 WebSocket？"></a>什么是 WebSocket？</h2><p>以下摘自 MDN：</p>
 <blockquote>
 <p>WebSocket 是一种在客户端与<a href="https://developer.mozilla.org/zh-CN/docs/Glossary/Server">服务器</a>之间保持<a href="https://developer.mozilla.org/zh-CN/docs/Glossary/TCP">TCP</a>长连接的<a href="https://developer.mozilla.org/zh-CN/docs/Glossary/Protocol">网络协议</a>，这样它们就可以随时进行信息交换。</p>
-<p>虽然任何客户端或服务器上的应用都可以使用WebSocket，但原则上还是指<a href="https://developer.mozilla.org/zh-CN/docs/Glossary/浏览器">浏览器</a>与服务器之间使用。通过WebSocket，服务器可以直接向客户端发送数据，而无须客户端周期性的请求服务器，以动态更新数据内容。</p>
+<p>虽然任何客户端或服务器上的应用都可以使用 WebSocket，但原则上还是指<a href="https://developer.mozilla.org/zh-CN/docs/Glossary/浏览器">浏览器</a>与服务器之间使用。通过 WebSocket，服务器可以直接向客户端发送数据，而无须客户端周期性的请求服务器，以动态更新数据内容。</p>
 </blockquote>
-<p>简单的说，WebSocket是一个基于TCP，复用HTTP通路的，用于客户端服务器之间的持久连接的<strong>轻量协议</strong>。</p>
-<h2 id="Why-WebSocket？"><a href="#Why-WebSocket？" class="headerlink" title="Why WebSocket？"></a>Why WebSocket？</h2><p>为啥要有WebSocket？这是第一接触WebSocket的人首先会疑惑的。</p>
+<p>简单的说，WebSocket 是一个基于 TCP，复用 HTTP 通路的，用于客户端服务器之间的持久连接的<strong>轻量协议</strong>。</p>
+<h2 id="Why-WebSocket？"><a href="#Why-WebSocket？" class="headerlink" title="Why WebSocket？"></a>Why WebSocket？</h2><p>为啥要有 WebSocket？这是第一接触 WebSocket 的人首先会疑惑的。</p>
 <p>在项目中，一定会遇到这种情景：我们需要去动态去获取服务器的某些资源。如，抢票的信息，订单的状态，最近做的东西也需要从服务器查询状态。</p>
-<p>这时候，在没有WebSocket的情况下，我们该怎么做?</p>
-<p><strong>我们可以使用一个GET请求，有如下两种情况：</strong></p>
+<p>这时候，在没有 WebSocket 的情况下，我们该怎么做?</p>
+<p><strong>我们可以使用一个 GET 请求，有如下两种情况：</strong></p>
 <pre><code>1. 如果服务器端有新的数据需要传送，就立即把数据发回给客户端，客户端收到数据后，立即再发送GET请求给服务器。
 2. 如果服务器端没有新的数据需要发送，服务器不立即发送回应给服务器，而是把这个请求保持住，等待有新的数据到来时，再来响应这个请求。</code></pre><p><strong>那么这个方法的问题有什么副作用呢？</strong></p>
-<p>HTTP作为一个很重的协议，一次请求数据量往往很大（通常有400多个字节）。但是很多时候，我们只需要传输极少的数据，这时候使用这种协议真是大材小用了。并且若是服务端的更新速度很慢，使用HTTP协议数据的往返时间最短时间也有 2RTT 考虑网络拥塞问题，无疑效果是不尽如人意。</p>
-<p>这时候就需要WebSocket了。</p>
+<p>HTTP 作为一个很重的协议，一次请求数据量往往很大（通常有 400 多个字节）。但是很多时候，我们只需要传输极少的数据，这时候使用这种协议真是大材小用了。并且若是服务端的更新速度很慢，使用 HTTP 协议数据的往返时间最短时间也有 2RTT 考虑网络拥塞问题，无疑效果是不尽如人意。</p>
+<p>这时候就需要 WebSocket 了。</p>
 <h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p>本文不会过分拘泥于使用，只是简单的举例，具体服务端可以看<a href="https://www.npmjs.com/package/ws#sending-and-receiving-text-data">ws npm</a>，客户端可以看<a href="https://developer.mozilla.org/zh-CN/docs/Web/API/WebSocket/WebSocket">WebSocket MDN</a>。</p>
 <p>此处为方便下面的讲解简单写一个例子：</p>
 <p>服务端：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123;Server&#125; = <span class="built_in">require</span>(<span class="string">"ws"</span>);</span><br><span class="line"><span class="keyword">const</span> wsServer = <span class="keyword">new</span> Server(&#123;</span><br><span class="line">    port: <span class="number">8808</span></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">wsServer.on(<span class="string">"connection"</span>, socket =&gt; &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"已建立链接"</span>);</span><br><span class="line">    socket.on(<span class="string">'message'</span>, msg =&gt; &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">"服务器获得text消息："</span>, msg); </span><br><span class="line">        socket.send(<span class="string">"你好，客户端"</span>); <span class="comment">//使用当前套接字传回消息</span></span><br><span class="line">    &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">const</span> &#123; Server &#125; = <span class="hljs-built_in">require</span>(<span class="hljs-string">"ws"</span>);<br><span class="hljs-keyword">const</span> wsServer = <span class="hljs-keyword">new</span> Server(&#123;<br>  port: <span class="hljs-number">8808</span>,<br>&#125;);<br><br>wsServer.on(<span class="hljs-string">"connection"</span>, (socket) =&gt; &#123;<br>  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"已建立链接"</span>);<br>  socket.on(<span class="hljs-string">"message"</span>, (msg) =&gt; &#123;<br>    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"服务器获得text消息："</span>, msg);<br>    socket.send(<span class="hljs-string">"你好，客户端"</span>); <span class="hljs-comment">//使用当前套接字传回消息</span><br>  &#125;);<br>&#125;);<br></code></pre></td></tr></table></figure>
 
-<p>​        客户端：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">        <span class="built_in">window</span>.onload = <span class="function"><span class="params">()</span> =&gt;</span>&#123;</span><br><span class="line">            <span class="keyword">let</span> uploadBtn = <span class="built_in">document</span>.querySelector(<span class="string">"#upload"</span>);</span><br><span class="line">            <span class="keyword">let</span> inputArea = <span class="built_in">document</span>.querySelector(<span class="string">"#inputArea"</span>);</span><br><span class="line">            </span><br><span class="line">            uploadBtn.addEventListener(<span class="string">"click"</span>, () =&gt; &#123;</span><br><span class="line">                <span class="keyword">let</span> socket = <span class="keyword">new</span> WebSocket(<span class="string">"ws://127.0.0.1:8808"</span>);<span class="comment">//注意，使用的是ws协议</span></span><br><span class="line">                socket.onopen = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">                    socket.send(inputArea.value);</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                socket.onmessage = <span class="function">(<span class="params">event</span>) =&gt;</span> &#123;</span><br><span class="line">                    event.returnValue ? <span class="built_in">console</span>.log(event.data) : <span class="literal">null</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;</span><br><span class="line">&lt;<span class="regexp">/script&gt;</span></span><br><span class="line"><span class="regexp">&lt;input type="text" id="inputArea" /</span>&gt;</span><br><span class="line">&lt;button id=<span class="string">"upload"</span>&gt;send message&lt;<span class="regexp">/button&gt;</span></span><br></pre></td></tr></table></figure>
+<p>​ 客户端：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs javascript">&lt;script&gt;<br>        <span class="hljs-built_in">window</span>.onload = <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span>&#123;<br>            <span class="hljs-keyword">let</span> uploadBtn = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#upload"</span>);<br>            <span class="hljs-keyword">let</span> inputArea = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#inputArea"</span>);<br><br>            uploadBtn.addEventListener(<span class="hljs-string">"click"</span>, () =&gt; &#123;<br>                <span class="hljs-keyword">let</span> socket = <span class="hljs-keyword">new</span> WebSocket(<span class="hljs-string">"ws://127.0.0.1:8808"</span>);<span class="hljs-comment">//注意，使用的是ws协议</span><br>                socket.onopen = <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> &#123;<br>                    socket.send(inputArea.value);<br>                &#125;<br><br>                socket.onmessage = <span class="hljs-function">(<span class="hljs-params">event</span>) =&gt;</span> &#123;<br>                    event.returnValue ? <span class="hljs-built_in">console</span>.log(event.data) : <span class="hljs-literal">null</span>;<br>                &#125;<br>            &#125;);<br>        &#125;<br>&lt;<span class="hljs-regexp">/script&gt;</span><br><span class="hljs-regexp">&lt;input type="text" id="inputArea" /</span>&gt;<br>&lt;button id=<span class="hljs-string">"upload"</span>&gt;send message&lt;<span class="hljs-regexp">/button&gt;</span><br></code></pre></td></tr></table></figure>
 
 <p>服务端效果图：</p>
-<p>​        <img src="https://i.niupic.com/images/2020/05/17/7ShK.png" alt="服务端效果图"></p>
+<p>​ <img   class="lazyload" data-original="https://i.niupic.com/images/2020/05/17/7ShK.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="服务端效果图"></p>
 <p>客户端效果图：</p>
-<p>​        <img src="https://i.niupic.com/images/2020/05/17/7ShL.png" alt="客户端效果图">    </p>
+<p>​ <img   class="lazyload" data-original="https://i.niupic.com/images/2020/05/17/7ShL.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="客户端效果图"></p>
 <p>很简单，就把讲解写入注释了，此处不再赘述。</p>
-<h2 id="分析："><a href="#分析：" class="headerlink" title="分析："></a>分析：</h2><p>我们使用浏览器自带的抓包工具，看看建立一个ws链接到底都做了些什么？</p>
+<h2 id="分析："><a href="#分析：" class="headerlink" title="分析："></a>分析：</h2><p>我们使用浏览器自带的抓包工具，看看建立一个 ws 链接到底都做了些什么？</p>
 <p>我们看一下这个请求头（此处只截取对本文有意义的）：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Sec-WebSocket-Key:f4t2h1c6ShhGdc6awSlX+A&#x3D;&#x3D;</span><br><span class="line">Upgrade:&quot;websocket&quot;</span><br><span class="line">Sec-WebSocket-Version:&quot;13&quot;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs txt">Sec-WebSocket-Key:f4t2h1c6ShhGdc6awSlX+A&#x3D;&#x3D;<br>Upgrade:&quot;websocket&quot;<br>Sec-WebSocket-Version:&quot;13&quot;<br></code></pre></td></tr></table></figure>
 
-<p>我们可以看到，客户端向服务器发起了一个升级协议的请求，我们的这个请求依然是基于http协议发送，其中Sec-WebSocket-Key是一个客户端随机生成的字符串，用来验证服务端是否理解WebSocket协议。我们后面会去说他的校验方法。</p>
+<p>我们可以看到，客户端向服务器发起了一个升级协议的请求，我们的这个请求依然是基于 http 协议发送，其中 Sec-WebSocket-Key 是一个客户端随机生成的字符串，用来验证服务端是否理解 WebSocket 协议。我们后面会去说他的校验方法。</p>
 <p>再看一下响应头：</p>
-<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">HTTP/1.1 101 Switching Protocols</span><br><span class="line">Upgrade: websocket</span><br><span class="line">Connection: Upgrade</span><br><span class="line">Sec-WebSocket-Accept: vIXWy9ERVK8O90X/sgRPi+Ofmgc=</span><br></pre></td></tr></table></figure>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs routeros">HTTP/1.1 101 Switching Protocols<br>Upgrade: websocket<br>Connection: Upgrade<br>Sec-WebSocket-Accept: vIXWy9ERVK8O90X/sgRPi+Ofmgc=<br></code></pre></td></tr></table></figure>
 
-<p>可以看到，服务器给出了101状态码，表示服务器应客户端升级协议的请求。同时服务器返回了一个Sec-WebSocket-Accept，他是根据Sec-WebSocket-Key算出的校验码。如果这个码正确，则通信会建立，如果不正确，为了安全，那么就拒绝喽。</p>
+<p>可以看到，服务器给出了 101 状态码，表示服务器应客户端升级协议的请求。同时服务器返回了一个 Sec-WebSocket-Accept，他是根据 Sec-WebSocket-Key 算出的校验码。如果这个码正确，则通信会建立，如果不正确，为了安全，那么就拒绝喽。</p>
 <p>总结一下 Sec-WebSocket-Key/Accept 作用大致归纳如下：</p>
 <ol>
-<li>避免服务端收到非法的websocket连接（比如http客户端不小心请求连接websocket服务，此时服务端可以直接拒绝连接）</li>
-<li>确保服务端理解websocket连接。因为ws握手阶段采用的是http协议，因此可能ws连接是被一个http服务器处理并返回的，此时客户端可以通过Sec-WebSocket-Key来确保服务端认识ws协议。（并非百分百保险，比如总是存在那么些无聊的http服务器，光处理Sec-WebSocket-Key，但并没有实现ws协议。。。）</li>
-<li>用浏览器里发起ajax请求，设置header时，Sec-WebSocket-Key以及其他相关的header是被禁止的。这样可以避免客户端发送ajax请求时，意外请求协议升级（websocket upgrade）</li>
-<li>可以防止反向代理（不理解ws协议）返回错误的数据。比如反向代理前后收到两次ws连接的升级请求，反向代理把第一次请求的返回给cache住，然后第二次请求到来时直接把cache住的请求给返回（无意义的返回）。</li>
-<li>Sec-WebSocket-Key主要目的并不是确保数据的安全性，因为Sec-WebSocket-Key、Sec-WebSocket-Accept的转换计算公式是公开的，而且非常简单，最主要的作用是预防一些常见的意外情况（非故意的）。</li>
+<li>避免服务端收到非法的 websocket 连接（比如 http 客户端不小心请求连接 websocket 服务，此时服务端可以直接拒绝连接）</li>
+<li>确保服务端理解 websocket 连接。因为 ws 握手阶段采用的是 http 协议，因此可能 ws 连接是被一个 http 服务器处理并返回的，此时客户端可以通过 Sec-WebSocket-Key 来确保服务端认识 ws 协议。（并非百分百保险，比如总是存在那么些无聊的 http 服务器，光处理 Sec-WebSocket-Key，但并没有实现 ws 协议。。。）</li>
+<li>用浏览器里发起 ajax 请求，设置 header 时，Sec-WebSocket-Key 以及其他相关的 header 是被禁止的。这样可以避免客户端发送 ajax 请求时，意外请求协议升级（websocket upgrade）</li>
+<li>可以防止反向代理（不理解 ws 协议）返回错误的数据。比如反向代理前后收到两次 ws 连接的升级请求，反向代理把第一次请求的返回给 cache 住，然后第二次请求到来时直接把 cache 住的请求给返回（无意义的返回）。</li>
+<li>Sec-WebSocket-Key 主要目的并不是确保数据的安全性，因为 Sec-WebSocket-Key、Sec-WebSocket-Accept 的转换计算公式是公开的，而且非常简单，最主要的作用是预防一些常见的意外情况（非故意的）。</li>
 </ol>
 <p>既然这个东西这么重要，我们就看看它到底是怎么算的吧：</p>
-<h3 id="Sec-WebSocket-Accept的计算"><a href="#Sec-WebSocket-Accept的计算" class="headerlink" title="Sec-WebSocket-Accept的计算"></a>Sec-WebSocket-Accept的计算</h3><p>其实他的计算方法非常的简单，由于只是启到校验的作用，也用不到过于繁琐的加密手段。</p>
+<h3 id="Sec-WebSocket-Accept-的计算"><a href="#Sec-WebSocket-Accept-的计算" class="headerlink" title="Sec-WebSocket-Accept 的计算"></a>Sec-WebSocket-Accept 的计算</h3><p>其实他的计算方法非常的简单，由于只是启到校验的作用，也用不到过于繁琐的加密手段。</p>
 <p>步骤如下：</p>
 <ol>
-<li>获取Sec-WebSocket-Key</li>
-<li>将Sec-WebSocket-Key的值和’258EAFA5-E914-47DA-95CA-C5AB0DC85B11’, 拼接</li>
-<li>通过SHA1算法获取摘要，并转为base64字符串</li>
+<li>获取 Sec-WebSocket-Key</li>
+<li>将 Sec-WebSocket-Key 的值和’258EAFA5-E914-47DA-95CA-C5AB0DC85B11’, 拼接</li>
+<li>通过 SHA1 算法获取摘要，并转为 base64 字符串</li>
 </ol>
-<p>接下来看一下ws源码的处理：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> digest = createHash(<span class="string">'sha1'</span>)</span><br><span class="line">      .update(key + GUID)</span><br><span class="line">      .digest(<span class="string">'base64'</span>);</span><br></pre></td></tr></table></figure>
+<p>接下来看一下 ws 源码的处理：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">const</span> digest = createHash(<span class="hljs-string">"sha1"</span>)<br>  .update(key + GUID)<br>  .digest(<span class="hljs-string">"base64"</span>);<br></code></pre></td></tr></table></figure>
 
 <p>试验结果：</p>
-<p><img src="https://i.niupic.com/images/2020/05/17/7Si5.png" alt="加密结果"></p>
+<p><img   class="lazyload" data-original="https://i.niupic.com/images/2020/05/17/7Si5.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="加密结果"></p>
 <p>没啥问题，我们继续。</p>
-<h2 id="WebSocket数据帧格式"><a href="#WebSocket数据帧格式" class="headerlink" title="WebSocket数据帧格式"></a>WebSocket数据帧格式</h2><p>先上图：</p>
-<p><img src="https://i.niupic.com/images/2020/05/17/7SiT.png" alt="帧格式"></p>
-<p>这是RFC文档定义的帧格式。</p>
+<h2 id="WebSocket-数据帧格式"><a href="#WebSocket-数据帧格式" class="headerlink" title="WebSocket 数据帧格式"></a>WebSocket 数据帧格式</h2><p>先上图：</p>
+<p><img   class="lazyload" data-original="https://i.niupic.com/images/2020/05/17/7SiT.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="帧格式"></p>
+<p>这是 RFC 文档定义的帧格式。</p>
 <p>我们分析一下：</p>
 <ol>
 <li><p>FIN：用来标记当前数据帧是不是最后一个数据帧</p>
 </li>
-<li><p>RSV1, RSV2, RSV3：占位，用做扩展用途，默认置0</p>
+<li><p>RSV1, RSV2, RSV3：占位，用做扩展用途，默认置 0</p>
 </li>
 <li><p>Opcode：用来描述要传递的数据作用</p>
-<p>0x0 denotes a continuation frame 标示当前数据帧为分片的数据帧，也就是当一个消息需要分成多个数据帧来传送的时候，需要将opcode设置位0x0。</p>
+<p>0x0 denotes a continuation frame 标示当前数据帧为分片的数据帧，也就是当一个消息需要分成多个数据帧来传送的时候，需要将 opcode 设置位 0x0。</p>
 <p>0x1 denotes a text frame 标示当前数据帧传递的内容是文本</p>
 <p>0x2 denotes a binary frame 标示当前数据帧传递的是二进制内容，不要转换成字符串</p>
 <p>0x8 denotes a connection close 标示请求关闭连接</p>
-<p>0x9 denotes a ping 标示Ping请求</p>
-<p>0xA denotes a pong 标示Pong数据包，当收到Ping请求时自动给回一个Pong</p>
-<p>目前协议中就规定了这么多，0x3<del>0x7以及0xB</del>0xF都是预留作为其它用途的。</p>
+<p>0x9 denotes a ping 标示 Ping 请求</p>
+<p>0xA denotes a pong 标示 Pong 数据包，当收到 Ping 请求时自动给回一个 Pong</p>
+<p>目前协议中就规定了这么多，0x3<del>0x7 以及 0xB</del>0xF 都是预留作为其它用途的。</p>
 </li>
 <li><p>MASK：一个字节位，标识数据有没有使用掩码，服务端发送给客户端的数据帧<strong>不能使用</strong>掩码，客户端发送给服务端的数据帧<strong>必须使用</strong>掩码。</p>
 </li>
 <li><p>payload len：</p>
-<p>如果数据的长度小于125个字节（注意：是字节）则用默认的7个bit来标示数据的长度。</p>
-<p>如果数据的长度为126个字节，则用后面相邻的2个字节来保存一个16bit位的无符号整数作为数据的长度。</p>
-<p>如果数据的长度大于126个字节，则用后面相邻的8个字节来保存一个64bit位的无符号整数作为数据的长度。</p>
+<p>如果数据的长度小于 125 个字节（注意：是字节）则用默认的 7 个 bit 来标示数据的长度。</p>
+<p>如果数据的长度为 126 个字节，则用后面相邻的 2 个字节来保存一个 16bit 位的无符号整数作为数据的长度。</p>
+<p>如果数据的长度大于 126 个字节，则用后面相邻的 8 个字节来保存一个 64bit 位的无符号整数作为数据的长度。</p>
 </li>
-<li><p>Masking-key：数据掩码，如果MASK设置位0，则该部分可以省略</p>
+<li><p>Masking-key：数据掩码，如果 MASK 设置位 0，则该部分可以省略</p>
 </li>
 <li><p>Payload data：帧真正要发送的数据</p>
 </li>
 </ol>
-<p>一旦WebSocket客户端、服务端建立连接后，后续的操作都是基于数据帧的传递。</p>
+<p>一旦 WebSocket 客户端、服务端建立连接后，后续的操作都是基于数据帧的传递。</p>
 <p>我们可以封装一个数据帧</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">encodeDataFrame</span>(<span class="params">e</span>)</span>&#123;</span><br><span class="line">     <span class="keyword">var</span> s = [],</span><br><span class="line">         o = <span class="keyword">new</span> Buffer(e.PayloadData),</span><br><span class="line">         l = o.length;</span><br><span class="line">     s.push((e.FIN &lt;&lt; <span class="number">7</span>)+e.Opcode);</span><br><span class="line">     <span class="comment">//服务端发送数据永远不使用掩码</span></span><br><span class="line">     <span class="keyword">if</span>(l &lt; <span class="number">126</span>)</span><br><span class="line">         s.push(l);</span><br><span class="line">     <span class="keyword">else</span> <span class="keyword">if</span>(l &lt; <span class="number">0x10000</span>)</span><br><span class="line">         s.push(<span class="number">126</span>,(l&amp;<span class="number">0xFF00</span>)&gt;&gt;<span class="number">8</span>,l&amp;<span class="number">0xFF</span>);</span><br><span class="line">     <span class="keyword">else</span> </span><br><span class="line">        s.push(</span><br><span class="line">            <span class="number">127</span>,</span><br><span class="line">            <span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>, <span class="comment">//8字节数据，前4字节一般没用留空</span></span><br><span class="line">            (l&amp;<span class="number">0xFF000000</span>)&gt;&gt;<span class="number">24</span>,</span><br><span class="line">            (l&amp;<span class="number">0xFF0000</span>)&gt;&gt;<span class="number">16</span>,</span><br><span class="line">            (l&amp;<span class="number">0xFF00</span>)&gt;&gt;<span class="number">8</span>,</span><br><span class="line">            l&amp;<span class="number">0xFF</span></span><br><span class="line">        );</span><br><span class="line">     <span class="keyword">return</span> Buffer.concat([<span class="keyword">new</span> Buffer(s),o]);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">encodeDataFrame</span>(<span class="hljs-params">e</span>) </span>&#123;<br>  <span class="hljs-keyword">var</span> s = [],<br>    o = <span class="hljs-keyword">new</span> Buffer(e.PayloadData),<br>    l = o.length;<br>  s.push((e.FIN &lt;&lt; <span class="hljs-number">7</span>) + e.Opcode);<br>  <span class="hljs-comment">//服务端发送数据永远不使用掩码</span><br>  <span class="hljs-keyword">if</span> (l &lt; <span class="hljs-number">126</span>) s.push(l);<br>  <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (l &lt; <span class="hljs-number">0x10000</span>) s.push(<span class="hljs-number">126</span>, (l &amp; <span class="hljs-number">0xff00</span>) &gt;&gt; <span class="hljs-number">8</span>, l &amp; <span class="hljs-number">0xff</span>);<br>  <span class="hljs-keyword">else</span><br>    s.push(<br>      <span class="hljs-number">127</span>,<br>      <span class="hljs-number">0</span>,<br>      <span class="hljs-number">0</span>,<br>      <span class="hljs-number">0</span>,<br>      <span class="hljs-number">0</span>, <span class="hljs-comment">//8字节数据，前4字节一般没用留空</span><br>      (l &amp; <span class="hljs-number">0xff000000</span>) &gt;&gt; <span class="hljs-number">24</span>,<br>      (l &amp; <span class="hljs-number">0xff0000</span>) &gt;&gt; <span class="hljs-number">16</span>,<br>      (l &amp; <span class="hljs-number">0xff00</span>) &gt;&gt; <span class="hljs-number">8</span>,<br>      l &amp; <span class="hljs-number">0xff</span><br>    );<br>  <span class="hljs-keyword">return</span> Buffer.concat([<span class="hljs-keyword">new</span> Buffer(s), o]);<br>&#125;<br></code></pre></td></tr></table></figure>
 
-
-
-<h2 id="封装一个简单的WebSocket服务器"><a href="#封装一个简单的WebSocket服务器" class="headerlink" title="封装一个简单的WebSocket服务器"></a>封装一个简单的WebSocket服务器</h2><p>测试驱动开发，先编写测试：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> ws = <span class="keyword">new</span> WebSocket(&#123;</span><br><span class="line">    port: <span class="number">8000</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">ws.on(<span class="string">"connection"</span>, (socket) =&gt; &#123;</span><br><span class="line">    socket.on(<span class="string">"message"</span>, msg =&gt;&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(msg);</span><br><span class="line">        socket.send(msg);</span><br><span class="line">    &#125;)</span><br><span class="line">    </span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h2 id="封装一个简单的-WebSocket-服务器"><a href="#封装一个简单的-WebSocket-服务器" class="headerlink" title="封装一个简单的 WebSocket 服务器"></a>封装一个简单的 WebSocket 服务器</h2><p>测试驱动开发，先编写测试：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">const</span> ws = <span class="hljs-keyword">new</span> WebSocket(&#123;<br>  port: <span class="hljs-number">8000</span>,<br>&#125;);<br><br>ws.on(<span class="hljs-string">"connection"</span>, (socket) =&gt; &#123;<br>  socket.on(<span class="hljs-string">"message"</span>, (msg) =&gt; &#123;<br>    <span class="hljs-built_in">console</span>.log(msg);<br>    socket.send(msg);<br>  &#125;);<br>&#125;);<br></code></pre></td></tr></table></figure>
 
 <p>几个工具方法：</p>
 <p>除了上面的封装数据帧方法外还有以下几个方法：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123;createHash&#125; = <span class="built_in">require</span>(<span class="string">'crypto'</span>);</span><br><span class="line"><span class="keyword">const</span> GUID = <span class="string">"258EAFA5-E914-47DA-95CA-C5AB0DC85B11"</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getDigest</span>(<span class="params">key</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> createHash(<span class="string">'sha1'</span>).update(key+GUID).digest(<span class="string">"base64"</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">unmask</span>(<span class="params">buffer, mask</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> length = buffer.length;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; length; i++) &#123;</span><br><span class="line">      buffer[i] ^= mask[i &amp; <span class="number">3</span>];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">parseHttpHeader</span>(<span class="params"> header </span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> headerMap = &#123;&#125;;</span><br><span class="line">    <span class="keyword">let</span> headerArray = header.split(<span class="string">'\r\n'</span>);</span><br><span class="line">    headerArray = headerArray.slice(<span class="number">1</span>, <span class="number">-2</span>);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> item <span class="keyword">of</span> headerArray)&#123;</span><br><span class="line">        <span class="keyword">const</span> [k , v] = item.split(<span class="string">': '</span>);</span><br><span class="line">        headerMap[k] = v;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> headerMap;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">exports.getDigest = getDigest;</span><br><span class="line">exports.unmask = unmask;</span><br><span class="line">exports.parseHttpHeader = parseHttpHeader;</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">const</span> &#123; createHash &#125; = <span class="hljs-built_in">require</span>(<span class="hljs-string">"crypto"</span>);<br><span class="hljs-keyword">const</span> GUID = <span class="hljs-string">"258EAFA5-E914-47DA-95CA-C5AB0DC85B11"</span>;<br><br><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getDigest</span>(<span class="hljs-params">key</span>) </span>&#123;<br>  <span class="hljs-keyword">return</span> createHash(<span class="hljs-string">"sha1"</span>)<br>    .update(key + GUID)<br>    .digest(<span class="hljs-string">"base64"</span>);<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">unmask</span>(<span class="hljs-params">buffer, mask</span>) </span>&#123;<br>  <span class="hljs-keyword">const</span> length = buffer.length;<br>  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; i &lt; length; i++) &#123;<br>    buffer[i] ^= mask[i &amp; <span class="hljs-number">3</span>];<br>  &#125;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">parseHttpHeader</span>(<span class="hljs-params">header</span>) </span>&#123;<br>  <span class="hljs-keyword">let</span> headerMap = &#123;&#125;;<br>  <span class="hljs-keyword">let</span> headerArray = header.split(<span class="hljs-string">"\r\n"</span>);<br>  headerArray = headerArray.slice(<span class="hljs-number">1</span>, <span class="hljs-number">-2</span>);<br>  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> item <span class="hljs-keyword">of</span> headerArray) &#123;<br>    <span class="hljs-keyword">const</span> [k, v] = item.split(<span class="hljs-string">": "</span>);<br>    headerMap[k] = v;<br>  &#125;<br>  <span class="hljs-keyword">return</span> headerMap;<br>&#125;<br><br>exports.getDigest = getDigest;<br>exports.unmask = unmask;<br>exports.parseHttpHeader = parseHttpHeader;<br></code></pre></td></tr></table></figure>
 
-<p>搭建WebSocket类的基本骨架：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> EventEmitter = <span class="built_in">require</span>(<span class="string">'events'</span>);</span><br><span class="line"><span class="keyword">const</span> net = <span class="built_in">require</span>(<span class="string">'net'</span>);</span><br><span class="line"><span class="keyword">const</span> &#123;parseHttpHeader,getDigest&#125; = <span class="built_in">require</span>(<span class="string">'./utils'</span>);</span><br><span class="line"><span class="keyword">const</span> &#123; unmask &#125; = <span class="built_in">require</span>(<span class="string">'ws/lib/buffer-util'</span>)</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">WebSocket</span> <span class="keyword">extends</span> <span class="title">EventEmitter</span></span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span>(options)&#123;</span><br><span class="line">        <span class="keyword">super</span>(options);</span><br><span class="line">        <span class="keyword">this</span>.options = options;</span><br><span class="line">        <span class="keyword">this</span>.server = net.createServer(<span class="keyword">this</span>.listener);</span><br><span class="line">        <span class="keyword">this</span>.server.listen(options.port || <span class="number">8808</span>);</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 服务器的回调</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param <span class="type">&#123;net.Socket&#125;</span> </span>socket </span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    listener = <span class="function">(<span class="params">socket</span>) =&gt;</span> &#123;</span><br><span class="line">        socket.setKeepAlive = <span class="literal">true</span>;</span><br><span class="line">        <span class="comment">// 为socket添加send方法，可以用这个方法来发送数据</span></span><br><span class="line">        socket.send = <span class="function">(<span class="params">payloadData</span>) =&gt;</span> &#123;</span><br><span class="line">            <span class="comment">//TODO send方法实现</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        socket.on(<span class="string">"data"</span>, (chunk) =&gt; &#123;</span><br><span class="line">            <span class="keyword">if</span>(chunk.toString().match(<span class="regexp">/Upgrade: websocket/</span>)) &#123;</span><br><span class="line">                <span class="comment">// 处理协议升级请求</span></span><br><span class="line">                <span class="keyword">this</span>.toUpgradeProtcol(socket, chunk.toString()); <span class="comment">//TODO 协议升级处理</span></span><br><span class="line">            &#125;<span class="keyword">else</span>&#123; </span><br><span class="line">                <span class="comment">// 处理非协议升级请求</span></span><br><span class="line">                <span class="keyword">this</span>.toHandleMessage(socket, chunk); <span class="comment">//TODO 非协议升级处理</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">        <span class="comment">// 触发一个connection事件</span></span><br><span class="line">        <span class="keyword">this</span>.emit(<span class="string">"connection"</span>, socket);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>搭建 WebSocket 类的基本骨架：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">const</span> EventEmitter = <span class="hljs-built_in">require</span>(<span class="hljs-string">"events"</span>);<br><span class="hljs-keyword">const</span> net = <span class="hljs-built_in">require</span>(<span class="hljs-string">"net"</span>);<br><span class="hljs-keyword">const</span> &#123; parseHttpHeader, getDigest &#125; = <span class="hljs-built_in">require</span>(<span class="hljs-string">"./utils"</span>);<br><span class="hljs-keyword">const</span> &#123; unmask &#125; = <span class="hljs-built_in">require</span>(<span class="hljs-string">"ws/lib/buffer-util"</span>);<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">WebSocket</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">EventEmitter</span> </span>&#123;<br>  <span class="hljs-keyword">constructor</span>(options) &#123;<br>    <span class="hljs-keyword">super</span>(options);<br>    <span class="hljs-keyword">this</span>.options = options;<br>    <span class="hljs-keyword">this</span>.server = net.createServer(<span class="hljs-keyword">this</span>.listener);<br>    <span class="hljs-keyword">this</span>.server.listen(options.port || <span class="hljs-number">8808</span>);<br>  &#125;<br><br>  <span class="hljs-comment">/**</span><br><span class="hljs-comment">   * 服务器的回调</span><br><span class="hljs-comment">   * <span class="hljs-doctag">@param <span class="hljs-type">&#123;net.Socket&#125;</span> <span class="hljs-variable">socket</span></span></span><br><span class="hljs-comment">   */</span><br>  listener = <span class="hljs-function">(<span class="hljs-params">socket</span>) =&gt;</span> &#123;<br>    socket.setKeepAlive = <span class="hljs-literal">true</span>;<br>    <span class="hljs-comment">// 为socket添加send方法，可以用这个方法来发送数据</span><br>    socket.send = <span class="hljs-function">(<span class="hljs-params">payloadData</span>) =&gt;</span> &#123;<br>      <span class="hljs-comment">//TODO send方法实现</span><br>    &#125;;<br><br>    socket.on(<span class="hljs-string">"data"</span>, (chunk) =&gt; &#123;<br>      <span class="hljs-keyword">if</span> (chunk.toString().match(<span class="hljs-regexp">/Upgrade: websocket/</span>)) &#123;<br>        <span class="hljs-comment">// 处理协议升级请求</span><br>        <span class="hljs-keyword">this</span>.toUpgradeProtcol(socket, chunk.toString()); <span class="hljs-comment">//TODO 协议升级处理</span><br>      &#125; <span class="hljs-keyword">else</span> &#123;<br>        <span class="hljs-comment">// 处理非协议升级请求</span><br>        <span class="hljs-keyword">this</span>.toHandleMessage(socket, chunk); <span class="hljs-comment">//TODO 非协议升级处理</span><br>      &#125;<br>    &#125;);<br>    <span class="hljs-comment">// 触发一个connection事件</span><br>    <span class="hljs-keyword">this</span>.emit(<span class="hljs-string">"connection"</span>, socket);<br>  &#125;;<br>&#125;<br></code></pre></td></tr></table></figure>
 
-<p>实现send方法：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">socket.send = <span class="function">(<span class="params">payloadData</span>) =&gt;</span> &#123;</span><br><span class="line">            <span class="comment">//TODO send方法实现</span></span><br><span class="line">    <span class="keyword">let</span> opcode;</span><br><span class="line">    <span class="keyword">if</span>(Buffer.isBuffer(payloadData))&#123;</span><br><span class="line">         opcode = <span class="number">1</span>;</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">         opcode = <span class="number">2</span>;</span><br><span class="line">         payloadData = Buffer.from(payloadData);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">const</span> payloadLength = payloadData.length;</span><br><span class="line">    <span class="keyword">const</span> buffer = Buffer.alloc(payloadLength + <span class="number">2</span>) <span class="comment">//开辟包括两个请求头字节的空间</span></span><br><span class="line">    buffer[<span class="number">0</span>] = <span class="number">0b10000000</span> | opcode;</span><br><span class="line">    buffer[<span class="number">1</span>] = <span class="number">0b00000000</span> | payloadLength;</span><br><span class="line">    payloadData.copy(buffer, <span class="number">2</span>);</span><br><span class="line">    <span class="comment">//传入客户端</span></span><br><span class="line">    socket.write(buffer);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>实现 send 方法：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs javascript">socket.send = <span class="hljs-function">(<span class="hljs-params">payloadData</span>) =&gt;</span> &#123;<br>  <span class="hljs-comment">//TODO send方法实现</span><br>  <span class="hljs-keyword">let</span> opcode;<br>  <span class="hljs-keyword">if</span> (Buffer.isBuffer(payloadData)) &#123;<br>    opcode = <span class="hljs-number">1</span>;<br>  &#125; <span class="hljs-keyword">else</span> &#123;<br>    opcode = <span class="hljs-number">2</span>;<br>    payloadData = Buffer.from(payloadData);<br>  &#125;<br>  <span class="hljs-keyword">const</span> payloadLength = payloadData.length;<br>  <span class="hljs-keyword">const</span> buffer = Buffer.alloc(payloadLength + <span class="hljs-number">2</span>); <span class="hljs-comment">//开辟包括两个请求头字节的空间</span><br>  buffer[<span class="hljs-number">0</span>] = <span class="hljs-number">0b10000000</span> | opcode;<br>  buffer[<span class="hljs-number">1</span>] = <span class="hljs-number">0b00000000</span> | payloadLength;<br>  payloadData.copy(buffer, <span class="hljs-number">2</span>);<br>  <span class="hljs-comment">//传入客户端</span><br>  socket.write(buffer);<br>&#125;;<br></code></pre></td></tr></table></figure>
 
-<p>这里需要注意，数据包的问题。客户端给服务器端发送数据不需要使用掩码，所以只需要使用2字节头即可。此处仅仅实现了当数据长度小于126的时候的数据格式。</p>
+<p>这里需要注意，数据包的问题。客户端给服务器端发送数据不需要使用掩码，所以只需要使用 2 字节头即可。此处仅仅实现了当数据长度小于 126 的时候的数据格式。</p>
 <p>接下来是升级协议的处理：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">toUpgradeProtcol = <span class="function">(<span class="params">socket, chunk</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">const</span> headerMap = parseHttpHeader(chunk);</span><br><span class="line">        <span class="keyword">const</span> SecWebSocketKey = headerMap[<span class="string">"Sec-WebSocket-Key"</span>];</span><br><span class="line">        <span class="keyword">const</span> swa = getDigest(SecWebSocketKey);</span><br><span class="line">        <span class="keyword">if</span>(headerMap[<span class="string">"Upgrade"</span>] === <span class="string">"websocket"</span>)&#123;</span><br><span class="line">            <span class="comment">// 定义响应头</span></span><br><span class="line">            <span class="keyword">const</span> resp = [</span><br><span class="line">                <span class="string">"HTTP/1.1 101 Switching Protocols"</span>,</span><br><span class="line">                <span class="string">"Upgrade: websocket"</span>,</span><br><span class="line">                <span class="string">"Connection: Upgrade"</span>,</span><br><span class="line">                <span class="string">`Sec-WebSocket-Accept: <span class="subst">$&#123;swa&#125;</span>`</span>,</span><br><span class="line">                <span class="string">"mark: kilic"</span>,</span><br><span class="line">                <span class="string">"\r\n"</span></span><br><span class="line">            ].join(<span class="string">'\r\n'</span>);</span><br><span class="line">            socket.write(resp);</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs javascript">toUpgradeProtcol = <span class="hljs-function">(<span class="hljs-params">socket, chunk</span>) =&gt;</span> &#123;<br>  <span class="hljs-keyword">const</span> headerMap = parseHttpHeader(chunk);<br>  <span class="hljs-keyword">const</span> SecWebSocketKey = headerMap[<span class="hljs-string">"Sec-WebSocket-Key"</span>];<br>  <span class="hljs-keyword">const</span> swa = getDigest(SecWebSocketKey);<br>  <span class="hljs-keyword">if</span> (headerMap[<span class="hljs-string">"Upgrade"</span>] === <span class="hljs-string">"websocket"</span>) &#123;<br>    <span class="hljs-comment">// 定义响应头</span><br>    <span class="hljs-keyword">const</span> resp = [<br>      <span class="hljs-string">"HTTP/1.1 101 Switching Protocols"</span>,<br>      <span class="hljs-string">"Upgrade: websocket"</span>,<br>      <span class="hljs-string">"Connection: Upgrade"</span>,<br>      <span class="hljs-string">`Sec-WebSocket-Accept: <span class="hljs-subst">$&#123;swa&#125;</span>`</span>,<br>      <span class="hljs-string">"mark: kilic"</span>,<br>      <span class="hljs-string">"\r\n"</span>,<br>    ].join(<span class="hljs-string">"\r\n"</span>);<br>    socket.write(resp);<br>  &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
 
 <p>没啥好说的，就是简单的响应了协议升级请求。</p>
 <p>然后是普通请求的处理：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">toHandleMessage = <span class="function">(<span class="params">socket, chunk</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="comment">// 拆分数据帧</span></span><br><span class="line">        <span class="keyword">const</span> FIN = ( chunk[<span class="number">0</span>] &amp; <span class="number">0b10000000</span> ) === <span class="number">0b10000000</span>; <span class="comment">//判断结束帧</span></span><br><span class="line">        <span class="keyword">const</span> opcode = chunk[<span class="number">0</span>] &amp; <span class="number">0b00001111</span>;</span><br><span class="line">        <span class="keyword">const</span> masked = ( chunk[<span class="number">1</span>] &amp; <span class="number">0b10000000</span>) === <span class="number">0b10000000</span>;</span><br><span class="line">        <span class="keyword">const</span> payloadLength = chunk[<span class="number">1</span>] &amp; <span class="number">0b01111111</span>;</span><br><span class="line">        <span class="keyword">let</span> payloadData;</span><br><span class="line">        <span class="keyword">if</span>(masked) &#123;</span><br><span class="line">            <span class="keyword">const</span> maskingKey = chunk.slice(<span class="number">2</span>, <span class="number">6</span>);</span><br><span class="line">            payloadData = chunk.slice(<span class="number">6</span>, <span class="number">6</span> + payloadLength);</span><br><span class="line">            unmask(payloadData, maskingKey);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            payloadData = chunk.slice(<span class="number">6</span>, <span class="number">6</span> + payloadLength);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//判断当前数据帧是否是结束帧</span></span><br><span class="line">        <span class="keyword">if</span>(FIN)&#123;</span><br><span class="line">            <span class="keyword">switch</span> (opcode) &#123;</span><br><span class="line">                <span class="keyword">case</span> <span class="number">1</span>:</span><br><span class="line">                    socket.emit(<span class="string">"message"</span>, payloadData.toString(<span class="string">"utf8"</span>));</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                <span class="keyword">case</span> <span class="number">2</span>:</span><br><span class="line">                    socket.emit(<span class="string">"message"</span>, payloadData);</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                <span class="keyword">default</span>:</span><br><span class="line">                    <span class="comment">//TODO 其他情况略</span></span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs javascript">toHandleMessage = <span class="hljs-function">(<span class="hljs-params">socket, chunk</span>) =&gt;</span> &#123;<br>  <span class="hljs-comment">// 拆分数据帧</span><br>  <span class="hljs-keyword">const</span> FIN = (chunk[<span class="hljs-number">0</span>] &amp; <span class="hljs-number">0b10000000</span>) === <span class="hljs-number">0b10000000</span>; <span class="hljs-comment">//判断结束帧</span><br>  <span class="hljs-keyword">const</span> opcode = chunk[<span class="hljs-number">0</span>] &amp; <span class="hljs-number">0b00001111</span>;<br>  <span class="hljs-keyword">const</span> masked = (chunk[<span class="hljs-number">1</span>] &amp; <span class="hljs-number">0b10000000</span>) === <span class="hljs-number">0b10000000</span>;<br>  <span class="hljs-keyword">const</span> payloadLength = chunk[<span class="hljs-number">1</span>] &amp; <span class="hljs-number">0b01111111</span>;<br>  <span class="hljs-keyword">let</span> payloadData;<br>  <span class="hljs-keyword">if</span> (masked) &#123;<br>    <span class="hljs-keyword">const</span> maskingKey = chunk.slice(<span class="hljs-number">2</span>, <span class="hljs-number">6</span>);<br>    payloadData = chunk.slice(<span class="hljs-number">6</span>, <span class="hljs-number">6</span> + payloadLength);<br>    unmask(payloadData, maskingKey);<br>  &#125; <span class="hljs-keyword">else</span> &#123;<br>    payloadData = chunk.slice(<span class="hljs-number">6</span>, <span class="hljs-number">6</span> + payloadLength);<br>  &#125;<br>  <span class="hljs-comment">//判断当前数据帧是否是结束帧</span><br>  <span class="hljs-keyword">if</span> (FIN) &#123;<br>    <span class="hljs-keyword">switch</span> (opcode) &#123;<br>      <span class="hljs-keyword">case</span> <span class="hljs-number">1</span>:<br>        socket.emit(<span class="hljs-string">"message"</span>, payloadData.toString(<span class="hljs-string">"utf8"</span>));<br>        <span class="hljs-keyword">break</span>;<br>      <span class="hljs-keyword">case</span> <span class="hljs-number">2</span>:<br>        socket.emit(<span class="hljs-string">"message"</span>, payloadData);<br>        <span class="hljs-keyword">break</span>;<br>      <span class="hljs-keyword">default</span>:<br>        <span class="hljs-comment">//TODO 其他情况略</span><br>        <span class="hljs-keyword">break</span>;<br>    &#125;<br>  &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
 
 <p>这样基本就可以使用了<code>node websocketTest.js</code></p>
 <p>服务端：</p>
-<p><img src="https://i.niupic.com/images/2020/05/18/7Sud.png" alt="服务端数据"></p>
+<p><img   class="lazyload" data-original="https://i.niupic.com/images/2020/05/18/7Sud.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="服务端数据"></p>
 <p>客户端：</p>
-<p><img src="https://i.niupic.com/images/2020/05/18/7Sue.png" alt="客户端数据"></p>
+<p><img   class="lazyload" data-original="https://i.niupic.com/images/2020/05/18/7Sue.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="客户端数据"></p>
 <p>以上！</p>
+      </section>
+      <section class="extra">
+        
+        <ul class="copyright">
+  
+  <li><strong>本文作者：</strong>kilic</li>
+  <li><strong>本文链接：</strong><a href="http://kilic.site/2020/05/17/%E8%AF%A6%E8%A7%A3WEBSOCKET/index.html">http://kilic.site/2020/05/17/%E8%AF%A6%E8%A7%A3WEBSOCKET/index.html</a></li>
+  <li><strong>版权声明：</strong>本博客所有文章均采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh"
+      rel="external nofollow" target="_blank"> BY-NC-SA </a>许可协议，转载请注明出处！</li>
+  
+</ul>
+        
+        
+        <section class="donate">
+  <div class="qrcode">
+    <img   class="lazyload" data-original="/images/others/alipay.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" >
+  </div>
+  <div class="icon">
+    <a href="javascript:;" id="alipay"><i class="iconfont iconalipay"></i></a>
+    <a href="javascript:;" id="wechat"><i class="iconfont iconwechat-fill"></i></a>
+  </div>
+</section>
+        
+        
+  <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/WEBSOCKET/" rel="tag">websocket</a></li></ul>
 
-        </div>
-      </div>
-    </div>
+        
+<nav class="nav">
+  
+    <a href="/2020/05/17/%E5%A4%A7%E5%B0%8F%E7%AB%AF%E9%97%AE%E9%A2%98/"><i class="iconfont iconleft"></i>大小端问题</a>
+  
+  
+    <a href="/2020/05/06/GETH%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C/">Geth常用操作<i class="iconfont iconright"></i></a>
+  
+</nav>
+
+      </section>
+      
+      <section class="comments">
+  
+  <div class="btn" id="comments-btn">查看评论</div>
+  
+  
+</section>
+      
+    </section>
   </div>
 </article>
-
-
-
-    <!-- Footer -->
-<footer>
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-        <p class="copyright text-muted">
-          Theme By <a target="_blank" href="https://github.com/levblanc">Levblanc.</a>
-          Inspired By <a target="_blank" href="https://github.com/klugjo/hexo-theme-clean-blog">Clean Blog.</a>
-        <p class="copyright text-muted">
-          Powered By <a target="_blank" href="https://hexo.io/">Hexo.</a>
-        </p>
-      </div>
-    </div>
   </div>
+</main>
+  <footer class="footer">
+  <div class="footer-social">
+    
+    
+    
+    
+    
+    <a href="tencent://message/?Menu=yes&uin=102483678 " target="_blank" onMouseOver="this.style.color= '#12B7F5'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconQQ "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="javascript:; " target="_blank" onMouseOver="this.style.color= '#09BB07'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconwechat-fill "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="https://www.instagram.com/kilicmu3/ " target="_blank" onMouseOver="this.style.color= '#DA2E76'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconinstagram "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="https://github.com/kilicmu " target="_blank" onMouseOver="this.style.color= '#24292E'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  icongithub-fill "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="kilicmu3389@outlook.com " target="_blank" onMouseOver="this.style.color='#FFBE5B'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconmail"></i>
+    </a>
+    
+  </div>
+  <div class="footer-copyright"><p>Powered by <a target="_blank" href="https://hexo.io">Hexo</a>  |  Theme - <a target="_blank" href="https://github.com/izhaoo/hexo-theme-zhaoo">zhaoo</a></p></div>
 </footer>
+  
+      <div class="fab fab-plus">
+    <i class="iconfont iconplus"></i>
+  </div>
+  
+  <div class="fab fab-daovoice">
+    <i class="iconfont iconcomment"></i>
+  </div>
+  
+  <div class="fab fab-up">
+    <i class="iconfont iconcaret-up"></i>
+  </div>
+  
+</body>
 
 
-    <!-- After Footer Scripts -->
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
 
-<script src="/js/highlight.pack.js"></script>
+
+
+
+
+
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+
+
+
+
+
+<script src="https://cdn.bootcss.com/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+
+
+
+
+
+
+<script src="/js/utils.js"></script>
+<script src="/js/modules.js"></script>
+<script src="/js/zui.js"></script>
+<script src="/js/script.js"></script>
+
+
+
+
 
 <script>
-  document.addEventListener("DOMContentLoaded", function(event) {
-    var codeBlocks = Array.prototype.slice.call(document.getElementsByTagName('pre'))
-    codeBlocks.forEach(function(block, index) {
-      hljs.highlightBlock(block);
-    });
+  (function (i, s, o, g, r, a, m) {
+    i["DaoVoiceObject"] = r;
+    i[r] = i[r] || function () {
+      (i[r].q = i[r].q || []).push(arguments)
+    }, i[r].l = 1 * new Date();
+    a = s.createElement(o), m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    a.charset = "utf-8";
+    m.parentNode.insertBefore(a, m)
+  })(window, document, "script", ('https:' == document.location.protocol ? 'https:' : 'http:') +
+    "//widget.daovoice.io/widget/0f81ff2f.js", "daovoice")
+  daovoice('init', {
+    app_id: "abcdefg"
+  }, {
+    launcher: {
+      disableLauncherIcon: true,
+    },
   });
+  daovoice('update');
 </script>
 
-  </body>
-</html>
 
+
+<script>
+  (function () {
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    } else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+<script>
+  var _hmt = _hmt || [];
+  (function () {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?4c204d8bc027a0455b5fc642ac334ca8";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+
+
+
+
+
+
+
+
+
+</html>

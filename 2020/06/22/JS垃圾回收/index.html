@@ -1,197 +1,244 @@
+
+
 <!DOCTYPE html>
-<html>
-  <!-- Html Head Tag-->
-  <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="">
-  <meta name="author" content="kilic">
-  <!-- Open Graph Data -->
-  <meta property="og:title" content="JS垃圾回收"/>
-  <meta property="og:description" content="咸鱼，无业游民" />
-  <meta property="og:site_name" content="kilic の 部落格"/>
-  <meta property="og:type" content="article" />
-  <meta property="og:image" content="http://kilic.site"/>
+<html lang="zh-CN">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>JS垃圾回收 - kilic の 部落格</title>
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="google" content="notranslate" />
+
   
-    <link rel="alternate" href="/atom.xml" title="kilic の 部落格" type="application/atom+xml">
+  <meta name="keywords" content="golang,前端,移动端,区块链,智能合约,混吃等死,nodejs,运维,python"> 
+  
+  <meta name="description" content="本文将总结常用的垃圾回收算法，并顺带的聊一聊 V8 的..."> 
+  
+  <meta name="author" content="kilic"> 
+
+  
+    <link rel="icon" href="/images/icons/favicon-16x16.png" type="image/png" sizes="16x16">
   
   
-    <link rel="icon" href="/favicon.png">
+    <link rel="icon" href="/images/icons/favicon-32x32.png" type="image/png" sizes="32x32">
+  
+  
+    <link rel="apple-touch-icon" href="/images/icons/apple-touch-icon.png" sizes="180x180">
+  
+  
+    <meta rel="mask-icon" href="/images/icons/stun-logo.svg" color="#333333">
+  
+  
+    <meta rel="msapplication-TileImage" content="/images/icons/favicon-144x144.png">
+    <meta rel="msapplication-TileColor" content="#000000">
   
 
-  <!-- Site Title -->
-  <title>kilic の 部落格</title>
-
-  <!-- Bootstrap CSS -->
   
-<link rel="stylesheet" href="/css/bootstrap.min.css">
+<link rel="stylesheet" href="/css/style.css">
 
-  <!-- Custom CSS -->
+
   
   
-<link rel="stylesheet" href="/css/style.dark.css">
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1445822_h1619vhl1nr.css">
 
-
-  <!-- Google Analytics -->
   
 
+  
+  
+  
+<link rel="stylesheet" href="https://cdn.bootcss.com/fancybox/3.5.7/jquery.fancybox.min.css">
+
+  
+
+  
+  
+  
+<link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.18.1/styles/xcode.min.css">
+
+  
+
+  <script>
+    var CONFIG = window.CONFIG || {};
+    var ZHAOO = window.ZHAOO || {};
+    CONFIG = {
+      isHome: false,
+      fancybox: true,
+      pjax: false,
+      lazyload: {
+        enable: true,
+        loadingImage: '',
+      },
+      donate: {
+        enable: true,
+        alipay: '/images/others/alipay.jpg',
+        wechat: '/images/others/wechat.jpg'
+      },
+      motto: {
+        api: '',
+        default: 'fading is true while flowering is past。'
+      },
+      galleries: {
+        enable: true
+      },
+      fab: {
+        enable: true,
+        alwaysShow: false
+      },
+      carrier: {
+        enable: true
+      },
+      daovoice: {
+        enable: true
+      }
+    }
+  </script>
+
+  
+
+  
 <meta name="generator" content="Hexo 4.2.0"></head>
+<body class="lock-screen">
+  <div class="loading"></div>
+  
 
-  <body>
-    <!-- Page Header -->
 
+<nav class="navbar">
+  <div class="left"></div>
+  <div class="center">JS垃圾回收</div>
+  <div class="right">
+    <i class="iconfont iconmenu j-navbar-menu"></i>
+  </div>
+</nav>
 
-<header class="site-header header-background" style="background-image: url(/img/m2.jpg)">
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-        <div class="page-title with-background-image">
-          <p class="title">JS垃圾回收</p>
-          <p class="subtitle"></p>
-        </div>
-        <div class="site-menu with-background-image">
-          <ul>
-            
-              <li>
-                <a href="/">
-                  
-                  Home
-                  
-                </a>
-              </li>
-            
-              <li>
-                <a href="/archives">
-                  
-                  Archives
-                  
-                </a>
-              </li>
-            
-              <li>
-                <a href="https://github.com/kilicmu">
-                  
-                  Github
-                  
-                </a>
-              </li>
-            
-              <li>
-                <a href="mailto:kilicmu3389@outlook.com">
-                  
-                  Email
-                  
-                </a>
-              </li>
-            
-          </ul>
-        </div>
-      </div>
+  <nav class="menu">
+  <div class="menu-wrap">
+    <div class="menu-close">
+      <i class="iconfont iconbaseline-close-px"></i>
+    </div>
+    <ul class="menu-content">
+      
+      
+      
+      
+      <li class="menu-item"><a href="/ " class="underline"> 首页</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/galleries " class="underline"> 摄影</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/archives " class="underline"> 归档</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/tags " class="underline"> 标签</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/categories " class="underline"> 分类</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/about " class="underline"> 关于</a></li>
+      
+    </ul>
+    <div class="menu-copyright"><p>Powered by <a target="_blank" href="https://hexo.io">Hexo</a>  |  Theme - <a target="_blank" href="https://github.com/izhaoo/hexo-theme-zhaoo">zhaoo</a></p></div>
+  </div>
+</nav>
+  <main id="main">
+  <div class="container" id="container">
+    <article class="article">
+  <div class="wrap">
+    <section class="head">
+  <img   class="lazyload" data-original="https://i.niupic.com/images/2020/10/18/8T2r.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  draggable="false">
+  <div class="head-mask">
+    <h1 class="head-title">JS垃圾回收</h1>
+    <div class="head-info">
+      <span class="post-info-item"><i class="iconfont iconcalendar"></i>June 22, 2020</span
+        class="post-info-item">
+      
+      <span class="post-info-item"><i class="iconfont iconfont-size"></i>2474</span>
     </div>
   </div>
-</header>
-
-<article>
-  <div class="container typo">
-    <div class="row">
-      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-        <div class="post-info text-muted">
-          
-            <!-- Author -->
-            <span class="author info">By kilic</span>
-          
-          <!-- Date -->
-          <span class="date-time info">On
-            <span class="date">2020-06-22</span>
-            <span class="time">06:06:20</span>
-          </span>
-          
-        </div>
-        <!-- Tags -->
-        
-          <div class="post-tags text-muted">
-            Tags: 
-
-<a class="tag" href="/tags/JAVASCRIPT/">#JavaScript</a>
-
-
-          </div>
-        
-        <!-- Post Main Content -->
-        <div class="post-content">
-          <p>本文将总结常用的垃圾回收算法，并顺带的聊一聊V8的垃圾回收机制。标题可能有点问题，但是不想改了。</p>
-<a id="more"></a>
-
-<h2 id="内存生命周期"><a href="#内存生命周期" class="headerlink" title="内存生命周期"></a>内存生命周期</h2><p>内存的声明周期可以分为一下几个阶段：</p>
+</section>
+    <section class="main">
+      <section class="content">
+        <h2 id="内存生命周期"><a href="#内存生命周期" class="headerlink" title="内存生命周期"></a>内存生命周期</h2><p>内存的声明周期可以分为一下几个阶段：</p>
 <ol>
 <li>内存的分配</li>
 <li>内存的使用</li>
 <li>内存的释放</li>
 </ol>
-<p>我们知道，偏向低级的语言如C/C++对内存的管理可以通过malloc、free等函数动态管控，这种管控会增大编程人员的心智负担。</p>
-<p>所以在Java等偏高级语言会自动的分配与回收内存。内存的自动管理会让开发者更加专注于业务逻辑，不用处理底层逻辑，但是仍然有很大的问题，即垃圾回收行为的混乱。</p>
+<p>我们知道，偏向低级的语言如 C/C++对内存的管理可以通过 malloc、free 等函数动态管控，这种管控会增大编程人员的心智负担。</p>
+<p>所以在 Java 等偏高级语言会自动的分配与回收内存。内存的自动管理会让开发者更加专注于业务逻辑，不用处理底层逻辑，但是仍然有很大的问题，即垃圾回收行为的混乱。</p>
 <p>所以虽然我们不需要管理内存，内存回收机制却会因为回收算法的特性，而造成很多的非预期错误。</p>
 <p>这也是我们需要了解内存回收机制的一个重要原因。</p>
 <h2 id="常见的内存回收策略"><a href="#常见的内存回收策略" class="headerlink" title="常见的内存回收策略"></a>常见的内存回收策略</h2><p>在垃圾回收里，我们同样需要判断一块对象的状态，来决定是否要回收这个对象引用的内存，这个可以被回收的状态我们可以叫做<strong>对象已死</strong>。</p>
 <p>如字面表述，对象已死就是说对象已经不被执行上下文环境所引用。我们需要判断筛选出这些不被使用的内存，然后进行垃圾回收。那么具体怎么做？</p>
-<p>MDN上介绍了两种：</p>
-<h3 id="引用计数垃圾收集"><a href="#引用计数垃圾收集" class="headerlink" title="引用计数垃圾收集"></a>引用计数垃圾收集</h3><p>引用计数垃圾收集是一种简单的垃圾收集算法，每当一个对象被引用，这个对象的引用计数被增加1点，若不被引用则减少1点。如果计数归零，则可以代表这个对象已经不再被使用，也就是<strong>已死</strong>对象。</p>
+<p>MDN 上介绍了两种：</p>
+<h3 id="引用计数垃圾收集"><a href="#引用计数垃圾收集" class="headerlink" title="引用计数垃圾收集"></a>引用计数垃圾收集</h3><p>引用计数垃圾收集是一种简单的垃圾收集算法，每当一个对象被引用，这个对象的引用计数被增加 1 点，若不被引用则减少 1 点。如果计数归零，则可以代表这个对象已经不再被使用，也就是<strong>已死</strong>对象。</p>
 <p>如下图：</p>
-<p><img src="https://i.niupic.com/images/2020/06/22/8iwl.png" alt="引用计数"></p>
-<p>D就是一个已死亡对象，他会被垃圾回收器回收</p>
+<p><img   class="lazyload" data-original="https://i.niupic.com/images/2020/06/22/8iwl.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="引用计数"></p>
+<p>D 就是一个已死亡对象，他会被垃圾回收器回收</p>
 <p>请注意，这里有一个很重要的问题，若多个对象相互引用构成一个循环，他们之间会至少存在一个引用计数，但是这几个变量已经不被当前环境所需要，且这些对象无法被判定为死亡，导致这些内存无法被回收，进一步造成内存泄漏。</p>
 <p>如下面的代码：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> D = <span class="keyword">new</span> <span class="built_in">Object</span>();</span><br><span class="line">    <span class="keyword">var</span> E = <span class="keyword">new</span> <span class="built_in">Object</span>();</span><br><span class="line">    </span><br><span class="line">    D.e = E;</span><br><span class="line">    E.d = D;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">foo</span>(<span class="hljs-params"></span>) </span>&#123;<br>  <span class="hljs-keyword">var</span> D = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Object</span>();<br>  <span class="hljs-keyword">var</span> E = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Object</span>();<br><br>  D.e = E;<br>  E.d = D;<br>&#125;<br></code></pre></td></tr></table></figure>
 
-
-
-<p><img src="https://i.niupic.com/images/2020/06/22/8iww.png" alt="循环引用"></p>
-<p>可以看到D，E虽然不被需要了，但是因为他们被彼此引用他们的引用计数始终不会清零。</p>
+<p><img   class="lazyload" data-original="https://i.niupic.com/images/2020/06/22/8iww.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="循环引用"></p>
+<p>可以看到 D，E 虽然不被需要了，但是因为他们被彼此引用他们的引用计数始终不会清零。</p>
 <p>因为循环引用的问题，使得引用回收垃圾算法很难被信任，但是他简单的特点，使得这种算法在某些地方仍然被使用。</p>
 <h3 id="标记清除算法"><a href="#标记清除算法" class="headerlink" title="标记清除算法"></a>标记清除算法</h3><p>设置一个叫做根（root）的对象，从根开始将可能被引用的对象用递归的方式进行标记，将没有标记到的对象作为垃圾进行回收。</p>
 <p>标记阶段完成时，未被标记的对象就被视为<strong>已死</strong>对象。然后，将全部对象按顺序扫描一遍，将没有被标记的对象进行回收。</p>
 <p>如下图：</p>
-<p><img src="https://i.niupic.com/images/2020/06/22/8ixn.png" alt="标记清除"></p>
-<p>由于无法抵达F，G所以即使存在循环引用也不会造成无法回收的情况。</p>
+<p><img   class="lazyload" data-original="https://i.niupic.com/images/2020/06/22/8ixn.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="标记清除"></p>
+<p>由于无法抵达 F，G 所以即使存在循环引用也不会造成无法回收的情况。</p>
 <p>这个算法其实也有一定问题，如果我们分配了大量对象，标记过程中发现只有一小部分存活的情况下，所消耗的时间会大大超过必要的值，这是因为在清除阶段还需要对大量死亡对象进行二次扫描。</p>
 <p>所以又有了下面这个算法：</p>
 <h3 id="标记整理法"><a href="#标记整理法" class="headerlink" title="标记整理法"></a>标记整理法</h3><p>标记整理过程依然和“标记清除算法”一致，但后续步骤不是直接对可回收对象进行清除，而是让所有存活对象都向一端移动，然后直接清理掉边界以外的内存。</p>
 <p>从内存角度看，假设有如下一块内存，如下：</p>
-<p><img src="https://i.niupic.com/images/2020/06/23/8iBq.png" alt="内存"></p>
+<p><img   class="lazyload" data-original="https://i.niupic.com/images/2020/06/23/8iBq.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="内存"></p>
 <p>如果想要回收掉灰色内存，对比一下两种算法效果：</p>
 <p>标记清除算法：</p>
-<p><img src="https://i.niupic.com/images/2020/06/23/8iBv.png" alt="标记清除"></p>
+<p><img   class="lazyload" data-original="https://i.niupic.com/images/2020/06/23/8iBv.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="标记清除"></p>
 <p>标记整理法：</p>
-<p><img src="https://i.niupic.com/images/2020/06/23/8iBy.png" alt="标记整理"></p>
+<p><img   class="lazyload" data-original="https://i.niupic.com/images/2020/06/23/8iBy.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="标记整理"></p>
 <p>这也是后面分代收集算法很多老生代常用的方法。</p>
 <h3 id="复制收集法"><a href="#复制收集法" class="headerlink" title="复制收集法"></a>复制收集法</h3><p>这种算法会将内存按容量划分为大小相等的两块，每次只使用其中的一块，然后从根开始被引用的对象复制到另外的空间中，然后，再将复制的对象所能够引用的对象用递归的方式不断复制下去。</p>
-<p><img src="https://i.niupic.com/images/2020/06/22/8iz2.png" alt="复制收集法"></p>
+<p><img   class="lazyload" data-original="https://i.niupic.com/images/2020/06/22/8iz2.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="复制收集法"></p>
 <p>当这些复制结束后，需要进入清除阶段，清除原来内存中所有的对象。每次都是只对其中的一块进行内存回收，内存分配时也就不用考虑内存碎片等复杂情况，只要移动堆顶指针。但是这种算法的空间开销很大，且在存活对象较多的时候会很不利。</p>
 <p>下面我们说一说本文的重点：</p>
 <h3 id="分代收集算法"><a href="#分代收集算法" class="headerlink" title="分代收集算法 *"></a><strong>分代收集算法</strong> *</h3><p>这种算法根据对象存活周期的不同将内存划分为几块，根据各个生代的特点采用最适当的收集算法。</p>
-<p>分代收集算法可以有不同的实现，下面用V8的回收机制举例：</p>
-<p>V8引擎会把分配的内存分为两<code>新生代</code>和<code>老生代</code>，默认情况下，32位系统新生代内存大小为16MB，老生代内存大小为700MB，64位系统下，新生代内存大小为32MB，老生代内存大小为1.4GB。</p>
-<p>然后将新生代内存再分两块，一块from空间，一块to空间。</p>
+<p>分代收集算法可以有不同的实现，下面用 V8 的回收机制举例：</p>
+<p>V8 引擎会把分配的内存分为两<code>新生代</code>和<code>老生代</code>，默认情况下，32 位系统新生代内存大小为 16MB，老生代内存大小为 700MB，64 位系统下，新生代内存大小为 32MB，老生代内存大小为 1.4GB。</p>
+<p>然后将新生代内存再分两块，一块 from 空间，一块 to 空间。</p>
 <p>如下图：</p>
-<p><img src="https://i.niupic.com/images/2020/06/22/8iA8.png" alt="V8分代"></p>
-<p>V8中会使用两种垃圾回收器<strong>Scavenge</strong>与<strong>Full Mark-Compact</strong></p>
-<h4 id="Scavenge"><a href="#Scavenge" class="headerlink" title="Scavenge"></a>Scavenge</h4><p>Scavenge内存回收流程：</p>
+<p><img   class="lazyload" data-original="https://i.niupic.com/images/2020/06/22/8iA8.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="V8分代"></p>
+<p>V8 中会使用两种垃圾回收器<strong>Scavenge</strong>与<strong>Full Mark-Compact</strong></p>
+<h4 id="Scavenge"><a href="#Scavenge" class="headerlink" title="Scavenge"></a>Scavenge</h4><p>Scavenge 内存回收流程：</p>
 <ol>
-<li>判断From内存中活跃对象并标记</li>
-<li>将活跃对象从From复制到To</li>
-<li>清空From空间</li>
+<li>判断 From 内存中活跃对象并标记</li>
+<li>将活跃对象从 From 复制到 To</li>
+<li>清空 From 空间</li>
 <li>所有交换的对象标记<strong>晋升</strong></li>
-<li>将From空间与To空间指针交换交换</li>
+<li>将 From 空间与 To 空间指针交换交换</li>
 </ol>
 <p>大致意思如下图所示：</p>
-<p><img src="https://i.niupic.com/images/2020/06/23/8iAR.png" alt="Scavenge"></p>
+<p><img   class="lazyload" data-original="https://i.niupic.com/images/2020/06/23/8iAR.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="Scavenge"></p>
 <p>可以看到前三步与复制收集法步骤基本一致，下面我们重点聊聊第四步说的晋升。</p>
 <h4 id="晋升"><a href="#晋升" class="headerlink" title="晋升"></a>晋升</h4><p><strong>对象从新生代移动到老生代的过程叫作晋升</strong>。</p>
 <p>对象晋升条件：</p>
 <ol>
-<li>如果一个对象已经经历过一次Scavenge回收，则会认为这个对象是一个可以长时间在内存存储的对象，可以对他进行晋升。这里可以这么理解，一个对象经历一次Scavenge回收仍然存活则会晋升至“中生代”，如果再次经历Scavenge算法则会晋升为老生代。</li>
-<li>如果To空间已经使用了超过25%，则这个对象直接晋升到老生代中。设置25%这个阈值的原因是当这次Scavenge回收完成后，这个To空间会变为From空间，接下来的内存分配将在这个空间中进行。如果占比过高，会影响后续的内存分配。</li>
+<li>如果一个对象已经经历过一次 Scavenge 回收，则会认为这个对象是一个可以长时间在内存存储的对象，可以对他进行晋升。这里可以这么理解，一个对象经历一次 Scavenge 回收仍然存活则会晋升至“中生代”，如果再次经历 Scavenge 算法则会晋升为老生代。</li>
+<li>如果 To 空间已经使用了超过 25%，则这个对象直接晋升到老生代中。设置 25%这个阈值的原因是当这次 Scavenge 回收完成后，这个 To 空间会变为 From 空间，接下来的内存分配将在这个空间中进行。如果占比过高，会影响后续的内存分配。</li>
 </ol>
 <p>了解了晋升我们就可以知道，晋升对象都是一些存活时间比较长的对象，且老生代的内存远远大于新生代。上面描述复制收集法时也提到了，这种算法对于空间浪费严重，存活对象较多的时候也会很不利。</p>
 <p>所以在老生代中，使用<strong>Full Mark-Compact</strong>做内存回收。</p>
@@ -203,45 +250,210 @@
 </ol>
 <p>可以看看上面的标记整理法说明。此处不再赘述。</p>
 <p>以上</p>
+      </section>
+      <section class="extra">
+        
+        <ul class="copyright">
+  
+  <li><strong>本文作者：</strong>kilic</li>
+  <li><strong>本文链接：</strong><a href="http://kilic.site/2020/06/22/JS%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/index.html">http://kilic.site/2020/06/22/JS%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/index.html</a></li>
+  <li><strong>版权声明：</strong>本博客所有文章均采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh"
+      rel="external nofollow" target="_blank"> BY-NC-SA </a>许可协议，转载请注明出处！</li>
+  
+</ul>
+        
+        
+        <section class="donate">
+  <div class="qrcode">
+    <img   class="lazyload" data-original="/images/others/alipay.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" >
+  </div>
+  <div class="icon">
+    <a href="javascript:;" id="alipay"><i class="iconfont iconalipay"></i></a>
+    <a href="javascript:;" id="wechat"><i class="iconfont iconwechat-fill"></i></a>
+  </div>
+</section>
+        
+        
+  <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVASCRIPT/" rel="tag">JavaScript</a></li></ul>
 
-        </div>
-      </div>
-    </div>
+        
+<nav class="nav">
+  
+    <a href="/2020/06/23/%E5%B8%B8%E7%94%A8%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%E6%80%BB%E7%BB%93/"><i class="iconfont iconleft"></i>常用排序算法总结</a>
+  
+  
+    <a href="/2020/06/19/%E5%89%8D%E7%AB%AF%E8%B7%AF%E7%94%B1%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E7%8E%B0/">前端路由原理与实现<i class="iconfont iconright"></i></a>
+  
+</nav>
+
+      </section>
+      
+      <section class="comments">
+  
+  <div class="btn" id="comments-btn">查看评论</div>
+  
+  
+</section>
+      
+    </section>
   </div>
 </article>
-
-
-
-    <!-- Footer -->
-<footer>
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-        <p class="copyright text-muted">
-          Theme By <a target="_blank" href="https://github.com/levblanc">Levblanc.</a>
-          Inspired By <a target="_blank" href="https://github.com/klugjo/hexo-theme-clean-blog">Clean Blog.</a>
-        <p class="copyright text-muted">
-          Powered By <a target="_blank" href="https://hexo.io/">Hexo.</a>
-        </p>
-      </div>
-    </div>
   </div>
+</main>
+  <footer class="footer">
+  <div class="footer-social">
+    
+    
+    
+    
+    
+    <a href="tencent://message/?Menu=yes&uin=102483678 " target="_blank" onMouseOver="this.style.color= '#12B7F5'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconQQ "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="javascript:; " target="_blank" onMouseOver="this.style.color= '#09BB07'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconwechat-fill "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="https://www.instagram.com/kilicmu3/ " target="_blank" onMouseOver="this.style.color= '#DA2E76'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconinstagram "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="https://github.com/kilicmu " target="_blank" onMouseOver="this.style.color= '#24292E'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  icongithub-fill "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="kilicmu3389@outlook.com " target="_blank" onMouseOver="this.style.color='#FFBE5B'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconmail"></i>
+    </a>
+    
+  </div>
+  <div class="footer-copyright"><p>Powered by <a target="_blank" href="https://hexo.io">Hexo</a>  |  Theme - <a target="_blank" href="https://github.com/izhaoo/hexo-theme-zhaoo">zhaoo</a></p></div>
 </footer>
+  
+      <div class="fab fab-plus">
+    <i class="iconfont iconplus"></i>
+  </div>
+  
+  <div class="fab fab-daovoice">
+    <i class="iconfont iconcomment"></i>
+  </div>
+  
+  <div class="fab fab-up">
+    <i class="iconfont iconcaret-up"></i>
+  </div>
+  
+</body>
 
 
-    <!-- After Footer Scripts -->
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
 
-<script src="/js/highlight.pack.js"></script>
+
+
+
+
+
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+
+
+
+
+
+<script src="https://cdn.bootcss.com/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+
+
+
+
+
+
+<script src="/js/utils.js"></script>
+<script src="/js/modules.js"></script>
+<script src="/js/zui.js"></script>
+<script src="/js/script.js"></script>
+
+
+
+
 
 <script>
-  document.addEventListener("DOMContentLoaded", function(event) {
-    var codeBlocks = Array.prototype.slice.call(document.getElementsByTagName('pre'))
-    codeBlocks.forEach(function(block, index) {
-      hljs.highlightBlock(block);
-    });
+  (function (i, s, o, g, r, a, m) {
+    i["DaoVoiceObject"] = r;
+    i[r] = i[r] || function () {
+      (i[r].q = i[r].q || []).push(arguments)
+    }, i[r].l = 1 * new Date();
+    a = s.createElement(o), m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    a.charset = "utf-8";
+    m.parentNode.insertBefore(a, m)
+  })(window, document, "script", ('https:' == document.location.protocol ? 'https:' : 'http:') +
+    "//widget.daovoice.io/widget/0f81ff2f.js", "daovoice")
+  daovoice('init', {
+    app_id: "abcdefg"
+  }, {
+    launcher: {
+      disableLauncherIcon: true,
+    },
   });
+  daovoice('update');
 </script>
 
-  </body>
-</html>
 
+
+<script>
+  (function () {
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    } else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+<script>
+  var _hmt = _hmt || [];
+  (function () {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?4c204d8bc027a0455b5fc642ac334ca8";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+
+
+
+
+
+
+
+
+
+</html>

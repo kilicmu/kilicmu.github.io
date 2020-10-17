@@ -1,265 +1,475 @@
+
+
 <!DOCTYPE html>
-<html>
-  <!-- Html Head Tag-->
-  <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="">
-  <meta name="author" content="kilic">
-  <!-- Open Graph Data -->
-  <meta property="og:title" content="初识Go WebAssembly"/>
-  <meta property="og:description" content="咸鱼，无业游民" />
-  <meta property="og:site_name" content="kilic の 部落格"/>
-  <meta property="og:type" content="article" />
-  <meta property="og:image" content="http://kilic.site"/>
+<html lang="zh-CN">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>初识Go WebAssembly - kilic の 部落格</title>
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="google" content="notranslate" />
+
   
-    <link rel="alternate" href="/atom.xml" title="kilic の 部落格" type="application/atom+xml">
+  <meta name="keywords" content="golang,前端,移动端,区块链,智能合约,混吃等死,nodejs,运维,python"> 
+  
+  <meta name="description" content="WebAssembly 已经 W3C 新标准，虽然还没..."> 
+  
+  <meta name="author" content="kilic"> 
+
+  
+    <link rel="icon" href="/images/icons/favicon-16x16.png" type="image/png" sizes="16x16">
   
   
-    <link rel="icon" href="/favicon.png">
+    <link rel="icon" href="/images/icons/favicon-32x32.png" type="image/png" sizes="32x32">
+  
+  
+    <link rel="apple-touch-icon" href="/images/icons/apple-touch-icon.png" sizes="180x180">
+  
+  
+    <meta rel="mask-icon" href="/images/icons/stun-logo.svg" color="#333333">
+  
+  
+    <meta rel="msapplication-TileImage" content="/images/icons/favicon-144x144.png">
+    <meta rel="msapplication-TileColor" content="#000000">
   
 
-  <!-- Site Title -->
-  <title>kilic の 部落格</title>
-
-  <!-- Bootstrap CSS -->
   
-<link rel="stylesheet" href="/css/bootstrap.min.css">
+<link rel="stylesheet" href="/css/style.css">
 
-  <!-- Custom CSS -->
+
   
   
-<link rel="stylesheet" href="/css/style.dark.css">
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1445822_h1619vhl1nr.css">
 
-
-  <!-- Google Analytics -->
   
 
+  
+  
+  
+<link rel="stylesheet" href="https://cdn.bootcss.com/fancybox/3.5.7/jquery.fancybox.min.css">
+
+  
+
+  
+  
+  
+<link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.18.1/styles/xcode.min.css">
+
+  
+
+  <script>
+    var CONFIG = window.CONFIG || {};
+    var ZHAOO = window.ZHAOO || {};
+    CONFIG = {
+      isHome: false,
+      fancybox: true,
+      pjax: false,
+      lazyload: {
+        enable: true,
+        loadingImage: '',
+      },
+      donate: {
+        enable: true,
+        alipay: '/images/others/alipay.jpg',
+        wechat: '/images/others/wechat.jpg'
+      },
+      motto: {
+        api: '',
+        default: 'fading is true while flowering is past。'
+      },
+      galleries: {
+        enable: true
+      },
+      fab: {
+        enable: true,
+        alwaysShow: false
+      },
+      carrier: {
+        enable: true
+      },
+      daovoice: {
+        enable: true
+      }
+    }
+  </script>
+
+  
+
+  
 <meta name="generator" content="Hexo 4.2.0"></head>
+<body class="lock-screen">
+  <div class="loading"></div>
+  
 
-  <body>
-    <!-- Page Header -->
 
+<nav class="navbar">
+  <div class="left"></div>
+  <div class="center">初识Go WebAssembly</div>
+  <div class="right">
+    <i class="iconfont iconmenu j-navbar-menu"></i>
+  </div>
+</nav>
 
-<header class="site-header header-background" style="background-image: url(/img/m2.jpg)">
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-        <div class="page-title with-background-image">
-          <p class="title">初识Go WebAssembly</p>
-          <p class="subtitle"></p>
-        </div>
-        <div class="site-menu with-background-image">
-          <ul>
-            
-              <li>
-                <a href="/">
-                  
-                  Home
-                  
-                </a>
-              </li>
-            
-              <li>
-                <a href="/archives">
-                  
-                  Archives
-                  
-                </a>
-              </li>
-            
-              <li>
-                <a href="https://github.com/kilicmu">
-                  
-                  Github
-                  
-                </a>
-              </li>
-            
-              <li>
-                <a href="mailto:kilicmu3389@outlook.com">
-                  
-                  Email
-                  
-                </a>
-              </li>
-            
-          </ul>
-        </div>
-      </div>
+  <nav class="menu">
+  <div class="menu-wrap">
+    <div class="menu-close">
+      <i class="iconfont iconbaseline-close-px"></i>
+    </div>
+    <ul class="menu-content">
+      
+      
+      
+      
+      <li class="menu-item"><a href="/ " class="underline"> 首页</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/galleries " class="underline"> 摄影</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/archives " class="underline"> 归档</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/tags " class="underline"> 标签</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/categories " class="underline"> 分类</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/about " class="underline"> 关于</a></li>
+      
+    </ul>
+    <div class="menu-copyright"><p>Powered by <a target="_blank" href="https://hexo.io">Hexo</a>  |  Theme - <a target="_blank" href="https://github.com/izhaoo/hexo-theme-zhaoo">zhaoo</a></p></div>
+  </div>
+</nav>
+  <main id="main">
+  <div class="container" id="container">
+    <article class="article">
+  <div class="wrap">
+    <section class="head">
+  <img   class="lazyload" data-original="/images/theme/post-image.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  draggable="false">
+  <div class="head-mask">
+    <h1 class="head-title">初识Go WebAssembly</h1>
+    <div class="head-info">
+      <span class="post-info-item"><i class="iconfont iconcalendar"></i>March 18, 2020</span
+        class="post-info-item">
+      
+      <span class="post-info-item"><i class="iconfont iconfont-size"></i>6313</span>
     </div>
   </div>
-</header>
-
-<article>
-  <div class="container typo">
-    <div class="row">
-      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-        <div class="post-info text-muted">
-          
-            <!-- Author -->
-            <span class="author info">By kilic</span>
-          
-          <!-- Date -->
-          <span class="date-time info">On
-            <span class="date">2020-03-18</span>
-            <span class="time">06:06:20</span>
-          </span>
-          
-        </div>
-        <!-- Tags -->
-        
-          <div class="post-tags text-muted">
-            Tags: 
-
-<a class="tag" href="/tags/WEBASSEMBLY/">#-WebAssembly</a>
-
-
-          </div>
-        
-        <!-- Post Main Content -->
-        <div class="post-content">
-          <p>WebAssembly已经W3C新标准，虽然还没有被大范围使用，但是无疑会有很好的前景。作为一个合格的前端工程师，显然需要了解并学习一下这门新的技术。golang在1.11版本后也添加了对于WebAssembly的原生支持。我将记录golang使用WebAssembly的简单总结。</p>
-<a id="more"></a>
-
-<h2 id="What？Why？"><a href="#What？Why？" class="headerlink" title="What？Why？"></a>What？Why？</h2><h3 id="MDN对WebAssembly有如下的解释："><a href="#MDN对WebAssembly有如下的解释：" class="headerlink" title="MDN对WebAssembly有如下的解释："></a>MDN对WebAssembly有如下的解释：</h3><blockquote>
-<p>WebAssembly是一种运行在现代网络浏览器中的新型代码，并且提供新的性能特性和效果。它设计的目的不是为了手写代码而是为诸如C、C++和Rust等低级源语言提供一个高效的编译目标。</p>
-<p>你在不知道如何编写WebAssembly代码的情况下就可以使用它。WebAssembly的模块可以被导入的到一个网络app（或Node.js）中，并且暴露出供JavaScript使用的WebAssembly函数。JavaScript框架不但可以使用WebAssembly获得巨大性能优势和新特性，而且还能使得各种功能保持对网络开发者的易用性。</p>
+</section>
+    <section class="main">
+      <section class="content">
+        <h2 id="What？Why？"><a href="#What？Why？" class="headerlink" title="What？Why？"></a>What？Why？</h2><h3 id="MDN-对-WebAssembly-有如下的解释："><a href="#MDN-对-WebAssembly-有如下的解释：" class="headerlink" title="MDN 对 WebAssembly 有如下的解释："></a>MDN 对 WebAssembly 有如下的解释：</h3><blockquote>
+<p>WebAssembly 是一种运行在现代网络浏览器中的新型代码，并且提供新的性能特性和效果。它设计的目的不是为了手写代码而是为诸如 C、C++和 Rust 等低级源语言提供一个高效的编译目标。</p>
+<p>你在不知道如何编写 WebAssembly 代码的情况下就可以使用它。WebAssembly 的模块可以被导入的到一个网络 app（或 Node.js）中，并且暴露出供 JavaScript 使用的 WebAssembly 函数。JavaScript 框架不但可以使用 WebAssembly 获得巨大性能优势和新特性，而且还能使得各种功能保持对网络开发者的易用性。</p>
 </blockquote>
-<p>简单讲就是将传统的如C/C++等偏级语言编译为可以直接被浏览器运行的字节码，同时也可以为JavaScript暴露出可以直接调用的函数。</p>
-<h3 id="WebAssembly的优势："><a href="#WebAssembly的优势：" class="headerlink" title="WebAssembly的优势："></a>WebAssembly的优势：</h3><blockquote>
-<p>快速、高效、可移植——通过利用<a href="http://webassembly.org/docs/portability/#assumptions-for-efficient-execution">常见的硬件能力</a>，WebAssembly代码在不同平台上能够以接近本地速度运行。</p>
-<p>可读、可调试——WebAssembly是一门低阶语言，但是它有确实有一种人类可读的文本格式（其标准即将得到最终版本），这允许通过手工来写代码，看代码以及调试代码。</p>
-<p>保持安全——WebAssembly被限制运行在一个安全的沙箱执行环境中。像其他网络代码一样，它遵循浏览器的同源策略和授权策略。</p>
-<p>不破坏网络——WebAssembly的设计原则是与其他网络技术和谐共处并保持向后兼容。</p>
+<p>简单讲就是将传统的如 C/C++等偏级语言编译为可以直接被浏览器运行的字节码，同时也可以为 JavaScript 暴露出可以直接调用的函数。</p>
+<h3 id="WebAssembly-的优势："><a href="#WebAssembly-的优势：" class="headerlink" title="WebAssembly 的优势："></a>WebAssembly 的优势：</h3><blockquote>
+<p>快速、高效、可移植——通过利用<a href="http://webassembly.org/docs/portability/#assumptions-for-efficient-execution">常见的硬件能力</a>，WebAssembly 代码在不同平台上能够以接近本地速度运行。</p>
+<p>可读、可调试——WebAssembly 是一门低阶语言，但是它有确实有一种人类可读的文本格式（其标准即将得到最终版本），这允许通过手工来写代码，看代码以及调试代码。</p>
+<p>保持安全——WebAssembly 被限制运行在一个安全的沙箱执行环境中。像其他网络代码一样，它遵循浏览器的同源策略和授权策略。</p>
+<p>不破坏网络——WebAssembly 的设计原则是与其他网络技术和谐共处并保持向后兼容。</p>
 </blockquote>
-<p>显然，WebAssembly必然会在高性能Web应用大放异彩。</p>
+<p>显然，WebAssembly 必然会在高性能 Web 应用大放异彩。</p>
 <h2 id="环境要求"><a href="#环境要求" class="headerlink" title="环境要求"></a>环境要求</h2><p>golang version &gt;= 1.11</p>
-<h2 id="Hello-World"><a href="#Hello-World" class="headerlink" title="Hello World"></a>Hello World</h2><p>根据惯例，我们先用WebAssembly让我们的浏览器Alert一句Hello World。</p>
+<h2 id="Hello-World"><a href="#Hello-World" class="headerlink" title="Hello World"></a>Hello World</h2><p>根据惯例，我们先用 WebAssembly 让我们的浏览器 Alert 一句 Hello World。</p>
 <p>首先先来创建项目</p>
-<figure class="highlight zsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">go get -u github.com/shurcooL/goexec</span><br><span class="line">go mod init WasmTest</span><br><span class="line">mkdir static                          <span class="comment">#存储我们的wasm字节码</span></span><br><span class="line">cp <span class="string">"<span class="variable">$(go env GOROOT)</span>/misc/wasm/wasm_exec.js"</span> static</span><br><span class="line">touch main.go</span><br><span class="line">touch index.html</span><br></pre></td></tr></table></figure>
+<figure class="highlight zsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs zsh">go get -u github.com/shurcooL/goexec<br>go mod init WasmTest<br>mkdir static                          <span class="hljs-comment">#存储我们的wasm字节码</span><br>cp <span class="hljs-string">"<span class="hljs-variable">$(go env GOROOT)</span>/misc/wasm/wasm_exec.js"</span> static<br>touch main.go<br>touch index.html<br></code></pre></td></tr></table></figure>
 
 <p>项目目录如下：</p>
-<figure class="highlight coq"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">|<span class="type">-- go</span>.<span class="keyword">mod</span></span><br><span class="line">|<span class="type">-- go</span>.<span class="built_in">sum</span></span><br><span class="line">|<span class="type">-- static</span></span><br><span class="line">|   <span class="type">|-- wasm_exec</span>.js</span><br><span class="line">|<span class="type">-- index</span>.html</span><br><span class="line">`-- main.go</span><br></pre></td></tr></table></figure>
+<figure class="highlight coq"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs coq">|<span class="hljs-type">-- go</span>.<span class="hljs-keyword">mod</span><br>|<span class="hljs-type">-- go</span>.<span class="hljs-built_in">sum</span><br>|<span class="hljs-type">-- static</span><br>|   <span class="hljs-type">|-- wasm_exec</span>.js<br>|<span class="hljs-type">-- index</span>.html<br>`-- main.go<br></code></pre></td></tr></table></figure>
 
-<p>首先我们在main.go中使用<code>js.Global().Get(&#39;alert&#39;)</code>获取全局alert对象，并调用它：</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//main.go</span></span><br><span class="line"><span class="keyword">package</span> main</span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"syscall/js"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    alert := js.Global().Get(<span class="string">"alert"</span>)</span><br><span class="line">    alert.Invoke(<span class="string">"Hello World"</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>首先我们在 main.go 中使用<code>js.Global().Get(&#39;alert&#39;)</code>获取全局 alert 对象，并调用它：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-comment">//main.go</span><br><span class="hljs-keyword">package</span> main<br><span class="hljs-keyword">import</span> (<br>  <span class="hljs-string">"syscall/js"</span><br>)<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span>&#123;<br>    alert := js.Global().Get(<span class="hljs-string">"alert"</span>)<br>    alert.Invoke(<span class="hljs-string">"Hello World"</span>)<br>&#125;<br></code></pre></td></tr></table></figure>
 
-<p>然后我们将main.go编译为wasm字节码：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GOOS=js GOARCH=wasm go build -o static/main.wasm</span><br></pre></td></tr></table></figure>
+<p>然后我们将 main.go 编译为 wasm 字节码：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">GOOS=js GOARCH=wasm go build -o static/main.wasm<br></code></pre></td></tr></table></figure>
 
-<p>在index页面中添加如下脚本调用wasm</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"static/wasm_exec.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="actionscript">	<span class="keyword">const</span> go = <span class="keyword">new</span> Go()</span></span><br><span class="line"><span class="javascript">    WebAssembly.instantiateStreaming(fetch(<span class="string">"static/main.wasm"</span>), go.importObject).then(<span class="function"><span class="params">res</span>=&gt;</span>&#123;</span></span><br><span class="line">        go.run(res.instance)</span><br><span class="line">    &#125;)</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>在 index 页面中添加如下脚本调用 wasm</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"static/wasm_exec.js"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><br><span class="actionscript">  <span class="hljs-keyword">const</span> go = <span class="hljs-keyword">new</span> Go();</span><br>  WebAssembly.instantiateStreaming(<br><span class="actionscript">    fetch(<span class="hljs-string">"static/main.wasm"</span>),</span><br>    go.importObject<br><span class="javascript">  ).then(<span class="hljs-function">(<span class="hljs-params">res</span>) =&gt;</span> &#123;</span><br>    go.run(res.instance);<br>  &#125;);<br><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br></code></pre></td></tr></table></figure>
 
-<p>使用goexec启动web服务后即可在浏览器查看效果：</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">goexec <span class="string">'http.ListenAndServe(`:80`, http.FileServer(http.Dir(`.`)))'</span></span><br></pre></td></tr></table></figure>
+<p>使用 goexec 启动 web 服务后即可在浏览器查看效果：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs go">goexec <span class="hljs-string">'http.ListenAndServe(`:80`, http.FileServer(http.Dir(`.`)))'</span><br></code></pre></td></tr></table></figure>
 
-<p>为了简化操作，让我们写一个Makefile</p>
-<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">all: dev </span></span><br><span class="line">	goexec 'http.ListenAndServe(`:8080`, http.FileServer(http.Dir(`.`)))'</span><br><span class="line"></span><br><span class="line">dev : main.go</span><br><span class="line">	GO111MODULE=auto GOOS=js GOARCH=wasm go build -o static/main.wasm </span><br><span class="line">	cp <span class="string">"$(shell go env GOROOT)/misc/wasm/wasm_exec.js"</span> static</span><br></pre></td></tr></table></figure>
+<p>为了简化操作，让我们写一个 Makefile</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs makefile"><span class="hljs-section">all: dev</span><br>  goexec 'http.ListenAndServe(`:8080`, http.FileServer(http.Dir(`.`)))'<br><br>dev : main.go<br>  GO111MODULE=auto GOOS=js GOARCH=wasm go build -o static/main.wasm<br>  cp <span class="hljs-string">"$(shell go env GOROOT)/misc/wasm/wasm_exec.js"</span> static<br></code></pre></td></tr></table></figure>
 
 <p>OK！</p>
-<h2 id="DOM操作"><a href="#DOM操作" class="headerlink" title="DOM操作"></a>DOM操作</h2><p>上面的Demo中仅仅使用了golang调用JavaScript中的函数，那么我们是否可以使用golang直接做DOM操作呢？显然是可以的。</p>
+<h2 id="DOM-操作"><a href="#DOM-操作" class="headerlink" title="DOM 操作"></a>DOM 操作</h2><p>上面的 Demo 中仅仅使用了 golang 调用 JavaScript 中的函数，那么我们是否可以使用 golang 直接做 DOM 操作呢？显然是可以的。</p>
 <hr>
-<p>我们来实现一个小Demo:</p>
-<p>p标签内容随输入框改变而改变，示例如下：</p>
-<p><img src="https://i.niupic.com/images/2020/05/04/7AhC.png" alt="demo1"></p>
+<p>我们来实现一个小 Demo:</p>
+<p>p 标签内容随输入框改变而改变，示例如下：</p>
+<p><img   class="lazyload" data-original="https://i.niupic.com/images/2020/05/04/7AhC.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="demo1"></p>
 <hr>
-<p>首先我们添加一些DOM操作对象：</p>
+<p>首先我们添加一些 DOM 操作对象：</p>
 <p>index.html:</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">name</span>=<span class="string">"inputDemo"</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">button</span> <span class="attr">id</span>=<span class="string">"btn"</span>&gt;</span>OK<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span>&gt;</span>p demo<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"text"</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"inputDemo"</span> /&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"btn"</span>&gt;</span>OK<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>p demo<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span><br></code></pre></td></tr></table></figure>
 
 <p>main.go：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">package main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (<span class="string">"syscall/js"</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> (</span><br><span class="line">	<span class="built_in">document</span> = js.Global().Get(<span class="string">"document"</span>)</span><br><span class="line">	inputEl = <span class="built_in">document</span>.Call(<span class="string">"getElementById"</span>, <span class="string">"inputDemo"</span>)</span><br><span class="line">	btnEl = js.Global().Get(<span class="string">"btn"</span>)</span><br><span class="line">	pEl = <span class="built_in">document</span>.Call(<span class="string">"getElementById"</span>, <span class="string">"p1"</span>)</span><br><span class="line">)	</span><br><span class="line"></span><br><span class="line">func setText(<span class="keyword">this</span> js.Value, args []js.Value)interface &#123;&#125;&#123;</span><br><span class="line">	v := inputEl.Get(<span class="string">"value"</span>)</span><br><span class="line">	pEl.Set(<span class="string">"innerHTML"</span>, v)</span><br><span class="line">	<span class="keyword">return</span> nil</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func main()&#123;</span><br><span class="line">	done := make(chan int, <span class="number">1</span>)</span><br><span class="line">    inputEl.Call(<span class="string">"addEventListener"</span>, <span class="string">"change"</span>, js.FuncOf(setText))</span><br><span class="line">	&lt;-done</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs javascript">package main<br><br><span class="hljs-keyword">import</span> (<span class="hljs-string">"syscall/js"</span>)<br><br><span class="hljs-keyword">var</span> (<br>  <span class="hljs-built_in">document</span> = js.Global().Get(<span class="hljs-string">"document"</span>)<br>  inputEl = <span class="hljs-built_in">document</span>.Call(<span class="hljs-string">"getElementById"</span>, <span class="hljs-string">"inputDemo"</span>)<br>  btnEl = js.Global().Get(<span class="hljs-string">"btn"</span>)<br>  pEl = <span class="hljs-built_in">document</span>.Call(<span class="hljs-string">"getElementById"</span>, <span class="hljs-string">"p1"</span>)<br>)<br><br>func setText(<span class="hljs-keyword">this</span> js.Value, args []js.Value)interface &#123;&#125;&#123;<br>  v := inputEl.Get(<span class="hljs-string">"value"</span>)<br>  pEl.Set(<span class="hljs-string">"innerHTML"</span>, v)<br>  <span class="hljs-keyword">return</span> nil<br>&#125;<br><br>func main()&#123;<br>  done := make(chan int, <span class="hljs-number">1</span>)<br>    inputEl.Call(<span class="hljs-string">"addEventListener"</span>, <span class="hljs-string">"change"</span>, js.FuncOf(setText))<br>  &lt;-done<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <ol>
 <li>定义了 setText 函数，从 args[0] 获取入参，计算结果用 js.ValueOf 包装，并返回。</li>
-<li>通过<code>js.Golbal().Get(“document”)</code>来获取document元素，然后可以使用<code>documnet.getElementById(“id”)</code>获取目标dom元素</li>
-<li>通过<code>el.Call(“addEventListener”, “event”, js.FuncOf(jsFunc) )</code>添加event监听</li>
+<li>通过<code>js.Golbal().Get(“document”)</code>来获取 document 元素，然后可以使用<code>documnet.getElementById(“id”)</code>获取目标 dom 元素</li>
+<li>通过<code>el.Call(“addEventListener”, “event”, js.FuncOf(jsFunc) )</code>添加 event 监听</li>
 <li>调用<code>el.Get(“attr”)</code>获取属性</li>
-<li>调用<code>el.Set(“innerHTML”,  ……)</code>来渲染DOM</li>
+<li>调用<code>el.Set(“innerHTML”, ……)</code>来渲染 DOM</li>
 </ol>
 <blockquote>
 <p><code>js.Value</code> 可以将 Js 的值转换为 Go 的值，比如 args[0].Int()，则是转换为 Go 语言中的整型。<code>js.ValueOf</code>，则用来将 Go 的值，转换为 Js 的值。另外，注册函数的时候，使用 js.FuncOf 将函数转换为 <code>Func</code> 类型，只有 Func 类型的函数，才能在 JavaScript 中调用。</p>
 <p><code>js.Func()</code> 接受一个函数类型作为其参数，该函数的定义必须是：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">func(<span class="keyword">this</span> Value, args []Value) interface&#123;&#125;</span><br><span class="line"><span class="comment">// this 即 JavaScript 中的 this</span></span><br><span class="line"><span class="comment">// args 是在 JavaScript 中调用该函数的参数列表。</span></span><br><span class="line"><span class="comment">// 返回值需用 js.ValueOf 映射成 JavaScript 的值</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs javascript">func(<span class="hljs-keyword">this</span> Value, args []Value) interface&#123;&#125;<br><span class="hljs-comment">// this 即 JavaScript 中的 this</span><br><span class="hljs-comment">// args 是在 JavaScript 中调用该函数的参数列表。</span><br><span class="hljs-comment">// 返回值需用 js.ValueOf 映射成 JavaScript 的值</span><br></code></pre></td></tr></table></figure>
 </blockquote>
-<p>然后我们来重新make一下，打开相应页面即可看到效果。</p>
-<h2 id="注册函数"><a href="#注册函数" class="headerlink" title="注册函数"></a>注册函数</h2><p>除了调用JavaScript函数，WebAssembly还允许通过注册函数用来实现被JavaScript调用的代码，</p>
-<p>还是上面的例子，让我们通过注册函数在JavaScript中调用：</p>
-<p><img src="https://i.niupic.com/images/2020/05/04/7AhB.png" alt="demo2"></p>
+<p>然后我们来重新 make 一下，打开相应页面即可看到效果。</p>
+<h2 id="注册函数"><a href="#注册函数" class="headerlink" title="注册函数"></a>注册函数</h2><p>除了调用 JavaScript 函数，WebAssembly 还允许通过注册函数用来实现被 JavaScript 调用的代码，</p>
+<p>还是上面的例子，让我们通过注册函数在 JavaScript 中调用：</p>
+<p><img   class="lazyload" data-original="https://i.niupic.com/images/2020/05/04/7AhB.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="demo2"></p>
 <p>直接上代码：</p>
 <p>main.go:</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (<span class="string">"syscall/js"</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> (</span><br><span class="line">	document = js.Global().Get(<span class="string">"document"</span>)</span><br><span class="line">	inputEl = document.Call(<span class="string">"getElementById"</span>, <span class="string">"inputDemo"</span>)</span><br><span class="line">	btnEl = js.Global().Get(<span class="string">"btn"</span>)</span><br><span class="line">	pEl = document.Call(<span class="string">"getElementById"</span>, <span class="string">"p1"</span>)</span><br><span class="line">)	</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">setText</span><span class="params">(this js.Value, args []js.Value)</span><span class="title">interface</span></span> &#123;&#125;&#123;</span><br><span class="line">    v := args[<span class="number">0</span>].String()</span><br><span class="line">   	v = <span class="string">"wasm--"</span>+v+<span class="string">"--parse"</span></span><br><span class="line">    <span class="keyword">return</span> js.ValueOf(v)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	done := <span class="built_in">make</span>(<span class="keyword">chan</span> <span class="keyword">int</span>, <span class="number">1</span>)</span><br><span class="line">    js.Global().Set(<span class="string">"changeFn"</span>, js.FuncOf(setText))</span><br><span class="line">	&lt;-done</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-keyword">import</span> (<span class="hljs-string">"syscall/js"</span>)<br><br><span class="hljs-keyword">var</span> (<br>  document = js.Global().Get(<span class="hljs-string">"document"</span>)<br>  inputEl = document.Call(<span class="hljs-string">"getElementById"</span>, <span class="hljs-string">"inputDemo"</span>)<br>  btnEl = js.Global().Get(<span class="hljs-string">"btn"</span>)<br>  pEl = document.Call(<span class="hljs-string">"getElementById"</span>, <span class="hljs-string">"p1"</span>)<br>)<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">setText</span><span class="hljs-params">(this js.Value, args []js.Value)</span><span class="hljs-title">interface</span></span> &#123;&#125;&#123;<br>    v := args[<span class="hljs-number">0</span>].String()<br>   	v = <span class="hljs-string">"wasm--"</span>+v+<span class="hljs-string">"--parse"</span><br>    <span class="hljs-keyword">return</span> js.ValueOf(v)<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span>&#123;<br>  done := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">chan</span> <span class="hljs-keyword">int</span>, <span class="hljs-number">1</span>)<br>    js.Global().Set(<span class="hljs-string">"changeFn"</span>, js.FuncOf(setText))<br>  &lt;-done<br>&#125;<br></code></pre></td></tr></table></figure>
 
-<p>我们吧函数转换为js函数，然后将它注册到全局，在JavaScript脚本中可以被直接当做JavaScript的函数调用</p>
-<p>下面我们看一下JavaScript的代码：</p>
+<p>我们吧函数转换为 js 函数，然后将它注册到全局，在 JavaScript 脚本中可以被直接当做 JavaScript 的函数调用</p>
+<p>下面我们看一下 JavaScript 的代码：</p>
 <p>index.html</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="actionscript">    <span class="keyword">const</span> go = <span class="keyword">new</span> Go()</span></span><br><span class="line"><span class="javascript">    WebAssembly.instantiateStreaming(fetch(<span class="string">"static/main.wasm"</span>), go.importObject).then(<span class="function"><span class="params">res</span> =&gt;</span> go.run(res.instance))</span></span><br><span class="line"></span><br><span class="line"><span class="javascript">	<span class="keyword">let</span> btn = <span class="built_in">document</span>.querySelector(<span class="string">"#btn"</span>)</span></span><br><span class="line"><span class="javascript">    <span class="keyword">let</span> input = <span class="built_in">document</span>.querySelector(<span class="string">"#inputDemo"</span>)</span></span><br><span class="line"><span class="javascript">    <span class="keyword">let</span> p1 = <span class="built_in">document</span>.querySelector(<span class="string">"#p1"</span>)</span></span><br><span class="line">    </span><br><span class="line"><span class="actionscript">    btn.addEventListener(<span class="string">"click"</span>, () =&gt; &#123;</span></span><br><span class="line"><span class="javascript">      <span class="keyword">let</span> v = input.value</span></span><br><span class="line">      p1.innerHTML = changeFn(v)</span><br><span class="line">    &#125;)</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><br><span class="actionscript">  <span class="hljs-keyword">const</span> go = <span class="hljs-keyword">new</span> Go();</span><br>  WebAssembly.instantiateStreaming(<br><span class="actionscript">    fetch(<span class="hljs-string">"static/main.wasm"</span>),</span><br>    go.importObject<br><span class="javascript">  ).then(<span class="hljs-function">(<span class="hljs-params">res</span>) =&gt;</span> go.run(res.instance));</span><br><br><span class="javascript">  <span class="hljs-keyword">let</span> btn = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#btn"</span>);</span><br><span class="javascript">  <span class="hljs-keyword">let</span> input = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#inputDemo"</span>);</span><br><span class="javascript">  <span class="hljs-keyword">let</span> p1 = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#p1"</span>);</span><br><br><span class="actionscript">  btn.addEventListener(<span class="hljs-string">"click"</span>, () =&gt; &#123;</span><br><span class="javascript">    <span class="hljs-keyword">let</span> v = input.value;</span><br>    p1.innerHTML = changeFn(v);<br>  &#125;);<br><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br></code></pre></td></tr></table></figure>
 
-
-
-<h2 id="回调函数"><a href="#回调函数" class="headerlink" title="回调函数"></a>回调函数</h2><p>在JavaScript中，异步显然是一个无法避免的话题，而golang可以通过协程，帮助我们很好的实现异步操作。</p>
+<h2 id="回调函数"><a href="#回调函数" class="headerlink" title="回调函数"></a>回调函数</h2><p>在 JavaScript 中，异步显然是一个无法避免的话题，而 golang 可以通过协程，帮助我们很好的实现异步操作。</p>
 <p>下面我们假设存在一个耗时操作：</p>
 <p>maim.go:</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"time"</span></span><br><span class="line">	<span class="string">"syscall/js"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">timeConsuming</span><span class="params">(this js.Value, args []js.Value)</span><span class="title">interface</span></span>&#123;&#125;&#123;</span><br><span class="line">	callback := args[<span class="built_in">len</span>(args)<span class="number">-1</span>]</span><br><span class="line">	<span class="keyword">go</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span>&#123;</span><br><span class="line">        v := args[<span class="number">0</span>].String()</span><br><span class="line">		time.Sleep(<span class="number">5</span> * time.Second)</span><br><span class="line">		callback.Invoke(v)</span><br><span class="line">	&#125;()</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	done := <span class="built_in">make</span>(<span class="keyword">chan</span> <span class="keyword">int</span>, <span class="number">1</span>)</span><br><span class="line">    js.Global().Set(<span class="string">"timeConsuming"</span>, js.FuncOf(timeConsuming))</span><br><span class="line">	&lt;-done</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-keyword">import</span> (<br>  <span class="hljs-string">"time"</span><br>  <span class="hljs-string">"syscall/js"</span><br>)<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">timeConsuming</span><span class="hljs-params">(this js.Value, args []js.Value)</span><span class="hljs-title">interface</span></span>&#123;&#125;&#123;<br>  callback := args[<span class="hljs-built_in">len</span>(args)<span class="hljs-number">-1</span>]<br>  <span class="hljs-keyword">go</span> <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span>&#123;<br>        v := args[<span class="hljs-number">0</span>].String()<br>    time.Sleep(<span class="hljs-number">5</span> * time.Second)<br>    callback.Invoke(v)<br>  &#125;()<br>  <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span><br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span>&#123;<br>  done := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">chan</span> <span class="hljs-keyword">int</span>, <span class="hljs-number">1</span>)<br>    js.Global().Set(<span class="hljs-string">"timeConsuming"</span>, js.FuncOf(timeConsuming))<br>  &lt;-done<br>&#125;<br></code></pre></td></tr></table></figure>
 
-<p>如上，在goroutine中对调用传递的回调函数，我们将回调函数默认作为最后一个参数来调用wasm函数，同时我们在使用也可以通过向Invoke传参实现数据的传递。</p>
-<p>接下来看index.html:</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="actionscript">    <span class="keyword">const</span> go = <span class="keyword">new</span> Go()</span></span><br><span class="line"><span class="javascript">    WebAssembly.instantiateStreaming(fetch(<span class="string">"static/main.wasm"</span>), go.importObject).then(<span class="function"><span class="params">res</span> =&gt;</span> go.run(res.instance))</span></span><br><span class="line"></span><br><span class="line"><span class="javascript">    <span class="keyword">let</span> btn = <span class="built_in">document</span>.querySelector(<span class="string">"#btn"</span>)</span></span><br><span class="line"><span class="javascript">    <span class="keyword">let</span> input = <span class="built_in">document</span>.querySelector(<span class="string">"#inputDemo"</span>)</span></span><br><span class="line"><span class="javascript">    <span class="keyword">let</span> p1 = <span class="built_in">document</span>.querySelector(<span class="string">"#p1"</span>)</span></span><br><span class="line"></span><br><span class="line"><span class="actionscript">    btn.addEventListener(<span class="string">"click"</span>, () =&gt; &#123;</span></span><br><span class="line"><span class="javascript">      <span class="keyword">let</span> v = input.value</span></span><br><span class="line"><span class="actionscript">      p1.innerHTML = <span class="string">"wait 5s"</span></span></span><br><span class="line">      timeConsuming(v, val =&gt; &#123;</span><br><span class="line">        p1.innerHTML = val;</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;)</span><br><span class="line">  <span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-
+<p>如上，在 goroutine 中对调用传递的回调函数，我们将回调函数默认作为最后一个参数来调用 wasm 函数，同时我们在使用也可以通过向 Invoke 传参实现数据的传递。</p>
+<p>接下来看 index.html:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><br><span class="actionscript">  <span class="hljs-keyword">const</span> go = <span class="hljs-keyword">new</span> Go();</span><br>  WebAssembly.instantiateStreaming(<br><span class="actionscript">    fetch(<span class="hljs-string">"static/main.wasm"</span>),</span><br>    go.importObject<br><span class="javascript">  ).then(<span class="hljs-function">(<span class="hljs-params">res</span>) =&gt;</span> go.run(res.instance));</span><br><br><span class="javascript">  <span class="hljs-keyword">let</span> btn = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#btn"</span>);</span><br><span class="javascript">  <span class="hljs-keyword">let</span> input = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#inputDemo"</span>);</span><br><span class="javascript">  <span class="hljs-keyword">let</span> p1 = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#p1"</span>);</span><br><br><span class="actionscript">  btn.addEventListener(<span class="hljs-string">"click"</span>, () =&gt; &#123;</span><br><span class="javascript">    <span class="hljs-keyword">let</span> v = input.value;</span><br><span class="actionscript">    p1.innerHTML = <span class="hljs-string">"wait 5s"</span>;</span><br>    timeConsuming(v, (val) =&gt; &#123;<br>      p1.innerHTML = val;<br>    &#125;);<br>  &#125;);<br><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br></code></pre></td></tr></table></figure>
 
 <h2 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h2><h3 id="工具框架"><a href="#工具框架" class="headerlink" title="工具框架"></a>工具框架</h3><ul>
 <li>WebAssembly 的二进制分析工具 <a href="https://wasdk.github.io/wasmcodeexplorer/">WebAssembly Code Explorer</a></li>
-<li>使用NodeJs 或浏览器测试 Go Wasm 代码 <a href="https://github.com/golang/go/wiki/WebAssembly#executing-webassembly-with-nodejs">Github Wiki</a></li>
+<li>使用 NodeJs 或浏览器测试 Go Wasm 代码 <a href="https://github.com/golang/go/wiki/WebAssembly#executing-webassembly-with-nodejs">Github Wiki</a></li>
 <li>借鉴 Vue 实现的 Golang WebAssembly 前端框架 <a href="https://www.vugu.org/doc/start">Vugu</a>，完全使用 Go，不用写任何的 JavaScript 代码。</li>
 </ul>
 <h3 id="Demo-项目"><a href="#Demo-项目" class="headerlink" title="Demo/项目"></a>Demo/项目</h3><ul>
 <li>使用 Go Assembly 前端渲染的一些<a href="https://stdiopt.github.io/gowasm-experiments/">例子</a></li>
 <li><a href="https://github.com/dave/jsgo">jsgo</a> 这个项目汇聚一些小而精的项目，包括 <a href="https://jsgo.io/hajimehoshi/ebiten/examples/2048">2048</a>，<a href="https://jsgo.io/hajimehoshi/ebiten/examples/blocks">俄罗斯方块</a>等游戏，还有证明 Go 可以完整开发前端项目的 <a href="https://jsgo.io/dave/todomvc">TodoMVC</a></li>
 </ul>
-<h2 id="快速链接："><a href="#快速链接：" class="headerlink" title="快速链接："></a>快速链接：</h2><p><a href="https://github.com/golang/go/wiki/WebAssembly">WebAssembly官方文档</a></p>
+<h2 id="快速链接："><a href="#快速链接：" class="headerlink" title="快速链接："></a>快速链接：</h2><p><a href="https://github.com/golang/go/wiki/WebAssembly">WebAssembly 官方文档</a></p>
 <p><a href="https://developer.mozilla.org/zh-CN/docs/WebAssembly">WASM MDN</a></p>
+      </section>
+      <section class="extra">
+        
+        <ul class="copyright">
+  
+  <li><strong>本文作者：</strong>kilic</li>
+  <li><strong>本文链接：</strong><a href="http://kilic.site/2020/03/18/%E5%88%9D%E8%AF%86GO-WEBASSEMBLY/index.html">http://kilic.site/2020/03/18/%E5%88%9D%E8%AF%86GO-WEBASSEMBLY/index.html</a></li>
+  <li><strong>版权声明：</strong>本博客所有文章均采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh"
+      rel="external nofollow" target="_blank"> BY-NC-SA </a>许可协议，转载请注明出处！</li>
+  
+</ul>
+        
+        
+        <section class="donate">
+  <div class="qrcode">
+    <img   class="lazyload" data-original="/images/others/alipay.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" >
+  </div>
+  <div class="icon">
+    <a href="javascript:;" id="alipay"><i class="iconfont iconalipay"></i></a>
+    <a href="javascript:;" id="wechat"><i class="iconfont iconwechat-fill"></i></a>
+  </div>
+</section>
+        
+        
+  <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/WEBASSEMBLY/" rel="tag">-WebAssembly</a></li></ul>
 
-        </div>
-      </div>
-    </div>
+        
+<nav class="nav">
+  
+    <a href="/2020/03/22/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%EF%BC%9F/"><i class="iconfont iconleft"></i>函数式编程？</a>
+  
+  
+    <a href="/2020/03/16/WEBPACK%E5%BF%AB%E9%80%9F%E9%85%8D%E7%BD%AE/">Webpack快速配置<i class="iconfont iconright"></i></a>
+  
+</nav>
+
+      </section>
+      
+      <section class="comments">
+  
+  <div class="btn" id="comments-btn">查看评论</div>
+  
+  
+</section>
+      
+    </section>
   </div>
 </article>
-
-
-
-    <!-- Footer -->
-<footer>
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-        <p class="copyright text-muted">
-          Theme By <a target="_blank" href="https://github.com/levblanc">Levblanc.</a>
-          Inspired By <a target="_blank" href="https://github.com/klugjo/hexo-theme-clean-blog">Clean Blog.</a>
-        <p class="copyright text-muted">
-          Powered By <a target="_blank" href="https://hexo.io/">Hexo.</a>
-        </p>
-      </div>
-    </div>
   </div>
+</main>
+  <footer class="footer">
+  <div class="footer-social">
+    
+    
+    
+    
+    
+    <a href="tencent://message/?Menu=yes&uin=102483678 " target="_blank" onMouseOver="this.style.color= '#12B7F5'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconQQ "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="javascript:; " target="_blank" onMouseOver="this.style.color= '#09BB07'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconwechat-fill "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="https://www.instagram.com/kilicmu3/ " target="_blank" onMouseOver="this.style.color= '#DA2E76'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconinstagram "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="https://github.com/kilicmu " target="_blank" onMouseOver="this.style.color= '#24292E'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  icongithub-fill "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="kilicmu3389@outlook.com " target="_blank" onMouseOver="this.style.color='#FFBE5B'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconmail"></i>
+    </a>
+    
+  </div>
+  <div class="footer-copyright"><p>Powered by <a target="_blank" href="https://hexo.io">Hexo</a>  |  Theme - <a target="_blank" href="https://github.com/izhaoo/hexo-theme-zhaoo">zhaoo</a></p></div>
 </footer>
+  
+      <div class="fab fab-plus">
+    <i class="iconfont iconplus"></i>
+  </div>
+  
+  <div class="fab fab-daovoice">
+    <i class="iconfont iconcomment"></i>
+  </div>
+  
+  <div class="fab fab-up">
+    <i class="iconfont iconcaret-up"></i>
+  </div>
+  
+</body>
 
 
-    <!-- After Footer Scripts -->
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
 
-<script src="/js/highlight.pack.js"></script>
+
+
+
+
+
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+
+
+
+
+
+<script src="https://cdn.bootcss.com/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+
+
+
+
+
+
+<script src="/js/utils.js"></script>
+<script src="/js/modules.js"></script>
+<script src="/js/zui.js"></script>
+<script src="/js/script.js"></script>
+
+
+
+
 
 <script>
-  document.addEventListener("DOMContentLoaded", function(event) {
-    var codeBlocks = Array.prototype.slice.call(document.getElementsByTagName('pre'))
-    codeBlocks.forEach(function(block, index) {
-      hljs.highlightBlock(block);
-    });
+  (function (i, s, o, g, r, a, m) {
+    i["DaoVoiceObject"] = r;
+    i[r] = i[r] || function () {
+      (i[r].q = i[r].q || []).push(arguments)
+    }, i[r].l = 1 * new Date();
+    a = s.createElement(o), m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    a.charset = "utf-8";
+    m.parentNode.insertBefore(a, m)
+  })(window, document, "script", ('https:' == document.location.protocol ? 'https:' : 'http:') +
+    "//widget.daovoice.io/widget/0f81ff2f.js", "daovoice")
+  daovoice('init', {
+    app_id: "abcdefg"
+  }, {
+    launcher: {
+      disableLauncherIcon: true,
+    },
   });
+  daovoice('update');
 </script>
 
-  </body>
-</html>
 
+
+<script>
+  (function () {
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    } else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+<script>
+  var _hmt = _hmt || [];
+  (function () {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?4c204d8bc027a0455b5fc642ac334ca8";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+
+
+
+
+
+
+
+
+
+</html>

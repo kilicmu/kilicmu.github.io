@@ -1,189 +1,403 @@
+
+
 <!DOCTYPE html>
-<html>
-  <!-- Html Head Tag-->
-  <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="">
-  <meta name="author" content="kilic">
-  <!-- Open Graph Data -->
-  <meta property="og:title" content="Koa-Body文件上传方案"/>
-  <meta property="og:description" content="咸鱼，无业游民" />
-  <meta property="og:site_name" content="kilic の 部落格"/>
-  <meta property="og:type" content="article" />
-  <meta property="og:image" content="http://kilic.site"/>
+<html lang="zh-CN">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Koa-Body文件上传方案 - kilic の 部落格</title>
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="google" content="notranslate" />
+
   
-    <link rel="alternate" href="/atom.xml" title="kilic の 部落格" type="application/atom+xml">
+  <meta name="keywords" content="golang,前端,移动端,区块链,智能合约,混吃等死,nodejs,运维,python"> 
+  
+  <meta name="description" content="需要写一个上传文件的测试接口，用了koa-body，发..."> 
+  
+  <meta name="author" content="kilic"> 
+
+  
+    <link rel="icon" href="/images/icons/favicon-16x16.png" type="image/png" sizes="16x16">
   
   
-    <link rel="icon" href="/favicon.png">
+    <link rel="icon" href="/images/icons/favicon-32x32.png" type="image/png" sizes="32x32">
+  
+  
+    <link rel="apple-touch-icon" href="/images/icons/apple-touch-icon.png" sizes="180x180">
+  
+  
+    <meta rel="mask-icon" href="/images/icons/stun-logo.svg" color="#333333">
+  
+  
+    <meta rel="msapplication-TileImage" content="/images/icons/favicon-144x144.png">
+    <meta rel="msapplication-TileColor" content="#000000">
   
 
-  <!-- Site Title -->
-  <title>kilic の 部落格</title>
-
-  <!-- Bootstrap CSS -->
   
-<link rel="stylesheet" href="/css/bootstrap.min.css">
+<link rel="stylesheet" href="/css/style.css">
 
-  <!-- Custom CSS -->
+
   
   
-<link rel="stylesheet" href="/css/style.dark.css">
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1445822_h1619vhl1nr.css">
 
-
-  <!-- Google Analytics -->
   
 
+  
+  
+  
+<link rel="stylesheet" href="https://cdn.bootcss.com/fancybox/3.5.7/jquery.fancybox.min.css">
+
+  
+
+  
+  
+  
+<link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.18.1/styles/xcode.min.css">
+
+  
+
+  <script>
+    var CONFIG = window.CONFIG || {};
+    var ZHAOO = window.ZHAOO || {};
+    CONFIG = {
+      isHome: false,
+      fancybox: true,
+      pjax: false,
+      lazyload: {
+        enable: true,
+        loadingImage: '',
+      },
+      donate: {
+        enable: true,
+        alipay: '/images/others/alipay.jpg',
+        wechat: '/images/others/wechat.jpg'
+      },
+      motto: {
+        api: '',
+        default: 'fading is true while flowering is past。'
+      },
+      galleries: {
+        enable: true
+      },
+      fab: {
+        enable: true,
+        alwaysShow: false
+      },
+      carrier: {
+        enable: true
+      },
+      daovoice: {
+        enable: true
+      }
+    }
+  </script>
+
+  
+
+  
 <meta name="generator" content="Hexo 4.2.0"></head>
+<body class="lock-screen">
+  <div class="loading"></div>
+  
 
-  <body>
-    <!-- Page Header -->
 
+<nav class="navbar">
+  <div class="left"></div>
+  <div class="center">Koa-Body文件上传方案</div>
+  <div class="right">
+    <i class="iconfont iconmenu j-navbar-menu"></i>
+  </div>
+</nav>
 
-<header class="site-header header-background" style="background-image: url(/img/m2.jpg)">
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-        <div class="page-title with-background-image">
-          <p class="title">Koa-Body文件上传方案</p>
-          <p class="subtitle"></p>
-        </div>
-        <div class="site-menu with-background-image">
-          <ul>
-            
-              <li>
-                <a href="/">
-                  
-                  Home
-                  
-                </a>
-              </li>
-            
-              <li>
-                <a href="/archives">
-                  
-                  Archives
-                  
-                </a>
-              </li>
-            
-              <li>
-                <a href="https://github.com/kilicmu">
-                  
-                  Github
-                  
-                </a>
-              </li>
-            
-              <li>
-                <a href="mailto:kilicmu3389@outlook.com">
-                  
-                  Email
-                  
-                </a>
-              </li>
-            
-          </ul>
-        </div>
-      </div>
+  <nav class="menu">
+  <div class="menu-wrap">
+    <div class="menu-close">
+      <i class="iconfont iconbaseline-close-px"></i>
+    </div>
+    <ul class="menu-content">
+      
+      
+      
+      
+      <li class="menu-item"><a href="/ " class="underline"> 首页</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/galleries " class="underline"> 摄影</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/archives " class="underline"> 归档</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/tags " class="underline"> 标签</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/categories " class="underline"> 分类</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/about " class="underline"> 关于</a></li>
+      
+    </ul>
+    <div class="menu-copyright"><p>Powered by <a target="_blank" href="https://hexo.io">Hexo</a>  |  Theme - <a target="_blank" href="https://github.com/izhaoo/hexo-theme-zhaoo">zhaoo</a></p></div>
+  </div>
+</nav>
+  <main id="main">
+  <div class="container" id="container">
+    <article class="article">
+  <div class="wrap">
+    <section class="head">
+  <img   class="lazyload" data-original="/images/theme/post-image.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  draggable="false">
+  <div class="head-mask">
+    <h1 class="head-title">Koa-Body文件上传方案</h1>
+    <div class="head-info">
+      <span class="post-info-item"><i class="iconfont iconcalendar"></i>April 26, 2020</span
+        class="post-info-item">
+      
+      <span class="post-info-item"><i class="iconfont iconfont-size"></i>2115</span>
     </div>
   </div>
-</header>
-
-<article>
-  <div class="container typo">
-    <div class="row">
-      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-        <div class="post-info text-muted">
-          
-            <!-- Author -->
-            <span class="author info">By kilic</span>
-          
-          <!-- Date -->
-          <span class="date-time info">On
-            <span class="date">2020-04-26</span>
-            <span class="time">06:06:20</span>
-          </span>
-          
-        </div>
-        <!-- Tags -->
-        
-          <div class="post-tags text-muted">
-            Tags: 
-
-<a class="tag" href="/tags/NODEJS/">#nodejs</a>
-
-
-          </div>
-        
-        <!-- Post Main Content -->
-        <div class="post-content">
-          <p>需要写一个上传文件的测试接口，用了koa-body，发现koa-body的文档有些简单，兜兜转转浪费了一些时间，所以决定整理一下这个过程。</p>
-<a id="more"></a>
-
-<h3 id="设置中间件"><a href="#设置中间件" class="headerlink" title="设置中间件"></a>设置中间件</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// app.js</span></span><br><span class="line">app.use(<span class="built_in">require</span>(<span class="string">'koa-static'</span>)(__dirname + <span class="string">'/public'</span>));</span><br><span class="line"></span><br><span class="line">app.use(<span class="built_in">require</span>(<span class="string">'koa-body'</span>)(&#123;</span><br><span class="line">    multipart: <span class="literal">true</span>,</span><br><span class="line">    formidable: &#123;</span><br><span class="line">      maxFileSize: <span class="number">200</span> * <span class="number">1024</span> * <span class="number">1024</span>, <span class="comment">// 设置上传文件大小</span></span><br><span class="line">      uploadDir: path.resolve(__dirname, <span class="string">"/public/upload"</span>),	<span class="comment">//设置文件的上传目录</span></span><br><span class="line">      onFileBegin: <span class="function">(<span class="params">name, file</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="comment">// TODO</span></span><br><span class="line">      &#125;,</span><br><span class="line">      onError:<span class="function">(<span class="params">err</span>)=&gt;</span>&#123;</span><br><span class="line">  		<span class="comment">// TODO handle error</span></span><br><span class="line">	  &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;));</span><br></pre></td></tr></table></figure>
+</section>
+    <section class="main">
+      <section class="content">
+        <h3 id="设置中间件"><a href="#设置中间件" class="headerlink" title="设置中间件"></a>设置中间件</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">// app.js</span><br>app.use(<span class="hljs-built_in">require</span>(<span class="hljs-string">'koa-static'</span>)(__dirname + <span class="hljs-string">'/public'</span>));<br><br>app.use(<span class="hljs-built_in">require</span>(<span class="hljs-string">'koa-body'</span>)(&#123;<br>    multipart: <span class="hljs-literal">true</span>,<br>    formidable: &#123;<br>      maxFileSize: <span class="hljs-number">200</span> * <span class="hljs-number">1024</span> * <span class="hljs-number">1024</span>, <span class="hljs-comment">// 设置上传文件大小</span><br>      uploadDir: path.resolve(__dirname, <span class="hljs-string">"/public/upload"</span>),	<span class="hljs-comment">//设置文件的上传目录</span><br>      onFileBegin: <span class="hljs-function">(<span class="hljs-params">name, file</span>) =&gt;</span> &#123;<br>        <span class="hljs-comment">// TODO</span><br>      &#125;,<br>      onError:<span class="hljs-function">(<span class="hljs-params">err</span>)=&gt;</span>&#123;<br>  		<span class="hljs-comment">// TODO handle error</span><br>    &#125;<br>    &#125;<br>&#125;));<br></code></pre></td></tr></table></figure>
 
 <p>上面的代码添加了静态资源目录<code>/public</code>，我们将可以直接访问文件资源。</p>
 <p>继续添加<code>koa-body</code>解析post的内容，并暂且推迟onFileBegin的实现。</p>
 <h2 id="一些工具函数"><a href="#一些工具函数" class="headerlink" title="一些工具函数"></a>一些工具函数</h2><p>接下来我们做一个生成文件夹的工具函数：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// utils/fileUtils.js</span></span><br><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">"fs"</span>);</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">"path"</span>);</span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  getStampDirName() &#123;</span><br><span class="line">    <span class="keyword">const</span> date = <span class="keyword">new</span> <span class="built_in">Date</span>();</span><br><span class="line">    <span class="keyword">let</span> month = <span class="built_in">Number</span>(date.getMonth()) + <span class="number">1</span>;</span><br><span class="line">    month = month.toString().length &gt; <span class="number">1</span> ? month : <span class="string">`0<span class="subst">$&#123;month&#125;</span>`</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">`<span class="subst">$&#123;date.getFullYear()&#125;</span><span class="subst">$&#123;month&#125;</span><span class="subst">$&#123;date.getDate()&#125;</span>`</span>;</span><br><span class="line">  &#125;,</span><br><span class="line">  checkDirExit(dir) &#123;</span><br><span class="line">    <span class="keyword">if</span> (!fs.existsSync(dir)) &#123;</span><br><span class="line">      fs.mkdir(dir);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  getFileExt(name) &#123;</span><br><span class="line">    <span class="keyword">const</span> ext = name.split(<span class="string">"."</span>);</span><br><span class="line">    <span class="keyword">return</span> ext[ext.length - <span class="number">1</span>];</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">// utils/fileUtils.js</span><br><span class="hljs-keyword">const</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">"fs"</span>);<br><span class="hljs-keyword">const</span> path = <span class="hljs-built_in">require</span>(<span class="hljs-string">"path"</span>);<br><span class="hljs-built_in">module</span>.exports = &#123;<br>  getStampDirName() &#123;<br>    <span class="hljs-keyword">const</span> date = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>();<br>    <span class="hljs-keyword">let</span> month = <span class="hljs-built_in">Number</span>(date.getMonth()) + <span class="hljs-number">1</span>;<br>    month = month.toString().length &gt; <span class="hljs-number">1</span> ? month : <span class="hljs-string">`0<span class="hljs-subst">$&#123;month&#125;</span>`</span>;<br>    <span class="hljs-keyword">return</span> <span class="hljs-string">`<span class="hljs-subst">$&#123;date.getFullYear()&#125;</span><span class="hljs-subst">$&#123;month&#125;</span><span class="hljs-subst">$&#123;date.getDate()&#125;</span>`</span>;<br>  &#125;,<br>  checkDirExit(dir) &#123;<br>    <span class="hljs-keyword">if</span> (!fs.existsSync(dir)) &#123;<br>      fs.mkdir(dir);<br>    &#125;<br>  &#125;,<br>  getFileExt(name) &#123;<br>    <span class="hljs-keyword">const</span> ext = name.split(<span class="hljs-string">"."</span>);<br>    <span class="hljs-keyword">return</span> ext[ext.length - <span class="hljs-number">1</span>];<br>  &#125;,<br>&#125;;<br></code></pre></td></tr></table></figure>
 
 <p>getStampDirName：用来获取当期应存储文件的目录。</p>
 <p>checkDirExit：用来校验目录的存在，若不存在则新建目录。</p>
 <p>getFileExt：获取文件的扩展名。</p>
-<h2 id="onFileBegin-属性完善"><a href="#onFileBegin-属性完善" class="headerlink" title="onFileBegin 属性完善"></a>onFileBegin 属性完善</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// app.js</span></span><br><span class="line"><span class="keyword">const</span> &#123;</span><br><span class="line">  getStampDirName,</span><br><span class="line">  checkDirExit,</span><br><span class="line">  getFileExt,</span><br><span class="line">&#125; = <span class="built_in">require</span>(<span class="string">"./utils/fileUtils"</span>);</span><br><span class="line"></span><br><span class="line">onFileBegin:<span class="function">(<span class="params">name,file</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> ext =getFileExt(file.name);</span><br><span class="line">  <span class="keyword">const</span> dir = path.join(__dirname,<span class="string">`public/upload/<span class="subst">$&#123;getStampDirName()&#125;</span>`</span>);</span><br><span class="line">  checkDirExist(dir);</span><br><span class="line">  file.path = <span class="string">`<span class="subst">$&#123;dir&#125;</span>/<span class="subst">$&#123;getFileName(ext)&#125;</span>`</span>;</span><br><span class="line">  app.context.uploadpath = app.context.uploadpath</span><br><span class="line">  ? app.context.uploadpath</span><br><span class="line">  : &#123;&#125;;</span><br><span class="line">  app.context.uploadpath[name] = <span class="string">`/upload/<span class="subst">$&#123;dirName&#125;</span>/<span class="subst">$&#123;fileName&#125;</span>`</span>;</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+<h2 id="onFileBegin-属性完善"><a href="#onFileBegin-属性完善" class="headerlink" title="onFileBegin 属性完善"></a>onFileBegin 属性完善</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">// app.js</span><br><span class="hljs-keyword">const</span> &#123;<br>  getStampDirName,<br>  checkDirExit,<br>  getFileExt,<br>&#125; = <span class="hljs-built_in">require</span>(<span class="hljs-string">"./utils/fileUtils"</span>);<br><br>onFileBegin:<span class="hljs-function">(<span class="hljs-params">name,file</span>) =&gt;</span> &#123;<br>  <span class="hljs-keyword">const</span> ext =getFileExt(file.name);<br>  <span class="hljs-keyword">const</span> dir = path.join(__dirname,<span class="hljs-string">`public/upload/<span class="hljs-subst">$&#123;getStampDirName()&#125;</span>`</span>);<br>  checkDirExist(dir);<br>  file.path = <span class="hljs-string">`<span class="hljs-subst">$&#123;dir&#125;</span>/<span class="hljs-subst">$&#123;getFileName(ext)&#125;</span>`</span>;<br>  app.context.uploadpath = app.context.uploadpath<br>  ? app.context.uploadpath<br>  : &#123;&#125;;<br>  app.context.uploadpath[name] = <span class="hljs-string">`/upload/<span class="hljs-subst">$&#123;dirName&#125;</span>/<span class="hljs-subst">$&#123;fileName&#125;</span>`</span>;<br>&#125;,<br></code></pre></td></tr></table></figure>
 
 <p>在文件上传结束后，我们需要将上传文件的路径返回给前端。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">router.post(<span class="string">"/api/uploadHeadPic"</span>, <span class="keyword">async</span> ctx =&gt; &#123;</span><br><span class="line">  ctx.body = ctx.uploadpath;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs javascript">router.post(<span class="hljs-string">"/api/uploadHeadPic"</span>, <span class="hljs-keyword">async</span> ctx =&gt; &#123;<br>  ctx.body = ctx.uploadpath;<br>&#125;);<br></code></pre></td></tr></table></figure>
 
-<h2 id="前端获取文件路径"><a href="#前端获取文件路径" class="headerlink" title="前端获取文件路径"></a>前端获取文件路径</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">handleSuccessful(resp) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"filepath: "</span>, resp.file);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="前端获取文件路径"><a href="#前端获取文件路径" class="headerlink" title="前端获取文件路径"></a>前端获取文件路径</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs javascript">handleSuccessful(resp) &#123;<br>    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"filepath: "</span>, resp.file);<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <p>效果：</p>
-<p><img src="https://i.niupic.com/images/2020/05/04/7zZK.png" alt="前端获取路径"></p>
+<p><img   class="lazyload" data-original="https://i.niupic.com/images/2020/05/04/7zZK.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="前端获取路径"></p>
 <p>服务端：</p>
-<p><img src="https://i.niupic.com/images/2020/05/04/7zZM.png" alt="服务端路径"></p>
+<p><img   class="lazyload" data-original="https://i.niupic.com/images/2020/05/04/7zZM.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="服务端路径"></p>
 <p>以上。</p>
+      </section>
+      <section class="extra">
+        
+        <ul class="copyright">
+  
+  <li><strong>本文作者：</strong>kilic</li>
+  <li><strong>本文链接：</strong><a href="http://kilic.site/2020/04/26/KOA-BODY%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%96%B9%E6%A1%88/index.html">http://kilic.site/2020/04/26/KOA-BODY%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%96%B9%E6%A1%88/index.html</a></li>
+  <li><strong>版权声明：</strong>本博客所有文章均采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh"
+      rel="external nofollow" target="_blank"> BY-NC-SA </a>许可协议，转载请注明出处！</li>
+  
+</ul>
+        
+        
+        <section class="donate">
+  <div class="qrcode">
+    <img   class="lazyload" data-original="/images/others/alipay.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" >
+  </div>
+  <div class="icon">
+    <a href="javascript:;" id="alipay"><i class="iconfont iconalipay"></i></a>
+    <a href="javascript:;" id="wechat"><i class="iconfont iconwechat-fill"></i></a>
+  </div>
+</section>
+        
+        
+  <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/NODEJS/" rel="tag">nodejs</a></li></ul>
 
-        </div>
-      </div>
-    </div>
+        
+<nav class="nav">
+  
+    <a href="/2020/05/06/GETH%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C/"><i class="iconfont iconleft"></i>Geth常用操作</a>
+  
+  
+    <a href="/2020/03/22/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%EF%BC%9F/">函数式编程？<i class="iconfont iconright"></i></a>
+  
+</nav>
+
+      </section>
+      
+      <section class="comments">
+  
+  <div class="btn" id="comments-btn">查看评论</div>
+  
+  
+</section>
+      
+    </section>
   </div>
 </article>
-
-
-
-    <!-- Footer -->
-<footer>
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-        <p class="copyright text-muted">
-          Theme By <a target="_blank" href="https://github.com/levblanc">Levblanc.</a>
-          Inspired By <a target="_blank" href="https://github.com/klugjo/hexo-theme-clean-blog">Clean Blog.</a>
-        <p class="copyright text-muted">
-          Powered By <a target="_blank" href="https://hexo.io/">Hexo.</a>
-        </p>
-      </div>
-    </div>
   </div>
+</main>
+  <footer class="footer">
+  <div class="footer-social">
+    
+    
+    
+    
+    
+    <a href="tencent://message/?Menu=yes&uin=102483678 " target="_blank" onMouseOver="this.style.color= '#12B7F5'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconQQ "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="javascript:; " target="_blank" onMouseOver="this.style.color= '#09BB07'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconwechat-fill "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="https://www.instagram.com/kilicmu3/ " target="_blank" onMouseOver="this.style.color= '#DA2E76'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconinstagram "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="https://github.com/kilicmu " target="_blank" onMouseOver="this.style.color= '#24292E'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  icongithub-fill "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="kilicmu3389@outlook.com " target="_blank" onMouseOver="this.style.color='#FFBE5B'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconmail"></i>
+    </a>
+    
+  </div>
+  <div class="footer-copyright"><p>Powered by <a target="_blank" href="https://hexo.io">Hexo</a>  |  Theme - <a target="_blank" href="https://github.com/izhaoo/hexo-theme-zhaoo">zhaoo</a></p></div>
 </footer>
+  
+      <div class="fab fab-plus">
+    <i class="iconfont iconplus"></i>
+  </div>
+  
+  <div class="fab fab-daovoice">
+    <i class="iconfont iconcomment"></i>
+  </div>
+  
+  <div class="fab fab-up">
+    <i class="iconfont iconcaret-up"></i>
+  </div>
+  
+</body>
 
 
-    <!-- After Footer Scripts -->
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
 
-<script src="/js/highlight.pack.js"></script>
+
+
+
+
+
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+
+
+
+
+
+<script src="https://cdn.bootcss.com/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+
+
+
+
+
+
+<script src="/js/utils.js"></script>
+<script src="/js/modules.js"></script>
+<script src="/js/zui.js"></script>
+<script src="/js/script.js"></script>
+
+
+
+
 
 <script>
-  document.addEventListener("DOMContentLoaded", function(event) {
-    var codeBlocks = Array.prototype.slice.call(document.getElementsByTagName('pre'))
-    codeBlocks.forEach(function(block, index) {
-      hljs.highlightBlock(block);
-    });
+  (function (i, s, o, g, r, a, m) {
+    i["DaoVoiceObject"] = r;
+    i[r] = i[r] || function () {
+      (i[r].q = i[r].q || []).push(arguments)
+    }, i[r].l = 1 * new Date();
+    a = s.createElement(o), m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    a.charset = "utf-8";
+    m.parentNode.insertBefore(a, m)
+  })(window, document, "script", ('https:' == document.location.protocol ? 'https:' : 'http:') +
+    "//widget.daovoice.io/widget/0f81ff2f.js", "daovoice")
+  daovoice('init', {
+    app_id: "abcdefg"
+  }, {
+    launcher: {
+      disableLauncherIcon: true,
+    },
   });
+  daovoice('update');
 </script>
 
-  </body>
-</html>
 
+
+<script>
+  (function () {
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    } else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+<script>
+  var _hmt = _hmt || [];
+  (function () {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?4c204d8bc027a0455b5fc642ac334ca8";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+
+
+
+
+
+
+
+
+
+</html>

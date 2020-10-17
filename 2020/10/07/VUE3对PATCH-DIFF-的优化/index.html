@@ -1,268 +1,486 @@
+
+
 <!DOCTYPE html>
-<html>
-  <!-- Html Head Tag-->
-  <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="">
-  <meta name="author" content="kilic">
-  <!-- Open Graph Data -->
-  <meta property="og:title" content="Vue3对patch(diff)的优化"/>
-  <meta property="og:description" content="咸鱼，无业游民" />
-  <meta property="og:site_name" content="kilic の 部落格"/>
-  <meta property="og:type" content="article" />
-  <meta property="og:image" content="http://kilic.site"/>
+<html lang="zh-CN">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Vue3对patch(diff)的优化 - kilic の 部落格</title>
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="google" content="notranslate" />
+
   
-    <link rel="alternate" href="/atom.xml" title="kilic の 部落格" type="application/atom+xml">
+  <meta name="keywords" content="golang,前端,移动端,区块链,智能合约,混吃等死,nodejs,运维,python"> 
+  
+  <meta name="description" content="不知道为什么最近很困，强行控制自己去学习就会变得很丧，..."> 
+  
+  <meta name="author" content="kilic"> 
+
+  
+    <link rel="icon" href="/images/icons/favicon-16x16.png" type="image/png" sizes="16x16">
   
   
-    <link rel="icon" href="/favicon.png">
+    <link rel="icon" href="/images/icons/favicon-32x32.png" type="image/png" sizes="32x32">
+  
+  
+    <link rel="apple-touch-icon" href="/images/icons/apple-touch-icon.png" sizes="180x180">
+  
+  
+    <meta rel="mask-icon" href="/images/icons/stun-logo.svg" color="#333333">
+  
+  
+    <meta rel="msapplication-TileImage" content="/images/icons/favicon-144x144.png">
+    <meta rel="msapplication-TileColor" content="#000000">
   
 
-  <!-- Site Title -->
-  <title>kilic の 部落格</title>
-
-  <!-- Bootstrap CSS -->
   
-<link rel="stylesheet" href="/css/bootstrap.min.css">
+<link rel="stylesheet" href="/css/style.css">
 
-  <!-- Custom CSS -->
+
   
   
-<link rel="stylesheet" href="/css/style.dark.css">
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1445822_h1619vhl1nr.css">
 
-
-  <!-- Google Analytics -->
   
 
+  
+  
+  
+<link rel="stylesheet" href="https://cdn.bootcss.com/fancybox/3.5.7/jquery.fancybox.min.css">
+
+  
+
+  
+  
+  
+<link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.18.1/styles/xcode.min.css">
+
+  
+
+  <script>
+    var CONFIG = window.CONFIG || {};
+    var ZHAOO = window.ZHAOO || {};
+    CONFIG = {
+      isHome: false,
+      fancybox: true,
+      pjax: false,
+      lazyload: {
+        enable: true,
+        loadingImage: '',
+      },
+      donate: {
+        enable: true,
+        alipay: '/images/others/alipay.jpg',
+        wechat: '/images/others/wechat.jpg'
+      },
+      motto: {
+        api: '',
+        default: 'fading is true while flowering is past。'
+      },
+      galleries: {
+        enable: true
+      },
+      fab: {
+        enable: true,
+        alwaysShow: false
+      },
+      carrier: {
+        enable: true
+      },
+      daovoice: {
+        enable: true
+      }
+    }
+  </script>
+
+  
+
+  
 <meta name="generator" content="Hexo 4.2.0"></head>
+<body class="lock-screen">
+  <div class="loading"></div>
+  
 
-  <body>
-    <!-- Page Header -->
 
+<nav class="navbar">
+  <div class="left"></div>
+  <div class="center">Vue3对patch(diff)的优化</div>
+  <div class="right">
+    <i class="iconfont iconmenu j-navbar-menu"></i>
+  </div>
+</nav>
 
-<header class="site-header header-background" style="background-image: url(/img/m2.jpg)">
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-        <div class="page-title with-background-image">
-          <p class="title">Vue3对patch(diff)的优化</p>
-          <p class="subtitle"></p>
-        </div>
-        <div class="site-menu with-background-image">
-          <ul>
-            
-              <li>
-                <a href="/">
-                  
-                  Home
-                  
-                </a>
-              </li>
-            
-              <li>
-                <a href="/archives">
-                  
-                  Archives
-                  
-                </a>
-              </li>
-            
-              <li>
-                <a href="https://github.com/kilicmu">
-                  
-                  Github
-                  
-                </a>
-              </li>
-            
-              <li>
-                <a href="mailto:kilicmu3389@outlook.com">
-                  
-                  Email
-                  
-                </a>
-              </li>
-            
-          </ul>
-        </div>
-      </div>
+  <nav class="menu">
+  <div class="menu-wrap">
+    <div class="menu-close">
+      <i class="iconfont iconbaseline-close-px"></i>
+    </div>
+    <ul class="menu-content">
+      
+      
+      
+      
+      <li class="menu-item"><a href="/ " class="underline"> 首页</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/galleries " class="underline"> 摄影</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/archives " class="underline"> 归档</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/tags " class="underline"> 标签</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/categories " class="underline"> 分类</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/about " class="underline"> 关于</a></li>
+      
+    </ul>
+    <div class="menu-copyright"><p>Powered by <a target="_blank" href="https://hexo.io">Hexo</a>  |  Theme - <a target="_blank" href="https://github.com/izhaoo/hexo-theme-zhaoo">zhaoo</a></p></div>
+  </div>
+</nav>
+  <main id="main">
+  <div class="container" id="container">
+    <article class="article">
+  <div class="wrap">
+    <section class="head">
+  <img   class="lazyload" data-original="https://i.niupic.com/images/2020/10/18/8T2U.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  draggable="false">
+  <div class="head-mask">
+    <h1 class="head-title">Vue3对patch(diff)的优化</h1>
+    <div class="head-info">
+      <span class="post-info-item"><i class="iconfont iconcalendar"></i>October 07, 2020</span
+        class="post-info-item">
+      
+      <span class="post-info-item"><i class="iconfont iconfont-size"></i>15180</span>
     </div>
   </div>
-</header>
-
-<article>
-  <div class="container typo">
-    <div class="row">
-      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-        <div class="post-info text-muted">
-          
-            <!-- Author -->
-            <span class="author info">By kilic</span>
-          
-          <!-- Date -->
-          <span class="date-time info">On
-            <span class="date">2020-10-07</span>
-            <span class="time">06:06:20</span>
-          </span>
-          
-        </div>
-        <!-- Tags -->
-        
-        <!-- Post Main Content -->
-        <div class="post-content">
-          <p>不知道为什么最近很困，强行控制自己去学习就会变得很丧，所以还是遵循本能睡觉吧(つω｀)～。</p>
-<p>转眼一看已经睡了五六天，再这么下去假期也快欠费了，没有什么产出也不太符合我的性格。所以今天就把这篇以前想要写的文章写完好喽。</p>
-<p>这篇文章我将主要来分析Vue3（vue-next）的patch，Vue3的patch在Vue2的基础上做了很多的优化，如果对Vue2的patch思想不了解的同学可以自己去看源码或者找个博客看看。这里我们不对2进行过多赘述。</p>
-<a id="more"></a>
-
-<h2 id="before：源码地址："><a href="#before：源码地址：" class="headerlink" title="before：源码地址："></a>before：源码地址：</h2><p>这里我会直接拿github上的源码进行讲解：<a href="https://github.com/vuejs/vue-next/blob/28d5fd7a2871c10df3427dfbbe0e203c2a976cb4/packages/runtime-core/src/renderer.ts">文件地址</a></p>
-<p>看本文的小老弟可以打开github对比，也可以看我粘贴的关键部分代码。出于篇幅考虑，在这篇文章我会删减很多东西。所以推荐还是打开上面的链接看比较好。</p>
-<p>本文重点在section3，性子比较急的小老弟可以直接跳到那里。</p>
+</section>
+    <section class="main">
+      <section class="content">
+        <h2 id="before：源码地址："><a href="#before：源码地址：" class="headerlink" title="before：源码地址："></a>before：源码地址：</h2><p>这里我会直接拿 github 上的源码进行讲解：<a href="https://github.com/vuejs/vue-next/blob/28d5fd7a2871c10df3427dfbbe0e203c2a976cb4/packages/runtime-core/src/renderer.ts">文件地址</a></p>
+<p>看本文的小老弟可以打开 github 对比，也可以看我粘贴的关键部分代码。出于篇幅考虑，在这篇文章我会删减很多东西。所以推荐还是打开上面的链接看比较好。</p>
+<p>本文重点在 section3，性子比较急的小老弟可以直接跳到那里。</p>
 <h2 id="section1：大体思路"><a href="#section1：大体思路" class="headerlink" title="section1：大体思路"></a>section1：大体思路</h2><ol>
 <li>找出不同节点部分</li>
 <li>处理仅需要子节点新增与移除的情况</li>
 <li>处理不可复用子节点的新增或删除</li>
 <li>利用最长递增子序列优化可复用子节点的移动</li>
 </ol>
-<h2 id="section2：入口"><a href="#section2：入口" class="headerlink" title="section2：入口"></a>section2：入口</h2><p>先来看patch函数做了什么吧：(部分代码省略)</p>
-<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> patch: PatchFn = (</span><br><span class="line">    n1,</span><br><span class="line">    n2,</span><br><span class="line">    container,</span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">  ) =&gt; &#123;</span><br><span class="line">    <span class="comment">// patching &amp; not same type, unmount old tree</span></span><br><span class="line">    <span class="keyword">if</span> (n1 &amp;&amp; !isSameVNodeType(n1, n2)) &#123;</span><br><span class="line">      anchor = getNextHostNode(n1)</span><br><span class="line">      unmount(n1, parentComponent, parentSuspense, <span class="literal">true</span>)</span><br><span class="line">      n1 = <span class="literal">null</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> &#123; <span class="keyword">type</span>, ref, shapeFlag &#125; = n2</span><br><span class="line">    <span class="keyword">switch</span> (<span class="keyword">type</span>) &#123;</span><br><span class="line">      <span class="keyword">case</span> Text:</span><br><span class="line">        processText(n1, n2, container, anchor)</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">      <span class="keyword">case</span> Comment:</span><br><span class="line">        processCommentNode(n1, n2, container, anchor)</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">      <span class="keyword">case</span> Static:</span><br><span class="line">        <span class="keyword">if</span> (n1 == <span class="literal">null</span>) &#123;</span><br><span class="line">          mountStaticNode(n2, container, anchor, isSVG)</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (__DEV__) &#123;</span><br><span class="line">          patchStaticNode(n1, n2, container, isSVG)</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">      <span class="keyword">case</span> Fragment:</span><br><span class="line">        processFragment(</span><br><span class="line">          n1,</span><br><span class="line">          n2,</span><br><span class="line">          container,</span><br><span class="line">          <span class="comment">// ....</span></span><br><span class="line">        )</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">      <span class="keyword">default</span>:</span><br><span class="line">        <span class="keyword">if</span> (shapeFlag &amp; ShapeFlags.ELEMENT) &#123;</span><br><span class="line">          processElement(</span><br><span class="line">            n1,</span><br><span class="line">            n2,</span><br><span class="line">            container,</span><br><span class="line">            <span class="comment">//...</span></span><br><span class="line">          )</span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span> (shapeFlag &amp; ShapeFlags.COMPONENT) &#123;</span><br><span class="line">          processComponent(</span><br><span class="line">            n1,</span><br><span class="line">            n2,</span><br><span class="line">            container,</span><br><span class="line">            <span class="comment">// ... </span></span><br><span class="line">          )</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// ...</span></span><br><span class="line">    &#125;</span><br><span class="line">	<span class="comment">// ....</span></span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<h2 id="section2：入口"><a href="#section2：入口" class="headerlink" title="section2：入口"></a>section2：入口</h2><p>先来看 patch 函数做了什么吧：(部分代码省略)</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><code class="hljs ts"><span class="hljs-keyword">const</span> patch: PatchFn = (<br>  n1,<br>  n2,<br>  container<br>  <span class="hljs-comment">//...</span><br>) =&gt; &#123;<br>  <span class="hljs-comment">// patching &amp; not same type, unmount old tree</span><br>  <span class="hljs-keyword">if</span> (n1 &amp;&amp; !isSameVNodeType(n1, n2)) &#123;<br>    anchor = getNextHostNode(n1);<br>    unmount(n1, parentComponent, parentSuspense, <span class="hljs-literal">true</span>);<br>    n1 = <span class="hljs-literal">null</span>;<br>  &#125;<br><br>  <span class="hljs-keyword">const</span> &#123; <span class="hljs-keyword">type</span>, ref, shapeFlag &#125; = n2;<br>  <span class="hljs-keyword">switch</span> (<span class="hljs-keyword">type</span>) &#123;<br>    <span class="hljs-keyword">case</span> Text:<br>      processText(n1, n2, container, anchor);<br>      <span class="hljs-keyword">break</span>;<br>    <span class="hljs-keyword">case</span> Comment:<br>      processCommentNode(n1, n2, container, anchor);<br>      <span class="hljs-keyword">break</span>;<br>    <span class="hljs-keyword">case</span> Static:<br>      <span class="hljs-keyword">if</span> (n1 == <span class="hljs-literal">null</span>) &#123;<br>        mountStaticNode(n2, container, anchor, isSVG);<br>      &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (__DEV__) &#123;<br>        patchStaticNode(n1, n2, container, isSVG);<br>      &#125;<br>      <span class="hljs-keyword">break</span>;<br>    <span class="hljs-keyword">case</span> Fragment:<br>      processFragment(<br>        n1,<br>        n2,<br>        container<br>        <span class="hljs-comment">// ....</span><br>      );<br>      <span class="hljs-keyword">break</span>;<br>    <span class="hljs-keyword">default</span>:<br>      <span class="hljs-keyword">if</span> (shapeFlag &amp; ShapeFlags.ELEMENT) &#123;<br>        processElement(<br>          n1,<br>          n2,<br>          container<br>          <span class="hljs-comment">//...</span><br>        );<br>      &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (shapeFlag &amp; ShapeFlags.COMPONENT) &#123;<br>        processComponent(<br>          n1,<br>          n2,<br>          container<br>          <span class="hljs-comment">// ...</span><br>        );<br>      &#125;<br>    <span class="hljs-comment">// ...</span><br>  &#125;<br>  <span class="hljs-comment">// ....</span><br>&#125;;<br></code></pre></td></tr></table></figure>
 
-<p>简单说说patch函数做了什么：</p>
+<p>简单说说 patch 函数做了什么：</p>
 <ol>
-<li>判断新老vnode的tag是否相同，如果不相同没有继续比较的意义，直接替换掉老的vnode的真实DOM</li>
-<li>根据新vnode的type来判断如何做出相应的处理</li>
+<li>判断新老 vnode 的 tag 是否相同，如果不相同没有继续比较的意义，直接替换掉老的 vnode 的真实 DOM</li>
+<li>根据新 vnode 的 type 来判断如何做出相应的处理</li>
 </ol>
-<p>因为vnode的tag相同，可能是DOM元素也可能是组件，这里我们假设先不考虑组件的处理。因为需要降低文章的复杂度，让读者更专注于patch算法的本身而不去拘泥于细节，并且processComponent本身的思想也很简单:</p>
-<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> processComponent = (</span><br><span class="line">   n1: VNode | <span class="literal">null</span>,</span><br><span class="line">   n2: VNode,</span><br><span class="line">   container: RendererElement,</span><br><span class="line">   anchor: RendererNode | <span class="literal">null</span>,</span><br><span class="line">   parentComponent: ComponentInternalInstance | <span class="literal">null</span>,</span><br><span class="line">   parentSuspense: SuspenseBoundary | <span class="literal">null</span>,</span><br><span class="line">   isSVG: <span class="built_in">boolean</span>,</span><br><span class="line">   optimized: <span class="built_in">boolean</span></span><br><span class="line"> ) =&gt; &#123;</span><br><span class="line">   <span class="keyword">if</span> (n1 == <span class="literal">null</span>) &#123;</span><br><span class="line">     <span class="keyword">if</span> (n2.shapeFlag &amp; ShapeFlags.COMPONENT_KEPT_ALIVE) &#123;</span><br><span class="line">       ;(parentComponent!.ctx <span class="keyword">as</span> KeepAliveContext).activate(</span><br><span class="line">         n2,</span><br><span class="line">         container,</span><br><span class="line">         anchor,</span><br><span class="line">         isSVG,</span><br><span class="line">         optimized</span><br><span class="line">       )</span><br><span class="line">     &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">       mountComponent(</span><br><span class="line">         n2,</span><br><span class="line">         container,</span><br><span class="line">         anchor,</span><br><span class="line">         parentComponent,</span><br><span class="line">         parentSuspense,</span><br><span class="line">         isSVG,</span><br><span class="line">         optimized</span><br><span class="line">       )</span><br><span class="line">     &#125;</span><br><span class="line">   &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">     updateComponent(n1, n2, optimized)</span><br><span class="line">   &#125;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<p>因为 vnode 的 tag 相同，可能是 DOM 元素也可能是组件，这里我们假设先不考虑组件的处理。因为需要降低文章的复杂度，让读者更专注于 patch 算法的本身而不去拘泥于细节，并且 processComponent 本身的思想也很简单:</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs ts"><span class="hljs-keyword">const</span> processComponent = (<br>  n1: VNode | <span class="hljs-literal">null</span>,<br>  n2: VNode,<br>  container: RendererElement,<br>  anchor: RendererNode | <span class="hljs-literal">null</span>,<br>  parentComponent: ComponentInternalInstance | <span class="hljs-literal">null</span>,<br>  parentSuspense: SuspenseBoundary | <span class="hljs-literal">null</span>,<br>  isSVG: <span class="hljs-built_in">boolean</span>,<br>  optimized: <span class="hljs-built_in">boolean</span><br>) =&gt; &#123;<br>  <span class="hljs-keyword">if</span> (n1 == <span class="hljs-literal">null</span>) &#123;<br>    <span class="hljs-keyword">if</span> (n2.shapeFlag &amp; ShapeFlags.COMPONENT_KEPT_ALIVE) &#123;<br>      (parentComponent!.ctx <span class="hljs-keyword">as</span> KeepAliveContext).activate(<br>        n2,<br>        container,<br>        anchor,<br>        isSVG,<br>        optimized<br>      );<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>      mountComponent(<br>        n2,<br>        container,<br>        anchor,<br>        parentComponent,<br>        parentSuspense,<br>        isSVG,<br>        optimized<br>      );<br>    &#125;<br>  &#125; <span class="hljs-keyword">else</span> &#123;<br>    updateComponent(n1, n2, optimized);<br>  &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
 
-<p>如果不是第一次加载组件则updateComponent：</p>
-<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> updateComponent = <span class="function">(<span class="params">n1: VNode, n2: VNode, optimized: <span class="built_in">boolean</span></span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> instance = (n2.component = n1.component)!</span><br><span class="line">    <span class="keyword">if</span> (shouldUpdateComponent(n1, n2, optimized)) &#123;</span><br><span class="line">      <span class="keyword">if</span> (</span><br><span class="line">        __FEATURE_SUSPENSE__ &amp;&amp;</span><br><span class="line">        instance.asyncDep &amp;&amp;</span><br><span class="line">        !instance.asyncResolved</span><br><span class="line">      ) &#123;</span><br><span class="line">        <span class="keyword">if</span> (__DEV__) &#123;</span><br><span class="line">          pushWarningContext(n2)</span><br><span class="line">        &#125;</span><br><span class="line">        updateComponentPreRender(instance, n2, optimized)</span><br><span class="line">        <span class="keyword">if</span> (__DEV__) &#123;</span><br><span class="line">          popWarningContext()</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        instance.next = n2</span><br><span class="line">        invalidateJob(instance.update)</span><br><span class="line">        instance.update()</span><br><span class="line">      &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      n2.component = n1.component</span><br><span class="line">      n2.el = n1.el</span><br><span class="line">      instance.vnode = n2</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p>如果不是第一次加载组件则 updateComponent：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs ts"><span class="hljs-keyword">const</span> updateComponent = <span class="hljs-function">(<span class="hljs-params">n1: VNode, n2: VNode, optimized: <span class="hljs-built_in">boolean</span></span>) =&gt;</span> &#123;<br>  <span class="hljs-keyword">const</span> instance = (n2.component = n1.component)!;<br>  <span class="hljs-keyword">if</span> (shouldUpdateComponent(n1, n2, optimized)) &#123;<br>    <span class="hljs-keyword">if</span> (__FEATURE_SUSPENSE__ &amp;&amp; instance.asyncDep &amp;&amp; !instance.asyncResolved) &#123;<br>      <span class="hljs-keyword">if</span> (__DEV__) &#123;<br>        pushWarningContext(n2);<br>      &#125;<br>      updateComponentPreRender(instance, n2, optimized);<br>      <span class="hljs-keyword">if</span> (__DEV__) &#123;<br>        popWarningContext();<br>      &#125;<br>      <span class="hljs-keyword">return</span>;<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>      instance.next = n2;<br>      invalidateJob(instance.update);<br>      instance.update();<br>    &#125;<br>  &#125; <span class="hljs-keyword">else</span> &#123;<br>    n2.component = n1.component;<br>    n2.el = n1.el;<br>    instance.vnode = n2;<br>  &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
 
-<p>这里使用了一个内置的shouldUpdateComponent控制组件是否刷新。此下不去过多展开了。</p>
-<p>真正需要注意的仅仅有processElement这个方法。</p>
-<p>processElement这个方法很简单了，就是做个判断，然后调用真正的对元素的patch方法，patchElement</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> processElement = (n1: VNode | <span class="literal">null</span>, <span class="attr">n2</span>: VNode, <span class="attr">container</span>: RendererElement,</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">  ) =&gt; &#123;</span><br><span class="line">    <span class="keyword">if</span> (n1 == <span class="literal">null</span>) &#123;</span><br><span class="line">      mountElement(<span class="comment">// ...)</span></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      patchElement(n1, n2, parentComponent, parentSuspense, isSVG, optimized)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p>这里使用了一个内置的 shouldUpdateComponent 控制组件是否刷新。此下不去过多展开了。</p>
+<p>真正需要注意的仅仅有 processElement 这个方法。</p>
+<p>processElement 这个方法很简单了，就是做个判断，然后调用真正的对元素的 patch 方法，patchElement</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> processElement = (n1: VNode | <span class="hljs-literal">null</span>, <span class="hljs-attr">n2</span>: VNode, <span class="hljs-attr">container</span>: RendererElement,<br>    <span class="hljs-comment">// ...</span><br>  ) =&gt; &#123;<br>    <span class="hljs-keyword">if</span> (n1 == <span class="hljs-literal">null</span>) &#123;<br>      mountElement(<span class="hljs-comment">// ...)</span><br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>      patchElement(n1, n2, parentComponent, parentSuspense, isSVG, optimized)<br>    &#125;<br>  &#125;<br></code></pre></td></tr></table></figure>
 
-<p>其实看过Vue2感觉这些和Vue2还是蛮像的，所以这里不做多啰嗦，继续找patchElement：</p>
-<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> patchElement = (</span><br><span class="line">    n1: VNode,</span><br><span class="line">    n2: VNode,</span><br><span class="line">    parentComponent: ComponentInternalInstance | <span class="literal">null</span>,</span><br><span class="line">    parentSuspense: SuspenseBoundary | <span class="literal">null</span>,</span><br><span class="line">    isSVG: <span class="built_in">boolean</span>,</span><br><span class="line">    optimized: <span class="built_in">boolean</span></span><br><span class="line">  ) =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> el = (n2.el = n1.el!)</span><br><span class="line">    <span class="keyword">let</span> &#123; patchFlag, dynamicChildren, dirs &#125; = n2</span><br><span class="line">    <span class="comment">// #1426 take the old vnode's patch flag into account since user may clone a</span></span><br><span class="line">    <span class="comment">// compiler-generated vnode, which de-opts to FULL_PROPS</span></span><br><span class="line">    patchFlag |= n1.patchFlag &amp; PatchFlags.FULL_PROPS</span><br><span class="line">    <span class="keyword">const</span> oldProps = n1.props || EMPTY_OBJ</span><br><span class="line">    <span class="keyword">const</span> newProps = n2.props || EMPTY_OBJ</span><br><span class="line">    <span class="keyword">let</span> vnodeHook: VNodeHook | <span class="literal">undefined</span> | <span class="literal">null</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> ((vnodeHook = newProps.onVnodeBeforeUpdate)) &#123;</span><br><span class="line">      invokeVNodeHook(vnodeHook, parentComponent, n2, n1)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (dirs) &#123;</span><br><span class="line">      invokeDirectiveHook(n2, n1, parentComponent, <span class="string">'beforeUpdate'</span>)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (patchFlag &gt; <span class="number">0</span>) &#123;</span><br><span class="line">      <span class="comment">// ...</span></span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (!optimized &amp;&amp; dynamicChildren == <span class="literal">null</span>) &#123;</span><br><span class="line">      <span class="comment">// unoptimized, full diff</span></span><br><span class="line">      patchProps(</span><br><span class="line">        <span class="comment">//...</span></span><br><span class="line">      )</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (dynamicChildren) &#123;</span><br><span class="line">      patchBlockChildren(</span><br><span class="line">        <span class="comment">//...</span></span><br><span class="line">      )</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (!optimized) &#123;</span><br><span class="line">      <span class="comment">// full diff</span></span><br><span class="line">      patchChildren(</span><br><span class="line">        n1,</span><br><span class="line">        n2,</span><br><span class="line">        el,</span><br><span class="line">        <span class="literal">null</span>,</span><br><span class="line">        parentComponent,</span><br><span class="line">        parentSuspense,</span><br><span class="line">        areChildrenSVG</span><br><span class="line">      )</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> ((vnodeHook = newProps.onVnodeUpdated) || dirs) &#123;</span><br><span class="line">      queuePostRenderEffect(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">        vnodeHook &amp;&amp; invokeVNodeHook(vnodeHook, parentComponent, n2, n1)</span><br><span class="line">        dirs &amp;&amp; invokeDirectiveHook(n2, n1, parentComponent, <span class="string">'updated'</span>)</span><br><span class="line">      &#125;, parentSuspense)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p>其实看过 Vue2 感觉这些和 Vue2 还是蛮像的，所以这里不做多啰嗦，继续找 patchElement：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><code class="hljs ts"><span class="hljs-keyword">const</span> patchElement = (<br>  n1: VNode,<br>  n2: VNode,<br>  parentComponent: ComponentInternalInstance | <span class="hljs-literal">null</span>,<br>  parentSuspense: SuspenseBoundary | <span class="hljs-literal">null</span>,<br>  isSVG: <span class="hljs-built_in">boolean</span>,<br>  optimized: <span class="hljs-built_in">boolean</span><br>) =&gt; &#123;<br>  <span class="hljs-keyword">const</span> el = (n2.el = n1.el!);<br>  <span class="hljs-keyword">let</span> &#123; patchFlag, dynamicChildren, dirs &#125; = n2;<br>  <span class="hljs-comment">// #1426 take the old vnode's patch flag into account since user may clone a</span><br>  <span class="hljs-comment">// compiler-generated vnode, which de-opts to FULL_PROPS</span><br>  patchFlag |= n1.patchFlag &amp; PatchFlags.FULL_PROPS;<br>  <span class="hljs-keyword">const</span> oldProps = n1.props || EMPTY_OBJ;<br>  <span class="hljs-keyword">const</span> newProps = n2.props || EMPTY_OBJ;<br>  <span class="hljs-keyword">let</span> vnodeHook: VNodeHook | <span class="hljs-literal">undefined</span> | <span class="hljs-literal">null</span>;<br><br>  <span class="hljs-keyword">if</span> ((vnodeHook = newProps.onVnodeBeforeUpdate)) &#123;<br>    invokeVNodeHook(vnodeHook, parentComponent, n2, n1);<br>  &#125;<br>  <span class="hljs-keyword">if</span> (dirs) &#123;<br>    invokeDirectiveHook(n2, n1, parentComponent, <span class="hljs-string">"beforeUpdate"</span>);<br>  &#125;<br><br>  <span class="hljs-keyword">if</span> (patchFlag &gt; <span class="hljs-number">0</span>) &#123;<br>    <span class="hljs-comment">// ...</span><br>  &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (!optimized &amp;&amp; dynamicChildren == <span class="hljs-literal">null</span>) &#123;<br>    <span class="hljs-comment">// unoptimized, full diff</span><br>    patchProps();<br>    <span class="hljs-comment">//...</span><br>  &#125;<br><br>  <span class="hljs-keyword">if</span> (dynamicChildren) &#123;<br>    patchBlockChildren();<br>    <span class="hljs-comment">//...</span><br>  &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (!optimized) &#123;<br>    <span class="hljs-comment">// full diff</span><br>    patchChildren(<br>      n1,<br>      n2,<br>      el,<br>      <span class="hljs-literal">null</span>,<br>      parentComponent,<br>      parentSuspense,<br>      areChildrenSVG<br>    );<br>  &#125;<br><br>  <span class="hljs-keyword">if</span> ((vnodeHook = newProps.onVnodeUpdated) || dirs) &#123;<br>    queuePostRenderEffect(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> &#123;<br>      vnodeHook &amp;&amp; invokeVNodeHook(vnodeHook, parentComponent, n2, n1);<br>      dirs &amp;&amp; invokeDirectiveHook(n2, n1, parentComponent, <span class="hljs-string">"updated"</span>);<br>    &#125;, parentSuspense);<br>  &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
 
-<p>这里，包含了对props的patch优化和对children节点的patch方案。</p>
-<p>diff的比较与复用是针对子元素的，这个patchChildren显然是个重点，继续往下看：</p>
-<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> patchChildren: PatchChildrenFn = (</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">  ) =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> c1 = n1 &amp;&amp; n1.children</span><br><span class="line">    <span class="keyword">const</span> prevShapeFlag = n1 ? n1.shapeFlag : <span class="number">0</span></span><br><span class="line">    <span class="keyword">const</span> c2 = n2.children</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> &#123; patchFlag, shapeFlag &#125; = n2</span><br><span class="line">    <span class="comment">// fast path</span></span><br><span class="line">    <span class="keyword">if</span> (patchFlag &gt; <span class="number">0</span>) &#123;</span><br><span class="line">      <span class="keyword">if</span> (patchFlag &amp; PatchFlags.KEYED_FRAGMENT) &#123;</span><br><span class="line">        patchKeyedChildren(</span><br><span class="line">          c1 <span class="keyword">as</span> VNode[],</span><br><span class="line">          c2 <span class="keyword">as</span> VNodeArrayChildren,</span><br><span class="line">          container,</span><br><span class="line">          anchor,</span><br><span class="line">          <span class="comment">// ...</span></span><br><span class="line">        )</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">      &#125; <span class="keyword">else</span> <span class="keyword">if</span> (patchFlag &amp; PatchFlags.UNKEYED_FRAGMENT) &#123;</span><br><span class="line">        <span class="comment">// unkeyed</span></span><br><span class="line">        patchUnkeyedChildren(</span><br><span class="line">          c1 <span class="keyword">as</span> VNode[],</span><br><span class="line">          c2 <span class="keyword">as</span> VNodeArrayChildren,</span><br><span class="line">          <span class="comment">//...</span></span><br><span class="line">        )</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>这里，包含了对 props 的 patch 优化和对 children 节点的 patch 方案。</p>
+<p>diff 的比较与复用是针对子元素的，这个 patchChildren 显然是个重点，继续往下看：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs ts"><span class="hljs-keyword">const</span> patchChildren: PatchChildrenFn = (<br>  <span class="hljs-comment">// ...</span><br>  ) =&gt; &#123;<br>    <span class="hljs-keyword">const</span> c1 = n1 &amp;&amp; n1.children<br>    <span class="hljs-keyword">const</span> prevShapeFlag = n1 ? n1.shapeFlag : <span class="hljs-number">0</span><br>    <span class="hljs-keyword">const</span> c2 = n2.children<br><br>    <span class="hljs-keyword">const</span> &#123; patchFlag, shapeFlag &#125; = n2<br>    <span class="hljs-comment">// fast path</span><br>    <span class="hljs-keyword">if</span> (patchFlag &gt; <span class="hljs-number">0</span>) &#123;<br>      <span class="hljs-keyword">if</span> (patchFlag &amp; PatchFlags.KEYED_FRAGMENT) &#123;<br>        patchKeyedChildren(<br>          c1 <span class="hljs-keyword">as</span> VNode[],<br>          c2 <span class="hljs-keyword">as</span> VNodeArrayChildren,<br>          container,<br>          anchor,<br>          <span class="hljs-comment">// ...</span><br>        )<br>        <span class="hljs-keyword">return</span><br>      &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (patchFlag &amp; PatchFlags.UNKEYED_FRAGMENT) &#123;<br>        <span class="hljs-comment">// unkeyed</span><br>        patchUnkeyedChildren(<br>          c1 <span class="hljs-keyword">as</span> VNode[],<br>          c2 <span class="hljs-keyword">as</span> VNodeArrayChildren,<br>          <span class="hljs-comment">//...</span><br>        )<br>        <span class="hljs-keyword">return</span><br>      &#125;<br>    &#125;<br></code></pre></td></tr></table></figure>
 
-<p>对于children的patch过程分别有两个方案，分别为keyed与unkeyed</p>
-<p>keyed很好理解，就是可以存在复用的节点，比如ul&gt;li*n。而unkeyed节点显然是那些正常节点。优化的核心点显然是那些keyed的子节点。而下面patchKeyedChildren也就是真正的Vue3的diff算法的核心。</p>
+<p>对于 children 的 patch 过程分别有两个方案，分别为 keyed 与 unkeyed</p>
+<p>keyed 很好理解，就是可以存在复用的节点，比如 ul&gt;li*n。而 unkeyed 节点显然是那些正常节点。优化的核心点显然是那些 keyed 的子节点。而下面 patchKeyedChildren 也就是真正的 Vue3 的 diff 算法的核心。</p>
 <h2 id="section3-核心"><a href="#section3-核心" class="headerlink" title="section3 核心"></a>section3 核心</h2><p>源码里这里的注释写的真的很棒，但是考虑读者的水平不同，我们仍然分步骤来看一下：</p>
-<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> patchKeyedChildren = (</span><br><span class="line">    c1: VNode[],</span><br><span class="line">    c2: VNodeArrayChildren,</span><br><span class="line">    container: RendererElement,</span><br><span class="line">    parentAnchor: RendererNode | <span class="literal">null</span>,</span><br><span class="line">    parentComponent: ComponentInternalInstance | <span class="literal">null</span>,</span><br><span class="line">    parentSuspense: SuspenseBoundary | <span class="literal">null</span>,</span><br><span class="line">    isSVG: <span class="built_in">boolean</span>,</span><br><span class="line">    optimized: <span class="built_in">boolean</span></span><br><span class="line">  ) =&gt; &#123;</span><br><span class="line">    <span class="keyword">let</span> i = <span class="number">0</span></span><br><span class="line">    <span class="keyword">const</span> l2 = c2.length</span><br><span class="line">    <span class="keyword">let</span> e1 = c1.length - <span class="number">1</span> <span class="comment">// prev ending index</span></span><br><span class="line">    <span class="keyword">let</span> e2 = l2 - <span class="number">1</span> <span class="comment">// next ending index</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">while</span> (i &lt;= e1 &amp;&amp; i &lt;= e2) &#123;</span><br><span class="line">      <span class="keyword">const</span> n1 = c1[i]</span><br><span class="line">      <span class="keyword">const</span> n2 = (c2[i] = optimized</span><br><span class="line">        ? cloneIfMounted(c2[i] <span class="keyword">as</span> VNode)</span><br><span class="line">        : normalizeVNode(c2[i]))</span><br><span class="line">      <span class="keyword">if</span> (isSameVNodeType(n1, n2)) &#123;</span><br><span class="line">        patch(</span><br><span class="line">          n1,</span><br><span class="line">          n2,</span><br><span class="line">          container,</span><br><span class="line">          <span class="literal">null</span>,</span><br><span class="line">          parentComponent,</span><br><span class="line">          parentSuspense,</span><br><span class="line">          isSVG,</span><br><span class="line">          optimized</span><br><span class="line">        )</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">      &#125;</span><br><span class="line">      i++</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><code class="hljs ts"><span class="hljs-keyword">const</span> patchKeyedChildren = (<br>  c1: VNode[],<br>  c2: VNodeArrayChildren,<br>  container: RendererElement,<br>  parentAnchor: RendererNode | <span class="hljs-literal">null</span>,<br>  parentComponent: ComponentInternalInstance | <span class="hljs-literal">null</span>,<br>  parentSuspense: SuspenseBoundary | <span class="hljs-literal">null</span>,<br>  isSVG: <span class="hljs-built_in">boolean</span>,<br>  optimized: <span class="hljs-built_in">boolean</span><br>) =&gt; &#123;<br>  <span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>;<br>  <span class="hljs-keyword">const</span> l2 = c2.length;<br>  <span class="hljs-keyword">let</span> e1 = c1.length - <span class="hljs-number">1</span>; <span class="hljs-comment">// prev ending index</span><br>  <span class="hljs-keyword">let</span> e2 = l2 - <span class="hljs-number">1</span>; <span class="hljs-comment">// next ending index</span><br><br>  <span class="hljs-keyword">while</span> (i &lt;= e1 &amp;&amp; i &lt;= e2) &#123;<br>    <span class="hljs-keyword">const</span> n1 = c1[i];<br>    <span class="hljs-keyword">const</span> n2 = (c2[i] = optimized<br>      ? cloneIfMounted(c2[i] <span class="hljs-keyword">as</span> VNode)<br>      : normalizeVNode(c2[i]));<br>    <span class="hljs-keyword">if</span> (isSameVNodeType(n1, n2)) &#123;<br>      patch(<br>        n1,<br>        n2,<br>        container,<br>        <span class="hljs-literal">null</span>,<br>        parentComponent,<br>        parentSuspense,<br>        isSVG,<br>        optimized<br>      );<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>      <span class="hljs-keyword">break</span>;<br>    &#125;<br>    i++;<br>  &#125;<br>  <span class="hljs-comment">//...</span><br>&#125;;<br></code></pre></td></tr></table></figure>
 
-<p>先从前向后查找第一个不可以复用的子节点，并用i记录这个子节点的下标：</p>
-<p><img src="https://i.niupic.com/images/2020/10/06/8LSI.png" alt="vnodes_i"></p>
-<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 2. sync from end</span></span><br><span class="line">   <span class="comment">// a (b c)</span></span><br><span class="line">   <span class="comment">// d e (b c)</span></span><br><span class="line">   <span class="keyword">while</span> (i &lt;= e1 &amp;&amp; i &lt;= e2) &#123;</span><br><span class="line">     <span class="keyword">const</span> n1 = c1[e1]</span><br><span class="line">     <span class="keyword">const</span> n2 = (c2[e2] = optimized</span><br><span class="line">       ? cloneIfMounted(c2[e2] <span class="keyword">as</span> VNode)</span><br><span class="line">       : normalizeVNode(c2[e2]))</span><br><span class="line">     <span class="keyword">if</span> (isSameVNodeType(n1, n2)) &#123;</span><br><span class="line">       patch(</span><br><span class="line">         n1,</span><br><span class="line">         n2,</span><br><span class="line">         container,</span><br><span class="line">         <span class="literal">null</span>,</span><br><span class="line">         parentComponent,</span><br><span class="line">         parentSuspense,</span><br><span class="line">         isSVG,</span><br><span class="line">         optimized</span><br><span class="line">       )</span><br><span class="line">     &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">       <span class="keyword">break</span></span><br><span class="line">     &#125;</span><br><span class="line">     e1--</span><br><span class="line">     e2--</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<p>先从前向后查找第一个不可以复用的子节点，并用 i 记录这个子节点的下标：</p>
+<p><img   class="lazyload" data-original="https://i.niupic.com/images/2020/10/06/8LSI.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="vnodes_i"></p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs ts"><span class="hljs-comment">// 2. sync from end</span><br><span class="hljs-comment">// a (b c)</span><br><span class="hljs-comment">// d e (b c)</span><br><span class="hljs-keyword">while</span> (i &lt;= e1 &amp;&amp; i &lt;= e2) &#123;<br>  <span class="hljs-keyword">const</span> n1 = c1[e1];<br>  <span class="hljs-keyword">const</span> n2 = (c2[e2] = optimized<br>    ? cloneIfMounted(c2[e2] <span class="hljs-keyword">as</span> VNode)<br>    : normalizeVNode(c2[e2]));<br>  <span class="hljs-keyword">if</span> (isSameVNodeType(n1, n2)) &#123;<br>    patch(<br>      n1,<br>      n2,<br>      container,<br>      <span class="hljs-literal">null</span>,<br>      parentComponent,<br>      parentSuspense,<br>      isSVG,<br>      optimized<br>    );<br>  &#125; <span class="hljs-keyword">else</span> &#123;<br>    <span class="hljs-keyword">break</span>;<br>  &#125;<br>  e1--;<br>  e2--;<br>&#125;<br></code></pre></td></tr></table></figure>
 
-<p>然后从后向前找到不可以复用的子节点下标。这里，因为c1和c2的长度可能有所不同，所以使用e1和e2两个变量分别记录这两个数组中不可直接复用的节点下标：</p>
-<p><img src="https://i.niupic.com/images/2020/10/06/8LSN.png" alt="vnodes_i2"></p>
+<p>然后从后向前找到不可以复用的子节点下标。这里，因为 c1 和 c2 的长度可能有所不同，所以使用 e1 和 e2 两个变量分别记录这两个数组中不可直接复用的节点下标：</p>
+<p><img   class="lazyload" data-original="https://i.niupic.com/images/2020/10/06/8LSN.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="vnodes_i2"></p>
 <p>接下来有两种比较容易处理的情况：</p>
 <ol>
 <li>总顺序不变但新增了节点</li>
 <li>总顺序不变但减少了节点</li>
 </ol>
 <p>第一种情况很容易想到，如图：</p>
-<p><img src="https://i.niupic.com/images/2020/10/06/8LSU.png" alt="patch1"></p>
+<p><img   class="lazyload" data-original="https://i.niupic.com/images/2020/10/06/8LSU.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="patch1"></p>
 <p>这种情况只要把新增的节点生成挂载就好了。</p>
 <p>看代码：</p>
-<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (i &gt; e1) &#123;</span><br><span class="line">     <span class="keyword">if</span> (i &lt;= e2) &#123;</span><br><span class="line">       <span class="keyword">const</span> nextPos = e2 + <span class="number">1</span></span><br><span class="line">       <span class="keyword">const</span> anchor = nextPos &lt; l2 ? (c2[nextPos] <span class="keyword">as</span> VNode).el : parentAnchor</span><br><span class="line">       <span class="keyword">while</span> (i &lt;= e2) &#123;</span><br><span class="line">         patch(</span><br><span class="line">           <span class="literal">null</span>,</span><br><span class="line">           (c2[i] = optimized</span><br><span class="line">             ? cloneIfMounted(c2[i] <span class="keyword">as</span> VNode)</span><br><span class="line">             : normalizeVNode(c2[i])),</span><br><span class="line">           container,</span><br><span class="line">           anchor,</span><br><span class="line">           parentComponent,</span><br><span class="line">           parentSuspense,</span><br><span class="line">           isSVG</span><br><span class="line">         )</span><br><span class="line">         i++</span><br><span class="line">       &#125;</span><br><span class="line">     &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs ts"><span class="hljs-keyword">if</span> (i &gt; e1) &#123;<br>  <span class="hljs-keyword">if</span> (i &lt;= e2) &#123;<br>    <span class="hljs-keyword">const</span> nextPos = e2 + <span class="hljs-number">1</span>;<br>    <span class="hljs-keyword">const</span> anchor = nextPos &lt; l2 ? (c2[nextPos] <span class="hljs-keyword">as</span> VNode).el : parentAnchor;<br>    <span class="hljs-keyword">while</span> (i &lt;= e2) &#123;<br>      patch(<br>        <span class="hljs-literal">null</span>,<br>        (c2[i] = optimized<br>          ? cloneIfMounted(c2[i] <span class="hljs-keyword">as</span> VNode)<br>          : normalizeVNode(c2[i])),<br>        container,<br>        anchor,<br>        parentComponent,<br>        parentSuspense,<br>        isSVG<br>      );<br>      i++;<br>    &#125;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <p>另一种情况就更容易了：</p>
-<p><img src="https://i.niupic.com/images/2020/10/06/8LSZ.png" alt="patch2"></p>
+<p><img   class="lazyload" data-original="https://i.niupic.com/images/2020/10/06/8LSZ.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="patch2"></p>
 <p>这种情况只要把多余的节点卸掉就好了：</p>
-<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">else</span> <span class="keyword">if</span> (i &gt; e2) &#123;</span><br><span class="line">     <span class="keyword">while</span> (i &lt;= e1) &#123;</span><br><span class="line">       unmount(c1[i], parentComponent, parentSuspense, <span class="literal">true</span>)</span><br><span class="line">       i++</span><br><span class="line">     &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs ts"><span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (i &gt; e2) &#123;<br>     <span class="hljs-keyword">while</span> (i &lt;= e1) &#123;<br>       unmount(c1[i], parentComponent, parentSuspense, <span class="hljs-literal">true</span>)<br>       i++<br>     &#125;<br>   &#125;<br></code></pre></td></tr></table></figure>
 
 <p>继续，方便处理的已经结束了，下面对无序节点进行处理喽：</p>
 <p>如下情况：</p>
-<p><img src="https://i.niupic.com/images/2020/10/06/8LT9.png" alt="unsequence_list"></p>
+<p><img   class="lazyload" data-original="https://i.niupic.com/images/2020/10/06/8LT9.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="unsequence_list"></p>
 <p>到了这步显然只需要处理 i -&gt; e1(e2)部分的所有无须子节点的复用即可。</p>
 <p>分三步：</p>
 <ol>
-<li><p>构建一个key -&gt; index的列表，用来确认c1是否在c2中有对应节点可供复用，并映射其位置</p>
-<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> s1 = i <span class="comment">// prev starting index</span></span><br><span class="line">   <span class="keyword">const</span> s2 = i <span class="comment">// next starting index</span></span><br><span class="line">   <span class="keyword">const</span> keyToNewIndexMap: Map&lt;<span class="built_in">string</span> | <span class="built_in">number</span>, <span class="built_in">number</span>&gt; = <span class="keyword">new</span> Map()</span><br><span class="line">   <span class="keyword">for</span> (i = s2; i &lt;= e2; i++) &#123;</span><br><span class="line">     <span class="keyword">const</span> nextChild = (c2[i] = optimized</span><br><span class="line">       ? cloneIfMounted(c2[i] <span class="keyword">as</span> VNode)</span><br><span class="line">       : normalizeVNode(c2[i]))</span><br><span class="line">     <span class="keyword">if</span> (nextChild.key != <span class="literal">null</span>) &#123;</span><br><span class="line">       keyToNewIndexMap.set(nextChild.key, i)</span><br><span class="line">     &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<li><p>构建一个 key -&gt; index 的列表，用来确认 c1 是否在 c2 中有对应节点可供复用，并映射其位置</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs ts"><span class="hljs-keyword">const</span> s1 = i; <span class="hljs-comment">// prev starting index</span><br><span class="hljs-keyword">const</span> s2 = i; <span class="hljs-comment">// next starting index</span><br><span class="hljs-keyword">const</span> keyToNewIndexMap: Map&lt;<span class="hljs-built_in">string</span> | <span class="hljs-built_in">number</span>, <span class="hljs-built_in">number</span>&gt; = <span class="hljs-keyword">new</span> Map();<br><span class="hljs-keyword">for</span> (i = s2; i &lt;= e2; i++) &#123;<br>  <span class="hljs-keyword">const</span> nextChild = (c2[i] = optimized<br>    ? cloneIfMounted(c2[i] <span class="hljs-keyword">as</span> VNode)<br>    : normalizeVNode(c2[i]));<br>  <span class="hljs-keyword">if</span> (nextChild.key != <span class="hljs-literal">null</span>) &#123;<br>    keyToNewIndexMap.set(nextChild.key, i);<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 </li>
-<li><p>利用上面的映射表做一次DOM处理，这里主要为了下面的优化处理，将所有不可以复用的节点卸载，需要的地方我写了注释。</p>
-<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> j</span><br><span class="line">   <span class="keyword">let</span> patched = <span class="number">0</span></span><br><span class="line">   <span class="keyword">const</span> toBePatched = e2 - s2 + <span class="number">1</span> <span class="comment">// 待处理的c2无序部分的长度</span></span><br><span class="line">   <span class="keyword">let</span> moved = <span class="literal">false</span></span><br><span class="line">   <span class="keyword">let</span> maxNewIndexSoFar = <span class="number">0</span></span><br><span class="line">   <span class="comment">// used for determining longest stable subsequence</span></span><br><span class="line">   <span class="comment">// 这个列表是用来映设c2中的节点对应（c1中节点的位置 + 1）</span></span><br><span class="line">   <span class="keyword">const</span> newIndexToOldIndexMap = <span class="keyword">new</span> <span class="built_in">Array</span>(toBePatched).fill(<span class="number">0</span>)</span><br><span class="line">   </span><br><span class="line">   <span class="keyword">for</span> (i = s1; i &lt;= e1; i++) &#123;</span><br><span class="line">     <span class="keyword">const</span> prevChild = c1[i]</span><br><span class="line">     <span class="keyword">if</span> (patched &gt;= toBePatched) &#123;</span><br><span class="line">       <span class="comment">// 性能优化，c1多余旧节点全部移除</span></span><br><span class="line">       unmount(prevChild, parentComponent, parentSuspense, <span class="literal">true</span>)</span><br><span class="line">       <span class="keyword">continue</span></span><br><span class="line">     &#125;</span><br><span class="line">     <span class="keyword">let</span> newIndex</span><br><span class="line">     <span class="keyword">if</span> (prevChild.key != <span class="literal">null</span>) &#123;</span><br><span class="line">       <span class="comment">// 有key元素直接获取key对应的新vnode的index</span></span><br><span class="line">       newIndex = keyToNewIndexMap.get(prevChild.key)</span><br><span class="line">     &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">       <span class="comment">// 无key旧vnode尝试匹配到一个可以复用的无key新vnode</span></span><br><span class="line">       <span class="keyword">for</span> (j = s2; j &lt;= e2; j++) &#123;</span><br><span class="line">         <span class="keyword">if</span> (</span><br><span class="line">           newIndexToOldIndexMap[j - s2] === <span class="number">0</span> &amp;&amp;</span><br><span class="line">           isSameVNodeType(prevChild, c2[j] <span class="keyword">as</span> VNode)</span><br><span class="line">         ) &#123;</span><br><span class="line">           newIndex = j</span><br><span class="line">           <span class="keyword">break</span></span><br><span class="line">         &#125;</span><br><span class="line">       &#125;</span><br><span class="line">     &#125;</span><br><span class="line">     <span class="keyword">if</span> (newIndex === <span class="literal">undefined</span>) &#123;</span><br><span class="line">       <span class="comment">// 卸载key对应的节点已经不存在或无key的且无法复用的节点</span></span><br><span class="line">       unmount(prevChild, parentComponent, parentSuspense, <span class="literal">true</span>)</span><br><span class="line">     &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">       <span class="comment">// 记录第新节点复用的老节点的idx + 1，用来做最大递增子序列</span></span><br><span class="line">       newIndexToOldIndexMap[newIndex - s2] = i + <span class="number">1</span></span><br><span class="line">       <span class="keyword">if</span> (newIndex &gt;= maxNewIndexSoFar) &#123;</span><br><span class="line">         maxNewIndexSoFar = newIndex</span><br><span class="line">       &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">         moved = <span class="literal">true</span></span><br><span class="line">       &#125;</span><br><span class="line">       patch(</span><br><span class="line">         prevChild,</span><br><span class="line">         c2[newIndex] <span class="keyword">as</span> VNode,</span><br><span class="line">         container,</span><br><span class="line">         <span class="literal">null</span>,</span><br><span class="line">         parentComponent,</span><br><span class="line">         parentSuspense,</span><br><span class="line">         isSVG,</span><br><span class="line">         optimized</span><br><span class="line">       )</span><br><span class="line">       patched++ <span class="comment">// 计数，用来剪枝</span></span><br><span class="line">     &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<li><p>利用上面的映射表做一次 DOM 处理，这里主要为了下面的优化处理，将所有不可以复用的节点卸载，需要的地方我写了注释。</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><code class="hljs ts"><span class="hljs-keyword">let</span> j;<br><span class="hljs-keyword">let</span> patched = <span class="hljs-number">0</span>;<br><span class="hljs-keyword">const</span> toBePatched = e2 - s2 + <span class="hljs-number">1</span>; <span class="hljs-comment">// 待处理的c2无序部分的长度</span><br><span class="hljs-keyword">let</span> moved = <span class="hljs-literal">false</span>;<br><span class="hljs-keyword">let</span> maxNewIndexSoFar = <span class="hljs-number">0</span>;<br><span class="hljs-comment">// used for determining longest stable subsequence</span><br><span class="hljs-comment">// 这个列表是用来映设c2中的节点对应（c1中节点的位置 + 1）</span><br><span class="hljs-keyword">const</span> newIndexToOldIndexMap = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Array</span>(toBePatched).fill(<span class="hljs-number">0</span>);<br><br><span class="hljs-keyword">for</span> (i = s1; i &lt;= e1; i++) &#123;<br>  <span class="hljs-keyword">const</span> prevChild = c1[i];<br>  <span class="hljs-keyword">if</span> (patched &gt;= toBePatched) &#123;<br>    <span class="hljs-comment">// 性能优化，c1多余旧节点全部移除</span><br>    unmount(prevChild, parentComponent, parentSuspense, <span class="hljs-literal">true</span>);<br>    <span class="hljs-keyword">continue</span>;<br>  &#125;<br>  <span class="hljs-keyword">let</span> newIndex;<br>  <span class="hljs-keyword">if</span> (prevChild.key != <span class="hljs-literal">null</span>) &#123;<br>    <span class="hljs-comment">// 有key元素直接获取key对应的新vnode的index</span><br>    newIndex = keyToNewIndexMap.get(prevChild.key);<br>  &#125; <span class="hljs-keyword">else</span> &#123;<br>    <span class="hljs-comment">// 无key旧vnode尝试匹配到一个可以复用的无key新vnode</span><br>    <span class="hljs-keyword">for</span> (j = s2; j &lt;= e2; j++) &#123;<br>      <span class="hljs-keyword">if</span> (<br>        newIndexToOldIndexMap[j - s2] === <span class="hljs-number">0</span> &amp;&amp;<br>        isSameVNodeType(prevChild, c2[j] <span class="hljs-keyword">as</span> VNode)<br>      ) &#123;<br>        newIndex = j;<br>        <span class="hljs-keyword">break</span>;<br>      &#125;<br>    &#125;<br>  &#125;<br>  <span class="hljs-keyword">if</span> (newIndex === <span class="hljs-literal">undefined</span>) &#123;<br>    <span class="hljs-comment">// 卸载key对应的节点已经不存在或无key的且无法复用的节点</span><br>    unmount(prevChild, parentComponent, parentSuspense, <span class="hljs-literal">true</span>);<br>  &#125; <span class="hljs-keyword">else</span> &#123;<br>    <span class="hljs-comment">// 记录第新节点复用的老节点的idx + 1，用来做最大递增子序列</span><br>    newIndexToOldIndexMap[newIndex - s2] = i + <span class="hljs-number">1</span>;<br>    <span class="hljs-keyword">if</span> (newIndex &gt;= maxNewIndexSoFar) &#123;<br>      maxNewIndexSoFar = newIndex;<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>      moved = <span class="hljs-literal">true</span>;<br>    &#125;<br>    patch(<br>      prevChild,<br>      c2[newIndex] <span class="hljs-keyword">as</span> VNode,<br>      container,<br>      <span class="hljs-literal">null</span>,<br>      parentComponent,<br>      parentSuspense,<br>      isSVG,<br>      optimized<br>    );<br>    patched++; <span class="hljs-comment">// 计数，用来剪枝</span><br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <ol start="3">
 <li>下面的才是戏肉，哦不对，肉戏：</li>
 </ol>
 <p>这里面用了一个概念：<a href="https://en.wikipedia.org/wiki/Longest_increasing_subsequence">最长递增子序列</a></p>
-<p>可以先参考<a href="https://leetcode-cn.com/problems/longest-increasing-subsequence/">leetcode300</a>。然后再看这段代码，这里显然是用了二分查找对时间复杂度优化到了O(nlogn)，如果做完上面的题目，这里就可以理解了。</p>
-<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getSequence</span>(<span class="params">arr: <span class="built_in">number</span>[]</span>): <span class="title">number</span>[] </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> p = arr.slice()</span><br><span class="line">  <span class="keyword">const</span> result = [<span class="number">0</span>]</span><br><span class="line">  <span class="keyword">let</span> i, j, u, v, c</span><br><span class="line">  <span class="keyword">const</span> len = arr.length</span><br><span class="line">  <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; len; i++) &#123;</span><br><span class="line">    <span class="keyword">const</span> arrI = arr[i]</span><br><span class="line">    <span class="keyword">if</span> (arrI !== <span class="number">0</span>) &#123;</span><br><span class="line">      j = result[result.length - <span class="number">1</span>]</span><br><span class="line">      <span class="keyword">if</span> (arr[j] &lt; arrI) &#123;</span><br><span class="line">        p[i] = j</span><br><span class="line">        result.push(i)</span><br><span class="line">        <span class="keyword">continue</span></span><br><span class="line">      &#125;</span><br><span class="line">      u = <span class="number">0</span> <span class="comment">// start</span></span><br><span class="line">      v = result.length - <span class="number">1</span>  <span class="comment">// end</span></span><br><span class="line">      <span class="keyword">while</span> (u &lt; v) &#123;</span><br><span class="line">        c = ((u + v) / <span class="number">2</span>) | <span class="number">0</span> <span class="comment">// mid</span></span><br><span class="line">        <span class="keyword">if</span> (arr[result[c]] &lt; arrI) &#123;</span><br><span class="line">          u = c + <span class="number">1</span></span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">          v = c</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">if</span> (arrI &lt; arr[result[u]]) &#123;</span><br><span class="line">        <span class="keyword">if</span> (u &gt; <span class="number">0</span>) &#123;</span><br><span class="line">          p[i] = result[u - <span class="number">1</span>]</span><br><span class="line">        &#125;</span><br><span class="line">        result[u] = i</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  u = result.length</span><br><span class="line">  v = result[u - <span class="number">1</span>]</span><br><span class="line">  <span class="keyword">while</span> (u-- &gt; <span class="number">0</span>) &#123;</span><br><span class="line">    result[u] = v</span><br><span class="line">    v = p[v]</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> result <span class="comment">// 可以复用的老节点的idx数组</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以先参考<a href="https://leetcode-cn.com/problems/longest-increasing-subsequence/">leetcode300</a>。然后再看这段代码，这里显然是用了二分查找对时间复杂度优化到了 O(nlogn)，如果做完上面的题目，这里就可以理解了。</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><code class="hljs ts"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getSequence</span>(<span class="hljs-params">arr: <span class="hljs-built_in">number</span>[]</span>): <span class="hljs-title">number</span>[] </span>&#123;<br>  <span class="hljs-keyword">const</span> p = arr.slice();<br>  <span class="hljs-keyword">const</span> result = [<span class="hljs-number">0</span>];<br>  <span class="hljs-keyword">let</span> i, j, u, v, c;<br>  <span class="hljs-keyword">const</span> len = arr.length;<br>  <span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; len; i++) &#123;<br>    <span class="hljs-keyword">const</span> arrI = arr[i];<br>    <span class="hljs-keyword">if</span> (arrI !== <span class="hljs-number">0</span>) &#123;<br>      j = result[result.length - <span class="hljs-number">1</span>];<br>      <span class="hljs-keyword">if</span> (arr[j] &lt; arrI) &#123;<br>        p[i] = j;<br>        result.push(i);<br>        <span class="hljs-keyword">continue</span>;<br>      &#125;<br>      u = <span class="hljs-number">0</span>; <span class="hljs-comment">// start</span><br>      v = result.length - <span class="hljs-number">1</span>; <span class="hljs-comment">// end</span><br>      <span class="hljs-keyword">while</span> (u &lt; v) &#123;<br>        c = ((u + v) / <span class="hljs-number">2</span>) | <span class="hljs-number">0</span>; <span class="hljs-comment">// mid</span><br>        <span class="hljs-keyword">if</span> (arr[result[c]] &lt; arrI) &#123;<br>          u = c + <span class="hljs-number">1</span>;<br>        &#125; <span class="hljs-keyword">else</span> &#123;<br>          v = c;<br>        &#125;<br>      &#125;<br>      <span class="hljs-keyword">if</span> (arrI &lt; arr[result[u]]) &#123;<br>        <span class="hljs-keyword">if</span> (u &gt; <span class="hljs-number">0</span>) &#123;<br>          p[i] = result[u - <span class="hljs-number">1</span>];<br>        &#125;<br>        result[u] = i;<br>      &#125;<br>    &#125;<br>  &#125;<br>  u = result.length;<br>  v = result[u - <span class="hljs-number">1</span>];<br>  <span class="hljs-keyword">while</span> (u-- &gt; <span class="hljs-number">0</span>) &#123;<br>    result[u] = v;<br>    v = p[v];<br>  &#125;<br>  <span class="hljs-keyword">return</span> result; <span class="hljs-comment">// 可以复用的老节点的idx数组</span><br>&#125;<br></code></pre></td></tr></table></figure>
 
-<p>吐槽一下这个命名，简直不要太随意。我看这几个字母总是混乱，到底是哪几个单词的首字母啊，抓狂o(≧口≦)o。</p>
-<p>利用getSequence获取了一个最大递增子序列每个节点的下标数组。</p>
+<p>吐槽一下这个命名，简直不要太随意。我看这几个字母总是混乱，到底是哪几个单词的首字母啊，抓狂 o(≧ 口 ≦)o。</p>
+<p>利用 getSequence 获取了一个最大递增子序列每个节点的下标数组。</p>
 <p>下面的即是整个优化的核心，先来想想为什么这里需要拿到这个数组？</p>
-<p>如果可以确定最大递增子序列节点位置，只需要移动不属于最大递增子序列的节点，即可完成对DOM的转换。代码如下：</p>
-<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> increasingNewIndexSequence = moved</span><br><span class="line">       ? getSequence(newIndexToOldIndexMap)</span><br><span class="line">       : EMPTY_ARR</span><br><span class="line">     j = increasingNewIndexSequence.length - <span class="number">1</span></span><br><span class="line">     <span class="comment">// looping backwards so that we can use last patched node as anchor</span></span><br><span class="line">     <span class="keyword">for</span> (i = toBePatched - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">       <span class="keyword">const</span> nextIndex = s2 + i</span><br><span class="line">       <span class="keyword">const</span> nextChild = c2[nextIndex] <span class="keyword">as</span> VNode</span><br><span class="line">       <span class="keyword">const</span> anchor =</span><br><span class="line">         nextIndex + <span class="number">1</span> &lt; l2 ? (c2[nextIndex + <span class="number">1</span>] <span class="keyword">as</span> VNode).el : parentAnchor</span><br><span class="line">       <span class="keyword">if</span> (newIndexToOldIndexMap[i] === <span class="number">0</span>) &#123;</span><br><span class="line">         <span class="comment">// 无复用的直接patch就好了</span></span><br><span class="line">         patch(</span><br><span class="line">           <span class="literal">null</span>,</span><br><span class="line">           nextChild,</span><br><span class="line">           container,</span><br><span class="line">           anchor,</span><br><span class="line">           parentComponent,</span><br><span class="line">           parentSuspense,</span><br><span class="line">           isSVG</span><br><span class="line">         )</span><br><span class="line">       &#125; <span class="keyword">else</span> <span class="keyword">if</span> (moved) &#123;</span><br><span class="line">         <span class="comment">// move if:</span></span><br><span class="line">         <span class="comment">// There is no stable subsequence (e.g. a reverse)</span></span><br><span class="line">         <span class="comment">// OR current node is not among the stable sequence</span></span><br><span class="line">         <span class="keyword">if</span> (j &lt; <span class="number">0</span> || i !== increasingNewIndexSequence[j]) &#123;</span><br><span class="line">           move(nextChild, container, anchor, MoveType.REORDER)</span><br><span class="line">         &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">           j--</span><br><span class="line">         &#125;</span><br><span class="line">       &#125;</span><br><span class="line">     &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<p>如果可以确定最大递增子序列节点位置，只需要移动不属于最大递增子序列的节点，即可完成对 DOM 的转换。代码如下：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><code class="hljs ts"><span class="hljs-keyword">const</span> increasingNewIndexSequence = moved<br>       ? getSequence(newIndexToOldIndexMap)<br>       : EMPTY_ARR<br>     j = increasingNewIndexSequence.length - <span class="hljs-number">1</span><br>     <span class="hljs-comment">// looping backwards so that we can use last patched node as anchor</span><br>     <span class="hljs-keyword">for</span> (i = toBePatched - <span class="hljs-number">1</span>; i &gt;= <span class="hljs-number">0</span>; i--) &#123;<br>       <span class="hljs-keyword">const</span> nextIndex = s2 + i<br>       <span class="hljs-keyword">const</span> nextChild = c2[nextIndex] <span class="hljs-keyword">as</span> VNode<br>       <span class="hljs-keyword">const</span> anchor =<br>         nextIndex + <span class="hljs-number">1</span> &lt; l2 ? (c2[nextIndex + <span class="hljs-number">1</span>] <span class="hljs-keyword">as</span> VNode).el : parentAnchor<br>       <span class="hljs-keyword">if</span> (newIndexToOldIndexMap[i] === <span class="hljs-number">0</span>) &#123;<br>         <span class="hljs-comment">// 无复用的直接patch就好了</span><br>         patch(<br>           <span class="hljs-literal">null</span>,<br>           nextChild,<br>           container,<br>           anchor,<br>           parentComponent,<br>           parentSuspense,<br>           isSVG<br>         )<br>       &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (moved) &#123;<br>         <span class="hljs-comment">// move if:</span><br>         <span class="hljs-comment">// There is no stable subsequence (e.g. a reverse)</span><br>         <span class="hljs-comment">// OR current node is not among the stable sequence</span><br>         <span class="hljs-keyword">if</span> (j &lt; <span class="hljs-number">0</span> || i !== increasingNewIndexSequence[j]) &#123;<br>           move(nextChild, container, anchor, MoveType.REORDER)<br>         &#125; <span class="hljs-keyword">else</span> &#123;<br>           j--<br>         &#125;<br>       &#125;<br>     &#125;<br>   &#125;<br></code></pre></td></tr></table></figure>
 
 <p>这里可能比较抽象，所以我画了一组图片。此处，假设我们已经有了最长递增子序列，同时，这些节点都是需要进行移动复用的。如下：</p>
-<p><img src="https://i.niupic.com/images/2020/10/07/8LUx.png" alt="子序列"></p>
-<p>从newIndexToOldIndexMap开始，发现这里有个复用同时在increasingNewIndexSequence的末尾，显然，这是个不需要移动的元素。i–， j–，如下：</p>
-<p><img src="https://i.niupic.com/images/2020/10/07/8LUy.png" alt="子序列2"></p>
-<p>到这里发现，i 位置的索引不等于j指向的值了，所以显然是需要进行位置的变换（move的），可以看到根据c2，在c1中将E会被插入节点I的前面，然后i–，看图：</p>
-<p><img src="https://i.niupic.com/images/2020/10/07/8LUz.png" alt="子序列3"></p>
-<p>接下来，2,1都在递增子序列中，所以不会进行移动，依然i–，j–，直到下图情况：</p>
-<p><img src="https://i.niupic.com/images/2020/10/07/8LUB.png" alt="子序列4"></p>
-<p>此时，j &lt; 0，直接对老节点进行位移即可，可以看到，需要将F节点插入D节点前面即可，看图：</p>
-<p><img src="https://i.niupic.com/images/2020/10/07/8LUG.png" alt="子序列5"></p>
-<p>可以看到，已经达到了keyedChildren的复用，且减少了大量无意义DOM操作。</p>
+<p><img   class="lazyload" data-original="https://i.niupic.com/images/2020/10/07/8LUx.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="子序列"></p>
+<p>从 newIndexToOldIndexMap 开始，发现这里有个复用同时在 increasingNewIndexSequence 的末尾，显然，这是个不需要移动的元素。i–， j–，如下：</p>
+<p><img   class="lazyload" data-original="https://i.niupic.com/images/2020/10/07/8LUy.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="子序列2"></p>
+<p>到这里发现，i 位置的索引不等于 j 指向的值了，所以显然是需要进行位置的变换（move 的），可以看到根据 c2，在 c1 中将 E 会被插入节点 I 的前面，然后 i–，看图：</p>
+<p><img   class="lazyload" data-original="https://i.niupic.com/images/2020/10/07/8LUz.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="子序列3"></p>
+<p>接下来，2,1 都在递增子序列中，所以不会进行移动，依然 i–，j–，直到下图情况：</p>
+<p><img   class="lazyload" data-original="https://i.niupic.com/images/2020/10/07/8LUB.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="子序列4"></p>
+<p>此时，j &lt; 0，直接对老节点进行位移即可，可以看到，需要将 F 节点插入 D 节点前面即可，看图：</p>
+<p><img   class="lazyload" data-original="https://i.niupic.com/images/2020/10/07/8LUG.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="子序列5"></p>
+<p>可以看到，已经达到了 keyedChildren 的复用，且减少了大量无意义 DOM 操作。</p>
 </li>
 </ol>
-<h2 id="section-4-总结"><a href="#section-4-总结" class="headerlink" title="section 4 总结"></a>section 4 总结</h2><p>整体感觉不算应该很难，但是我发现Vue3的一个有趣的地方。它将DOM操作底层封装成了一些特定的函数存储在vnode上，显然我们可以自定义一些特殊的行为然后替换原有的DOM操作吼。</p>
+<h2 id="section-4-总结"><a href="#section-4-总结" class="headerlink" title="section 4 总结"></a>section 4 总结</h2><p>整体感觉不算应该很难，但是我发现 Vue3 的一个有趣的地方。它将 DOM 操作底层封装成了一些特定的函数存储在 vnode 上，显然我们可以自定义一些特殊的行为然后替换原有的 DOM 操作吼。</p>
 <p>最后的递增子序列题解我放在下面，自以为我写的是最好理解的方法了。插个腰！&lt;(ˉ^ˉ)&gt;</p>
 <p>就酱，本文结束。</p>
 <h2 id="section-Afterword-题解"><a href="#section-Afterword-题解" class="headerlink" title="section Afterword 题解"></a>section Afterword 题解</h2><p><a href="https://leetcode-cn.com/problems/longest-increasing-subsequence/">leetcode300</a>：最大上升子序列长度</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> lengthOfLIS = <span class="function"><span class="keyword">function</span> (<span class="params">nums</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> ret = [];</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; nums.length; ++i) &#123;</span><br><span class="line">        <span class="keyword">const</span> max = ret[ret.length - <span class="number">1</span>] ? ret[ret.length - <span class="number">1</span>] : <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">if</span> (nums[i] &gt; max) &#123;</span><br><span class="line">            ret.push(nums[i]);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">let</span> idx = binarySearch(ret, nums[i]);</span><br><span class="line">            idx = idx &gt;= <span class="number">0</span> ? idx : -idx - <span class="number">1</span>;</span><br><span class="line">            ret[idx] = nums[i];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> ret.length</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">binarySearch</span>(<span class="params">ret, searchVal</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">let</span> start = <span class="number">0</span>,</span><br><span class="line">            end = ret.length - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">let</span> mid = <span class="number">0</span></span><br><span class="line">        <span class="keyword">while</span> (start &lt; end) &#123;</span><br><span class="line">            mid = <span class="built_in">Math</span>.floor((start + end) / <span class="number">2</span>);</span><br><span class="line">            <span class="keyword">if</span> (ret[mid] === searchVal) <span class="keyword">return</span> mid;</span><br><span class="line">            <span class="keyword">if</span> (ret[mid] &lt; searchVal) &#123;</span><br><span class="line">                start = mid + <span class="number">1</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                end = mid;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> -(start + <span class="number">1</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> lengthOfLIS = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">nums</span>) </span>&#123;<br>  <span class="hljs-keyword">const</span> ret = [];<br>  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; i &lt; nums.length; ++i) &#123;<br>    <span class="hljs-keyword">const</span> max = ret[ret.length - <span class="hljs-number">1</span>] ? ret[ret.length - <span class="hljs-number">1</span>] : <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">if</span> (nums[i] &gt; max) &#123;<br>      ret.push(nums[i]);<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>      <span class="hljs-keyword">let</span> idx = binarySearch(ret, nums[i]);<br>      idx = idx &gt;= <span class="hljs-number">0</span> ? idx : -idx - <span class="hljs-number">1</span>;<br>      ret[idx] = nums[i];<br>    &#125;<br>  &#125;<br><br>  <span class="hljs-keyword">return</span> ret.length;<br><br>  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">binarySearch</span>(<span class="hljs-params">ret, searchVal</span>) </span>&#123;<br>    <span class="hljs-keyword">let</span> start = <span class="hljs-number">0</span>,<br>      end = ret.length - <span class="hljs-number">1</span>;<br>    <span class="hljs-keyword">let</span> mid = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">while</span> (start &lt; end) &#123;<br>      mid = <span class="hljs-built_in">Math</span>.floor((start + end) / <span class="hljs-number">2</span>);<br>      <span class="hljs-keyword">if</span> (ret[mid] === searchVal) <span class="hljs-keyword">return</span> mid;<br>      <span class="hljs-keyword">if</span> (ret[mid] &lt; searchVal) &#123;<br>        start = mid + <span class="hljs-number">1</span>;<br>      &#125; <span class="hljs-keyword">else</span> &#123;<br>        end = mid;<br>      &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> -(start + <span class="hljs-number">1</span>);<br>  &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
 
-<p><img src="https://i.niupic.com/images/2020/10/07/8LUM.png" alt="solution"></p>
+<p><img   class="lazyload" data-original="https://i.niupic.com/images/2020/10/07/8LUM.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="solution"></p>
+      </section>
+      <section class="extra">
+        
+        <ul class="copyright">
+  
+  <li><strong>本文作者：</strong>kilic</li>
+  <li><strong>本文链接：</strong><a href="http://kilic.site/2020/10/07/VUE3%E5%AF%B9PATCH-DIFF-%E7%9A%84%E4%BC%98%E5%8C%96/index.html">http://kilic.site/2020/10/07/VUE3%E5%AF%B9PATCH-DIFF-%E7%9A%84%E4%BC%98%E5%8C%96/index.html</a></li>
+  <li><strong>版权声明：</strong>本博客所有文章均采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh"
+      rel="external nofollow" target="_blank"> BY-NC-SA </a>许可协议，转载请注明出处！</li>
+  
+</ul>
+        
+        
+        <section class="donate">
+  <div class="qrcode">
+    <img   class="lazyload" data-original="/images/others/alipay.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" >
+  </div>
+  <div class="icon">
+    <a href="javascript:;" id="alipay"><i class="iconfont iconalipay"></i></a>
+    <a href="javascript:;" id="wechat"><i class="iconfont iconwechat-fill"></i></a>
+  </div>
+</section>
+        
+        
+        
+<nav class="nav">
+  
+    <a href="/2020/10/08/REDUX%E5%88%B0%E5%BA%95%E5%81%9A%E4%BA%86%E4%BB%80%E4%B9%88%EF%BC%9F/"><i class="iconfont iconleft"></i>Redux到底做了什么？</a>
+  
+  
+    <a href="/2020/09/27/%E5%BC%82%E6%AD%A5%E8%AF%B7%E6%B1%82%E7%9A%84%E8%8A%82%E6%B5%81/">异步请求的节流<i class="iconfont iconright"></i></a>
+  
+</nav>
 
-        </div>
-      </div>
-    </div>
+      </section>
+      
+      <section class="comments">
+  
+  <div class="btn" id="comments-btn">查看评论</div>
+  
+  
+</section>
+      
+    </section>
   </div>
 </article>
-
-
-
-    <!-- Footer -->
-<footer>
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-        <p class="copyright text-muted">
-          Theme By <a target="_blank" href="https://github.com/levblanc">Levblanc.</a>
-          Inspired By <a target="_blank" href="https://github.com/klugjo/hexo-theme-clean-blog">Clean Blog.</a>
-        <p class="copyright text-muted">
-          Powered By <a target="_blank" href="https://hexo.io/">Hexo.</a>
-        </p>
-      </div>
-    </div>
   </div>
+</main>
+  <footer class="footer">
+  <div class="footer-social">
+    
+    
+    
+    
+    
+    <a href="tencent://message/?Menu=yes&uin=102483678 " target="_blank" onMouseOver="this.style.color= '#12B7F5'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconQQ "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="javascript:; " target="_blank" onMouseOver="this.style.color= '#09BB07'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconwechat-fill "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="https://www.instagram.com/kilicmu3/ " target="_blank" onMouseOver="this.style.color= '#DA2E76'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconinstagram "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="https://github.com/kilicmu " target="_blank" onMouseOver="this.style.color= '#24292E'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  icongithub-fill "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="kilicmu3389@outlook.com " target="_blank" onMouseOver="this.style.color='#FFBE5B'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconmail"></i>
+    </a>
+    
+  </div>
+  <div class="footer-copyright"><p>Powered by <a target="_blank" href="https://hexo.io">Hexo</a>  |  Theme - <a target="_blank" href="https://github.com/izhaoo/hexo-theme-zhaoo">zhaoo</a></p></div>
 </footer>
+  
+      <div class="fab fab-plus">
+    <i class="iconfont iconplus"></i>
+  </div>
+  
+  <div class="fab fab-daovoice">
+    <i class="iconfont iconcomment"></i>
+  </div>
+  
+  <div class="fab fab-up">
+    <i class="iconfont iconcaret-up"></i>
+  </div>
+  
+</body>
 
 
-    <!-- After Footer Scripts -->
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
 
-<script src="/js/highlight.pack.js"></script>
+
+
+
+
+
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+
+
+
+
+
+<script src="https://cdn.bootcss.com/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+
+
+
+
+
+
+<script src="/js/utils.js"></script>
+<script src="/js/modules.js"></script>
+<script src="/js/zui.js"></script>
+<script src="/js/script.js"></script>
+
+
+
+
 
 <script>
-  document.addEventListener("DOMContentLoaded", function(event) {
-    var codeBlocks = Array.prototype.slice.call(document.getElementsByTagName('pre'))
-    codeBlocks.forEach(function(block, index) {
-      hljs.highlightBlock(block);
-    });
+  (function (i, s, o, g, r, a, m) {
+    i["DaoVoiceObject"] = r;
+    i[r] = i[r] || function () {
+      (i[r].q = i[r].q || []).push(arguments)
+    }, i[r].l = 1 * new Date();
+    a = s.createElement(o), m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    a.charset = "utf-8";
+    m.parentNode.insertBefore(a, m)
+  })(window, document, "script", ('https:' == document.location.protocol ? 'https:' : 'http:') +
+    "//widget.daovoice.io/widget/0f81ff2f.js", "daovoice")
+  daovoice('init', {
+    app_id: "abcdefg"
+  }, {
+    launcher: {
+      disableLauncherIcon: true,
+    },
   });
+  daovoice('update');
 </script>
 
-  </body>
-</html>
 
+
+<script>
+  (function () {
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    } else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+<script>
+  var _hmt = _hmt || [];
+  (function () {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?4c204d8bc027a0455b5fc642ac334ca8";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+
+
+
+
+
+
+
+
+
+</html>

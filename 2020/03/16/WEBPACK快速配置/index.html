@@ -1,139 +1,188 @@
+
+
 <!DOCTYPE html>
-<html>
-  <!-- Html Head Tag-->
-  <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="">
-  <meta name="author" content="kilic">
-  <!-- Open Graph Data -->
-  <meta property="og:title" content="Webpack快速配置"/>
-  <meta property="og:description" content="咸鱼，无业游民" />
-  <meta property="og:site_name" content="kilic の 部落格"/>
-  <meta property="og:type" content="article" />
-  <meta property="og:image" content="http://kilic.site"/>
+<html lang="zh-CN">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Webpack快速配置 - kilic の 部落格</title>
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="google" content="notranslate" />
+
   
-    <link rel="alternate" href="/atom.xml" title="kilic の 部落格" type="application/atom+xml">
+  <meta name="keywords" content="golang,前端,移动端,区块链,智能合约,混吃等死,nodejs,运维,python"> 
+  
+  <meta name="description" content="本文目的是总结如何在不使用脚手架的情况下，如何快速搭建..."> 
+  
+  <meta name="author" content="kilic"> 
+
+  
+    <link rel="icon" href="/images/icons/favicon-16x16.png" type="image/png" sizes="16x16">
   
   
-    <link rel="icon" href="/favicon.png">
+    <link rel="icon" href="/images/icons/favicon-32x32.png" type="image/png" sizes="32x32">
+  
+  
+    <link rel="apple-touch-icon" href="/images/icons/apple-touch-icon.png" sizes="180x180">
+  
+  
+    <meta rel="mask-icon" href="/images/icons/stun-logo.svg" color="#333333">
+  
+  
+    <meta rel="msapplication-TileImage" content="/images/icons/favicon-144x144.png">
+    <meta rel="msapplication-TileColor" content="#000000">
   
 
-  <!-- Site Title -->
-  <title>kilic の 部落格</title>
-
-  <!-- Bootstrap CSS -->
   
-<link rel="stylesheet" href="/css/bootstrap.min.css">
+<link rel="stylesheet" href="/css/style.css">
 
-  <!-- Custom CSS -->
+
   
   
-<link rel="stylesheet" href="/css/style.dark.css">
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1445822_h1619vhl1nr.css">
 
-
-  <!-- Google Analytics -->
   
 
+  
+  
+  
+<link rel="stylesheet" href="https://cdn.bootcss.com/fancybox/3.5.7/jquery.fancybox.min.css">
+
+  
+
+  
+  
+  
+<link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.18.1/styles/xcode.min.css">
+
+  
+
+  <script>
+    var CONFIG = window.CONFIG || {};
+    var ZHAOO = window.ZHAOO || {};
+    CONFIG = {
+      isHome: false,
+      fancybox: true,
+      pjax: false,
+      lazyload: {
+        enable: true,
+        loadingImage: '',
+      },
+      donate: {
+        enable: true,
+        alipay: '/images/others/alipay.jpg',
+        wechat: '/images/others/wechat.jpg'
+      },
+      motto: {
+        api: '',
+        default: 'fading is true while flowering is past。'
+      },
+      galleries: {
+        enable: true
+      },
+      fab: {
+        enable: true,
+        alwaysShow: false
+      },
+      carrier: {
+        enable: true
+      },
+      daovoice: {
+        enable: true
+      }
+    }
+  </script>
+
+  
+
+  
 <meta name="generator" content="Hexo 4.2.0"></head>
+<body class="lock-screen">
+  <div class="loading"></div>
+  
 
-  <body>
-    <!-- Page Header -->
 
+<nav class="navbar">
+  <div class="left"></div>
+  <div class="center">Webpack快速配置</div>
+  <div class="right">
+    <i class="iconfont iconmenu j-navbar-menu"></i>
+  </div>
+</nav>
 
-<header class="site-header header-background" style="background-image: url(/img/m2.jpg)">
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-        <div class="page-title with-background-image">
-          <p class="title">Webpack快速配置</p>
-          <p class="subtitle"></p>
-        </div>
-        <div class="site-menu with-background-image">
-          <ul>
-            
-              <li>
-                <a href="/">
-                  
-                  Home
-                  
-                </a>
-              </li>
-            
-              <li>
-                <a href="/archives">
-                  
-                  Archives
-                  
-                </a>
-              </li>
-            
-              <li>
-                <a href="https://github.com/kilicmu">
-                  
-                  Github
-                  
-                </a>
-              </li>
-            
-              <li>
-                <a href="mailto:kilicmu3389@outlook.com">
-                  
-                  Email
-                  
-                </a>
-              </li>
-            
-          </ul>
-        </div>
-      </div>
+  <nav class="menu">
+  <div class="menu-wrap">
+    <div class="menu-close">
+      <i class="iconfont iconbaseline-close-px"></i>
+    </div>
+    <ul class="menu-content">
+      
+      
+      
+      
+      <li class="menu-item"><a href="/ " class="underline"> 首页</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/galleries " class="underline"> 摄影</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/archives " class="underline"> 归档</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/tags " class="underline"> 标签</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/categories " class="underline"> 分类</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/about " class="underline"> 关于</a></li>
+      
+    </ul>
+    <div class="menu-copyright"><p>Powered by <a target="_blank" href="https://hexo.io">Hexo</a>  |  Theme - <a target="_blank" href="https://github.com/izhaoo/hexo-theme-zhaoo">zhaoo</a></p></div>
+  </div>
+</nav>
+  <main id="main">
+  <div class="container" id="container">
+    <article class="article">
+  <div class="wrap">
+    <section class="head">
+  <img   class="lazyload" data-original="https://i.niupic.com/images/2020/10/18/8T2n.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  draggable="false">
+  <div class="head-mask">
+    <h1 class="head-title">Webpack快速配置</h1>
+    <div class="head-info">
+      <span class="post-info-item"><i class="iconfont iconcalendar"></i>March 16, 2020</span
+        class="post-info-item">
+      
+      <span class="post-info-item"><i class="iconfont iconfont-size"></i>1990</span>
     </div>
   </div>
-</header>
-
-<article>
-  <div class="container typo">
-    <div class="row">
-      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-        <div class="post-info text-muted">
-          
-            <!-- Author -->
-            <span class="author info">By kilic</span>
-          
-          <!-- Date -->
-          <span class="date-time info">On
-            <span class="date">2020-03-16</span>
-            <span class="time">06:06:20</span>
-          </span>
-          
-        </div>
-        <!-- Tags -->
-        
-          <div class="post-tags text-muted">
-            Tags: 
-
-<a class="tag" href="/tags/WEBPACK/">#webpack</a>
-
-
-          </div>
-        
-        <!-- Post Main Content -->
-        <div class="post-content">
-          <p>本文目的是总结如何在不使用脚手架的情况下，如何快速搭建一个可以使用的webpack环境，算是对webpack基本使用方法的复习。</p>
-<a id="more"></a>
-
-<h1 id="webpack4-x"><a href="#webpack4-x" class="headerlink" title="webpack4.x"></a>webpack4.x</h1><h2 id="1-npm-init"><a href="#1-npm-init" class="headerlink" title="1.npm init"></a>1.<code>npm init</code></h2><h2 id="2-创建目录结构"><a href="#2-创建目录结构" class="headerlink" title="2. 创建目录结构:"></a>2. 创建目录结构:</h2><p>| - project</p>
-<p>​    | - dist</p>
-<p>​    | - src</p>
-<p>​        | - main.js</p>
-<p>​        | - index.html</p>
-<h2 id="3-安装webpack与webpack-cli"><a href="#3-安装webpack与webpack-cli" class="headerlink" title="3. 安装webpack与webpack-cli"></a>3. 安装webpack与webpack-cli</h2><p><code>yarn add webpack -dev</code></p>
+</section>
+    <section class="main">
+      <section class="content">
+        <h1 id="webpack4-x"><a href="#webpack4-x" class="headerlink" title="webpack4.x"></a>webpack4.x</h1><h2 id="1-npm-init"><a href="#1-npm-init" class="headerlink" title="1.npm init"></a>1.<code>npm init</code></h2><h2 id="2-创建目录结构"><a href="#2-创建目录结构" class="headerlink" title="2. 创建目录结构:"></a>2. 创建目录结构:</h2><p>| - project</p>
+<p>​ | - dist</p>
+<p>​ | - src</p>
+<p>​ | - main.js</p>
+<p>​ | - index.html</p>
+<h2 id="3-安装-webpack-与-webpack-cli"><a href="#3-安装-webpack-与-webpack-cli" class="headerlink" title="3. 安装 webpack 与 webpack-cli"></a>3. 安装 webpack 与 webpack-cli</h2><p><code>yarn add webpack -dev</code></p>
 <p><code>yarn add webpack-cli -dev</code></p>
-<h2 id="4-写webpack-config-js"><a href="#4-写webpack-config-js" class="headerlink" title="4. 写webpack.config.js"></a>4. 写webpack.config.js</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">moudle.exports=&#123;</span><br><span class="line">	mode:<span class="string">'development'</span>, <span class="comment">//development不压缩 production压缩</span></span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="4-写-webpack-config-js"><a href="#4-写-webpack-config-js" class="headerlink" title="4. 写 webpack.config.js"></a>4. 写 webpack.config.js</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs js">moudle.exports = &#123;<br>  mode: <span class="hljs-string">"development"</span>, <span class="hljs-comment">//development不压缩 production压缩</span><br>&#125;;<br></code></pre></td></tr></table></figure>
 
-<p><strong>webpack4.x中约定大于配置，默认打包入口为src-&gt;index.js，输出为dist -&gt; main.js</strong></p>
-<h2 id="5-添加webpack-dev-server"><a href="#5-添加webpack-dev-server" class="headerlink" title="5. 添加webpack-dev-server"></a>5. 添加webpack-dev-server</h2><p>在package.json添加构建脚本：</p>
+<p><strong>webpack4.x 中约定大于配置，默认打包入口为 src-&gt;index.js，输出为 dist -&gt; main.js</strong></p>
+<h2 id="5-添加-webpack-dev-server"><a href="#5-添加-webpack-dev-server" class="headerlink" title="5. 添加 webpack-dev-server"></a>5. 添加 webpack-dev-server</h2><p>在 package.json 添加构建脚本：</p>
 <p>参数：</p>
 <ul>
 <li>–open [chrome/firefox/iexplore]：打开浏览器</li>
@@ -143,83 +192,248 @@
 <li>–host 127.0.0.1：打开域名</li>
 </ul>
 <p><code>“dev”：&quot;webpack-dev-server&quot;</code></p>
-<p>webpack-dev-server打包文件默认存在项目根目录，存在内存中</p>
-<h2 id="6-添加html-webpack-plugin插件"><a href="#6-添加html-webpack-plugin插件" class="headerlink" title="6. 添加html-webpack-plugin插件"></a>6. 添加html-webpack-plugin插件</h2><ol>
-<li><p><code>yarn add html-webpack-plugin  -dev</code></p>
+<p>webpack-dev-server 打包文件默认存在项目根目录，存在内存中</p>
+<h2 id="6-添加-html-webpack-plugin-插件"><a href="#6-添加-html-webpack-plugin-插件" class="headerlink" title="6. 添加 html-webpack-plugin 插件"></a>6. 添加 html-webpack-plugin 插件</h2><ol>
+<li><p><code>yarn add html-webpack-plugin -dev</code></p>
 </li>
-<li><p>实例化html-webpack-plugin插件：</p>
+<li><p>实例化 html-webpack-plugin 插件：</p>
 </li>
 </ol>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> HtmlWebPackPlugin = <span class="built_in">require</span>(<span class="string">'html-webpack-plugin'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> htmlPlugin = <span class="keyword">new</span> HtmlWebPackPlugin(&#123;</span><br><span class="line">    template:path.join(__dirname, <span class="string">'src/index.html'</span>),</span><br><span class="line">    filename:<span class="string">'index.html'</span><span class="comment">//生成内存中首页名称</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> HtmlWebPackPlugin = <span class="hljs-built_in">require</span>(<span class="hljs-string">"html-webpack-plugin"</span>);<br><br><span class="hljs-keyword">const</span> htmlPlugin = <span class="hljs-keyword">new</span> HtmlWebPackPlugin(&#123;<br>  template: path.join(__dirname, <span class="hljs-string">"src/index.html"</span>),<br>  filename: <span class="hljs-string">"index.html"</span>, <span class="hljs-comment">//生成内存中首页名称</span><br>&#125;);<br></code></pre></td></tr></table></figure>
 
 <ol start="3">
-<li>在package.json中添加插件</li>
+<li>在 package.json 中添加插件</li>
 </ol>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">plugins:[</span><br><span class="line">    htmlPlugin</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js">plugins: [htmlPlugin];<br></code></pre></td></tr></table></figure>
 
-<h2 id="7-配置babel："><a href="#7-配置babel：" class="headerlink" title="7. 配置babel："></a>7. 配置babel：</h2><ol>
+<h2 id="7-配置-babel："><a href="#7-配置-babel：" class="headerlink" title="7. 配置 babel："></a>7. 配置 babel：</h2><ol>
 <li>运行<code>yarn add babel-core babel-loader babel-plugin-transform-runtime --dev</code></li>
 <li>运行<code>yarn add babel-preset-env babel-preset-stage-0 –dev</code></li>
 </ol>
 <p>可选：</p>
 <ol start="3">
-<li><code>yarn add babel-preset-react -D</code>支持jsx转换 </li>
+<li><code>yarn add babel-preset-react -D</code>支持 jsx 转换</li>
 </ol>
-<p>webpack.config.js添加rules：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>:&#123;</span><br><span class="line">	rules:[</span><br><span class="line">		&#123;<span class="attr">test</span>:<span class="regexp">/\.js|.jsx$/</span>, <span class="attr">use</span>:<span class="string">'babel-loader'</span>, <span class="attr">exclude</span>: <span class="regexp">/node_modules/</span>&#125;</span><br><span class="line">	]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>webpack.config.js 添加 rules：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-built_in">module</span>: &#123;<br>  rules: [&#123; <span class="hljs-attr">test</span>: <span class="hljs-regexp">/\.js|.jsx$/</span>, <span class="hljs-attr">use</span>: <span class="hljs-string">"babel-loader"</span>, <span class="hljs-attr">exclude</span>: <span class="hljs-regexp">/node_modules/</span> &#125;];<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <p>配置.babelrc：</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"presets"</span>:[<span class="string">"env"</span>, <span class="string">"stage-0"</span>, <span class="string">"react"</span>],</span><br><span class="line">    <span class="attr">"plugins"</span>:[<span class="string">"transform-runtime"</span>]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs json">&#123;<br>  <span class="hljs-attr">"presets"</span>: [<span class="hljs-string">"env"</span>, <span class="hljs-string">"stage-0"</span>, <span class="hljs-string">"react"</span>],<br>  <span class="hljs-attr">"plugins"</span>: [<span class="hljs-string">"transform-runtime"</span>]<br>&#125;<br></code></pre></td></tr></table></figure>
 
-<h2 id="8-配置resolved"><a href="#8-配置resolved" class="headerlink" title="8. 配置resolved"></a>8. 配置resolved</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">resolved:&#123;</span><br><span class="line">	extensions:[<span class="string">'.js'</span>, <span class="string">'.jsx'</span>, <span class="string">'.json'</span>]<span class="comment">//表示下列后缀名可省略</span></span><br><span class="line">    alias:&#123;</span><br><span class="line">        <span class="string">'@'</span>:path.join(__dirname, <span class="string">'./src'</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="8-配置-resolved"><a href="#8-配置-resolved" class="headerlink" title="8. 配置 resolved"></a>8. 配置 resolved</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs js">resolved:&#123;<br>  extensions:[<span class="hljs-string">'.js'</span>, <span class="hljs-string">'.jsx'</span>, <span class="hljs-string">'.json'</span>]<span class="hljs-comment">//表示下列后缀名可省略</span><br>    alias:&#123;<br>        <span class="hljs-string">'@'</span>:path.join(__dirname, <span class="hljs-string">'./src'</span>)<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
-<h2 id="9-添加css解析"><a href="#9-添加css解析" class="headerlink" title="9. 添加css解析"></a>9. 添加css解析</h2><p><code>npm install style-loader css-loader</code></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>:&#123;</span><br><span class="line">	rules:[</span><br><span class="line">		&#123;<span class="attr">test</span>:<span class="regexp">/\.js|.jsx$/</span>, <span class="attr">use</span>:<span class="string">'babel-loader'</span>, <span class="attr">exclude</span>: <span class="regexp">/node_modules/</span>&#125;,</span><br><span class="line">        &#123;<span class="attr">test</span>:<span class="regexp">/\.css$/</span>, <span class="attr">use</span>:[<span class="string">'style-loader'</span>,<span class="string">'css-loader?modules'</span>]&#125;,</span><br><span class="line">	]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="9-添加-css-解析"><a href="#9-添加-css-解析" class="headerlink" title="9. 添加 css 解析"></a>9. 添加 css 解析</h2><p><code>npm install style-loader css-loader</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-built_in">module</span>: &#123;<br>  rules: [<br>    &#123; <span class="hljs-attr">test</span>: <span class="hljs-regexp">/\.js|.jsx$/</span>, <span class="hljs-attr">use</span>: <span class="hljs-string">"babel-loader"</span>, <span class="hljs-attr">exclude</span>: <span class="hljs-regexp">/node_modules/</span> &#125;,<br>    &#123; <span class="hljs-attr">test</span>: <span class="hljs-regexp">/\.css$/</span>, <span class="hljs-attr">use</span>: [<span class="hljs-string">"style-loader"</span>, <span class="hljs-string">"css-loader?modules"</span>] &#125;,<br>  ];<br>&#125;<br></code></pre></td></tr></table></figure>
 
-<p>可以再css-loaders中添加中加modules来模块化：</p>
-<p><img src="https://i.niupic.com/images/2020/05/04/7AhF.png" alt="Selection_028"></p>
+<p>可以再 css-loaders 中添加中加 modules 来模块化：</p>
+<p><img   class="lazyload" data-original="https://i.niupic.com/images/2020/05/04/7AhF.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="Selection_028"></p>
 <p>:global(类名)：可以接受所有的</p>
-<p>只针对类选择器和id选择器模块化，不会模块化标签选择器</p>
-<p><strong>如果启用第三方模块化，那么我们使用的样式需要用.sass/.less结尾，而.css结尾用来处理其他如bootstrap库</strong>    </p>
+<p>只针对类选择器和 id 选择器模块化，不会模块化标签选择器</p>
+<p><strong>如果启用第三方模块化，那么我们使用的样式需要用.sass/.less 结尾，而.css 结尾用来处理其他如 bootstrap 库</strong></p>
+      </section>
+      <section class="extra">
+        
+        <ul class="copyright">
+  
+  <li><strong>本文作者：</strong>kilic</li>
+  <li><strong>本文链接：</strong><a href="http://kilic.site/2020/03/16/WEBPACK%E5%BF%AB%E9%80%9F%E9%85%8D%E7%BD%AE/index.html">http://kilic.site/2020/03/16/WEBPACK%E5%BF%AB%E9%80%9F%E9%85%8D%E7%BD%AE/index.html</a></li>
+  <li><strong>版权声明：</strong>本博客所有文章均采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh"
+      rel="external nofollow" target="_blank"> BY-NC-SA </a>许可协议，转载请注明出处！</li>
+  
+</ul>
+        
+        
+        <section class="donate">
+  <div class="qrcode">
+    <img   class="lazyload" data-original="/images/others/alipay.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" >
+  </div>
+  <div class="icon">
+    <a href="javascript:;" id="alipay"><i class="iconfont iconalipay"></i></a>
+    <a href="javascript:;" id="wechat"><i class="iconfont iconwechat-fill"></i></a>
+  </div>
+</section>
+        
+        
+  <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/WEBPACK/" rel="tag">webpack</a></li></ul>
 
-        </div>
-      </div>
-    </div>
+        
+<nav class="nav">
+  
+    <a href="/2020/03/18/%E5%88%9D%E8%AF%86GO-WEBASSEMBLY/"><i class="iconfont iconleft"></i>初识Go WebAssembly</a>
+  
+  
+    <a href="/2020/03/11/%E8%AF%A6%E8%A7%A3PROMISE/">详解Promise<i class="iconfont iconright"></i></a>
+  
+</nav>
+
+      </section>
+      
+      <section class="comments">
+  
+  <div class="btn" id="comments-btn">查看评论</div>
+  
+  
+</section>
+      
+    </section>
   </div>
 </article>
-
-
-
-    <!-- Footer -->
-<footer>
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-        <p class="copyright text-muted">
-          Theme By <a target="_blank" href="https://github.com/levblanc">Levblanc.</a>
-          Inspired By <a target="_blank" href="https://github.com/klugjo/hexo-theme-clean-blog">Clean Blog.</a>
-        <p class="copyright text-muted">
-          Powered By <a target="_blank" href="https://hexo.io/">Hexo.</a>
-        </p>
-      </div>
-    </div>
   </div>
+</main>
+  <footer class="footer">
+  <div class="footer-social">
+    
+    
+    
+    
+    
+    <a href="tencent://message/?Menu=yes&uin=102483678 " target="_blank" onMouseOver="this.style.color= '#12B7F5'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconQQ "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="javascript:; " target="_blank" onMouseOver="this.style.color= '#09BB07'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconwechat-fill "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="https://www.instagram.com/kilicmu3/ " target="_blank" onMouseOver="this.style.color= '#DA2E76'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconinstagram "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="https://github.com/kilicmu " target="_blank" onMouseOver="this.style.color= '#24292E'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  icongithub-fill "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="kilicmu3389@outlook.com " target="_blank" onMouseOver="this.style.color='#FFBE5B'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconmail"></i>
+    </a>
+    
+  </div>
+  <div class="footer-copyright"><p>Powered by <a target="_blank" href="https://hexo.io">Hexo</a>  |  Theme - <a target="_blank" href="https://github.com/izhaoo/hexo-theme-zhaoo">zhaoo</a></p></div>
 </footer>
+  
+      <div class="fab fab-plus">
+    <i class="iconfont iconplus"></i>
+  </div>
+  
+  <div class="fab fab-daovoice">
+    <i class="iconfont iconcomment"></i>
+  </div>
+  
+  <div class="fab fab-up">
+    <i class="iconfont iconcaret-up"></i>
+  </div>
+  
+</body>
 
 
-    <!-- After Footer Scripts -->
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
 
-<script src="/js/highlight.pack.js"></script>
+
+
+
+
+
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+
+
+
+
+
+<script src="https://cdn.bootcss.com/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+
+
+
+
+
+
+<script src="/js/utils.js"></script>
+<script src="/js/modules.js"></script>
+<script src="/js/zui.js"></script>
+<script src="/js/script.js"></script>
+
+
+
+
 
 <script>
-  document.addEventListener("DOMContentLoaded", function(event) {
-    var codeBlocks = Array.prototype.slice.call(document.getElementsByTagName('pre'))
-    codeBlocks.forEach(function(block, index) {
-      hljs.highlightBlock(block);
-    });
+  (function (i, s, o, g, r, a, m) {
+    i["DaoVoiceObject"] = r;
+    i[r] = i[r] || function () {
+      (i[r].q = i[r].q || []).push(arguments)
+    }, i[r].l = 1 * new Date();
+    a = s.createElement(o), m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    a.charset = "utf-8";
+    m.parentNode.insertBefore(a, m)
+  })(window, document, "script", ('https:' == document.location.protocol ? 'https:' : 'http:') +
+    "//widget.daovoice.io/widget/0f81ff2f.js", "daovoice")
+  daovoice('init', {
+    app_id: "abcdefg"
+  }, {
+    launcher: {
+      disableLauncherIcon: true,
+    },
   });
+  daovoice('update');
 </script>
 
-  </body>
-</html>
 
+
+<script>
+  (function () {
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    } else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+<script>
+  var _hmt = _hmt || [];
+  (function () {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?4c204d8bc027a0455b5fc642ac334ca8";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+
+
+
+
+
+
+
+
+
+</html>
