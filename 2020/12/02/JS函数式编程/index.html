@@ -1,0 +1,494 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Js函数式编程 - kilic の 部落格</title>
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="google" content="notranslate" />
+
+  
+  <meta name="keywords" content="undefined"> 
+  
+  <meta name="description" content="导读这篇文章是对《JavaScript 函数式编程》这..."> 
+  
+  <meta name="author" content="kilic"> 
+
+  
+    <link rel="icon" href="/images/icons/favicon-16x16.png" type="image/png" sizes="16x16">
+  
+  
+    <link rel="icon" href="/images/icons/favicon-32x32.png" type="image/png" sizes="32x32">
+  
+  
+    <link rel="apple-touch-icon" href="/images/icons/apple-touch-icon.png" sizes="180x180">
+  
+  
+    <meta rel="mask-icon" href="/images/icons/stun-logo.svg" color="#333333">
+  
+  
+    <meta rel="msapplication-TileImage" content="/images/icons/favicon-144x144.png">
+    <meta rel="msapplication-TileColor" content="#000000">
+  
+
+  
+<link rel="stylesheet" href="/css/style.css">
+
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1445822_h1619vhl1nr.css">
+
+  
+
+  
+  
+  
+<link rel="stylesheet" href="https://cdn.bootcss.com/fancybox/3.5.7/jquery.fancybox.min.css">
+
+  
+
+  
+  
+  
+<link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.18.1/styles/xcode.min.css">
+
+  
+
+  <script>
+    var CONFIG = window.CONFIG || {};
+    var ZHAOO = window.ZHAOO || {};
+    CONFIG = {
+      isHome: false,
+      fancybox: true,
+      pjax: false,
+      lazyload: {
+        enable: true,
+        loadingImage: '',
+      },
+      donate: {
+        enable: true,
+        alipay: '/images/others/alipay.jpg',
+        wechat: '/images/others/wechat.jpg'
+      },
+      motto: {
+        api: '',
+        default: 'fading is true while flowering is past。'
+      },
+      galleries: {
+        enable: true
+      },
+      fab: {
+        enable: true,
+        alwaysShow: false
+      },
+      carrier: {
+        enable: true
+      },
+      daovoice: {
+        enable: true
+      }
+    }
+  </script>
+
+  
+
+  
+<meta name="generator" content="Hexo 5.3.0"></head>
+<body class="lock-screen">
+  <div class="loading"></div>
+  
+
+
+<nav class="navbar">
+  <div class="left"></div>
+  <div class="center">Js函数式编程</div>
+  <div class="right">
+    <i class="iconfont iconmenu j-navbar-menu"></i>
+  </div>
+</nav>
+
+  <nav class="menu">
+  <div class="menu-wrap">
+    <div class="menu-close">
+      <i class="iconfont iconbaseline-close-px"></i>
+    </div>
+    <ul class="menu-content">
+      
+      
+      
+      
+      <li class="menu-item"><a href="/ " class="underline"> 首页</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/galleries " class="underline"> 摄影</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/archives " class="underline"> 归档</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/tags " class="underline"> 标签</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/categories " class="underline"> 分类</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/about " class="underline"> 关于</a></li>
+      
+    </ul>
+    <div class="menu-copyright"><p>Powered by <a target="_blank" href="https://hexo.io">Hexo</a>  |  Theme - <a target="_blank" href="https://github.com/izhaoo/hexo-theme-zhaoo">zhaoo</a></p></div>
+  </div>
+</nav>
+  <main id="main">
+  <div class="container" id="container">
+    <article class="article">
+  <div class="wrap">
+    <section class="head">
+  <img   class="lazyload" data-original="/images/theme/post-image.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  draggable="false">
+  <div class="head-mask">
+    <h1 class="head-title">Js函数式编程</h1>
+    <div class="head-info">
+      <span class="post-info-item"><i class="iconfont iconcalendar"></i>December 02, 2020</span
+        class="post-info-item">
+      
+      <span class="post-info-item"><i class="iconfont iconfont-size"></i>4668</span>
+    </div>
+  </div>
+</section>
+    <section class="main">
+      <section class="content">
+        <h2 id="导读"><a href="#导读" class="headerlink" title="导读"></a>导读</h2><p>这篇文章是对《JavaScript 函数式编程》这本书的总结。</p>
+<p>这本书让我感觉，函数式编程不是为了面向对象编程，也不是软件工程的银弹。只是一种新的视角。</p>
+<p>自我感觉这本2013年著作的小册子，有一些地方已经脱离了时代。但是我希望通过这本书 + JS 来了解函数式编程的一些思想。也算是为后期更深入的接触函数式编程打下一定的基础。</p>
+<p>这个里面我会加入一些自己的理解，不过因为本人有一点菜，很多个人理解可能存在一定的偏颇，所以读者仅应将我的个人理解作为参考，仍需自己理解与求证。</p>
+<p>如果让我自己推荐的话，我不会推荐再去读这本书了。但是如果有一定的时间，也可以自己翻一翻这本小册子，感受一下作者的思维。</p>
+<h2 id="函数式编程"><a href="#函数式编程" class="headerlink" title="函数式编程"></a>函数式编程</h2><p>作者这里用了很简单的一句话描述了函数式编程：</p>
+<blockquote>
+<p>函数式编程就通过使用函数将数值转换成抽象单元，接着用于构建软件系统。</p>
+</blockquote>
+<p>这里我抛出看了前三章时候自己对函数式编程的一些理解。</p>
+<blockquote>
+<p>我认为函数式编程的本质就是通过函数抽象将目标问题分解，在可读性与抽象性之间达到一定的平衡。</p>
+</blockquote>
+<h2 id="正文喽"><a href="#正文喽" class="headerlink" title="正文喽"></a>正文喽</h2><h3 id="从一个小-Demo-领略一下下魅力"><a href="#从一个小-Demo-领略一下下魅力" class="headerlink" title="从一个小 Demo 领略一下下魅力"></a>从一个小 Demo 领略一下下魅力</h3><p>假设我们有一个表数据：</p>
+<table>
+<thead>
+<tr>
+<th>title</th>
+<th>isbn</th>
+<th>ed</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>title1</td>
+<td>01029394</td>
+<td>1</td>
+</tr>
+<tr>
+<td>title2</td>
+<td>01029395</td>
+<td>2</td>
+</tr>
+<tr>
+<td>title1</td>
+<td>01029396</td>
+<td>1</td>
+</tr>
+</tbody></table>
+<p>转成JSON大概是下面这样：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> table = [<br>  &#123; <span class="hljs-attr">title</span>: <span class="hljs-string">"title1"</span>, <span class="hljs-attr">isbn</span>: <span class="hljs-string">"01029394"</span>, <span class="hljs-attr">ed</span>: <span class="hljs-number">1</span> &#125;,<br>  &#123; <span class="hljs-attr">title</span>: <span class="hljs-string">"title2"</span>, <span class="hljs-attr">isbn</span>: <span class="hljs-string">"01029395"</span>, <span class="hljs-attr">ed</span>: <span class="hljs-number">2</span> &#125;,<br>  &#123; <span class="hljs-attr">title</span>: <span class="hljs-string">"title1"</span>, <span class="hljs-attr">isbn</span>: <span class="hljs-string">"01029396"</span>, <span class="hljs-attr">ed</span>: <span class="hljs-number">1</span> &#125;,<br>];<br></code></pre></td></tr></table></figure>
+
+<p>我们要做的肥肠简单，实现一个类似SQL的抽象</p>
+<p>比如：</p>
+<p><code>select title from table;</code></p>
+<p>我们应该如何将它使用函数抽象呢？这里设计一个简单的函数project</p>
+<p>如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> project = <span class="hljs-function">(<span class="hljs-params">table, keys</span>) =&gt;</span> &#123;<br>    <span class="hljs-keyword">return</span> _.map(table, (o) =&gt; &#123;<br>        <span class="hljs-keyword">return</span> _.pick(o, keys)<br>    &#125;)<br>&#125;<br><br><span class="hljs-comment">// 使用方法：</span><br>project(table, [<span class="hljs-string">'table'</span>]);<br><span class="hljs-comment">// =&gt; [ &#123; tit: 'title1' &#125;, &#123; tit: 'title2' &#125;, &#123; tit: 'title1' &#125; ]</span><br></code></pre></td></tr></table></figure>
+
+<p>嗯，就是这样了</p>
+<p>那么如何实现这么等价的抽象呢：<code>select title as tit, isbn from table;</code></p>
+<p>这里我们可以在不改变上一个project的函数，先来实现一个rename函数，功能只需要简单的将指定的key更新就可以了：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> rename = <span class="hljs-function">(<span class="hljs-params">obj, newNames</span>) =&gt;</span> &#123;<br>    <span class="hljs-keyword">return</span> _.reduce(newNames, (o, nu, old) =&gt; &#123;<br>        <span class="hljs-keyword">if</span>(_.has(obj, old))&#123;<br>            <span class="hljs-keyword">return</span> o[nu] = obj[old]<br>        &#125;<span class="hljs-keyword">else</span>&#123;<br>            <span class="hljs-keyword">return</span> o<br>        &#125;<br>    &#125;, _.omit(table, _.keys(newNames)))<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>然后as的本质就是对每一行数据，执行这个rename方法：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> <span class="hljs-keyword">as</span> = <span class="hljs-function">(<span class="hljs-params">table, newNames</span>) =&gt;</span> &#123;<br>    <span class="hljs-keyword">return</span> _.map(table, (line) =&gt; &#123;<br>        rename(line, newNames);<br>    &#125;)<br>&#125;<br><br><span class="hljs-comment">// 使用：</span><br>project(<span class="hljs-keyword">as</span>(<br>  table, &#123; <span class="hljs-attr">title</span>: <span class="hljs-string">"tit"</span> &#125;<br>), [<span class="hljs-string">'tit'</span>, <span class="hljs-string">'isbn'</span>])<br><span class="hljs-comment">// =&gt; 效果：</span><br><span class="hljs-comment">/*</span><br><span class="hljs-comment">	[ &#123; tit: 'title1', isbn: '01029394' &#125;,</span><br><span class="hljs-comment">  	  &#123; tit: 'title2', isbn: '01029395' &#125;,</span><br><span class="hljs-comment">      &#123; tit: 'title1', isbn: '01029396' &#125; ]</span><br><span class="hljs-comment">*/</span><br></code></pre></td></tr></table></figure>
+
+<p>那么再进阶一下下：</p>
+<p><code>select title as tit, ed as edition from table where edition &gt; 1</code></p>
+<p>这个怎么抽象呢？</p>
+<p>可以通过restrict方法进行过滤：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> restrict = <span class="hljs-function">(<span class="hljs-params">table, condition</span>) =&gt;</span> &#123;<br>    <span class="hljs-keyword">const</span> _.reduce(<br>    	table,<br>        (newTable, line) =&gt; &#123;<br>            <span class="hljs-keyword">if</span>(!!condition(line))&#123;<br>               <span class="hljs-comment">// 符合条件</span><br>                <span class="hljs-keyword">return</span> newTable;<br>            &#125;<span class="hljs-keyword">else</span>&#123;<br>                <span class="hljs-keyword">return</span> _.without(newTable, line);<br>            &#125;<br>        &#125;<br>    )<br>&#125;<br><br><span class="hljs-comment">// 使用：</span><br>restrict(<br>  project(<br>    	<span class="hljs-keyword">as</span>(<br>        	table,<br>            &#123;<span class="hljs-attr">title</span>: <span class="hljs-string">"tit"</span>, <span class="hljs-attr">ed</span>: <span class="hljs-string">"edition"</span>&#125;<br>        ),<br>        [<span class="hljs-string">'tit, edition'</span>]<br>    ), <br>    line =&gt; line.edition &gt; <span class="hljs-number">1</span><br>)<br></code></pre></td></tr></table></figure>
+
+<p>emmm，说实话，我觉得比起命令式编程，这中抽象不是很好理解，但是也可以从中窥得一丝函数式的魅力——良好的模块化与抽象复用能力。</p>
+<p>在业务多变的前端场景中，可复用也是一个很重要的点。</p>
+<p>下面我们正式开始学习啦！！！</p>
+<h2 id="高阶函数"><a href="#高阶函数" class="headerlink" title="高阶函数"></a>高阶函数</h2><p>定义：</p>
+<ul>
+<li>函数是一等公民</li>
+<li>以一个函数作为参数</li>
+<li>以一个函数作为返回结果</li>
+</ul>
+<h3 id="以一个函数作为参数"><a href="#以一个函数作为参数" class="headerlink" title="以一个函数作为参数"></a>以一个函数作为参数</h3><p>为了使一个函数更加通用，我们将<strong>使用一个函数而不是值</strong>，下面摘抄本书中的这个例子：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> repeat = <span class="hljs-function">(<span class="hljs-params">times, value</span>) =&gt;</span> _.map(_.range(times), () =&gt; value);<br></code></pre></td></tr></table></figure>
+
+<p>=&gt; 为了更通用，我们转换为下面的设计</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> repeatedly = <span class="hljs-function">(<span class="hljs-params">times, fn</span>) =&gt;</span> _.map(_.range(times), fn);<br></code></pre></td></tr></table></figure>
+
+<p>对比两种实现的优势：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs js">repeat(<span class="hljs-number">4</span>, <span class="hljs-number">1</span>) 		   <span class="hljs-comment">//=&gt; [1,1,1,1]</span><br>repeatedly(<span class="hljs-number">4</span>, () =&gt; <span class="hljs-number">1</span>) <span class="hljs-comment">//=&gt; [1,1,1,1]</span><br><span class="hljs-comment">/*但是repeatedly可以做到下面的事情*/</span><br>repeatedly(<span class="hljs-number">4</span>, () =&gt; <span class="hljs-built_in">Math</span>.floor(<span class="hljs-built_in">Math</span>.random()*<span class="hljs-number">10</span>) + <span class="hljs-number">1</span>; <span class="hljs-comment">// =&gt; [7,4,9,6]]</span><br>repeatedly(<span class="hljs-number">4</span>, (idx) =&gt; &#123;<br>    <span class="hljs-keyword">const</span> id = <span class="hljs-string">`id<span class="hljs-subst">$&#123;idx&#125;</span>`</span><br>    $(<span class="hljs-string">'body'</span>).append(<span class="hljs-string">`&lt;p id=<span class="hljs-subst">$&#123;idx&#125;</span>&gt;odelay~&lt;/p&gt;`</span>)<br>    <span class="hljs-keyword">return</span> id<br>&#125;) <span class="hljs-comment">// =&gt; [id1, id2, id3, id4]</span><br></code></pre></td></tr></table></figure>
+
+<p>也就是说，<strong>将一个值重复多次不如将一个运算重复多次</strong></p>
+<p>记得上面的话，使用函数而不是值，times参数仍然存在它的局限性，比如我们如果希望可以有条件的对数值进行迭代，repeatedly函数无疑难以满足我的期待。</p>
+<p>所以我们将这个函数优化一下。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> iterateUtil = <span class="hljs-function">(<span class="hljs-params">fn, check, init</span>) =&gt;</span> &#123;<br>    <span class="hljs-keyword">const</span> ret = []<br>    <span class="hljs-keyword">let</span> result = fn(init);<br>    <span class="hljs-keyword">while</span>(check(result)) &#123;<br>        result = fn(result)<br>        ret.push(result)<br>    &#125;<br>    <span class="hljs-keyword">return</span> ret<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>看看效果：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs js">iterateUtil(<span class="hljs-function">(<span class="hljs-params">n</span>) =&gt;</span> n+n, (n) =&gt; n &lt; <span class="hljs-number">1024</span>, <span class="hljs-number">1</span>);<br><span class="hljs-comment">//=&gt;[ 4, 8, 16, 32, 64, 128, 256, 512, 1024 ]</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="返回结果是一个函数"><a href="#返回结果是一个函数" class="headerlink" title="返回结果是一个函数"></a>返回结果是一个函数</h3><p>// TODO 第五章讨论</p>
+<p>通过invoker实现多态</p>
+<h3 id="引用透明"><a href="#引用透明" class="headerlink" title="引用透明"></a>引用透明</h3><p>看一个例子吧：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> omgenerator = (<br>  <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>&#123;<br>       <span class="hljs-keyword">var</span> COUNT = <span class="hljs-number">0</span><br>       <span class="hljs-keyword">return</span> &#123;<br>           uniqueString(prefix) &#123;<br>               <span class="hljs-keyword">return</span> [prefix, COUNT++].join(<span class="hljs-string">''</span>)<br>           &#125;<br>       &#125; <br>    &#125;<br>)(<span class="hljs-number">0</span>)<br><br>omgenerator.uniqueString(<span class="hljs-string">'prefix-'</span>) =&gt; <span class="hljs-string">'prefix-0'</span><br>omgenerator.uniqueString(<span class="hljs-string">'prefix-'</span>) =&gt; <span class="hljs-string">'prefix-1'</span><br></code></pre></td></tr></table></figure>
+
+<p>这个函数乍看没有什么太大的问题。COUNT很好的被隐藏，对调用者来说，不会破坏其良好的封装性。</p>
+<p>但是这里我们介绍一个概念：<strong>引用透明</strong>——它是指，一个函数的结果（返回值）仅依赖于参数。</p>
+<p>引用透明的最大好处就是使得函数具有可预知性。</p>
+<p>这时我们再来看上面的封装，uniqueString这个函数，除了依赖于prefix外，还依赖了一个COUNT变量（状态）即函数的调用次数。</p>
+<p>一个不可控的状态是极为危险的。</p>
+<p>如果我们需要对这个方法进行测试，我们需要首先知道这个方法的调用次数或其他可能改变COUNT这个状态的操作，才能对结果有所预期，但是这显然是不可能的。</p>
+<p>显然，这种情况是必须要避免的，下面来讨论如何避免这种情况？</p>
+<h3 id="闭包陷阱"><a href="#闭包陷阱" class="headerlink" title="闭包陷阱"></a>闭包陷阱</h3><p>// TODO 第七章</p>
+<h3 id="函数参数默认值"><a href="#函数参数默认值" class="headerlink" title="函数参数默认值"></a>函数参数默认值</h3><p>假设有这么个情况：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs js">_.reduce([<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>, <span class="hljs-literal">null</span>], (total, n) =&gt; total * n);<br><span class="hljs-comment">// =&gt; NaN</span><br></code></pre></td></tr></table></figure>
+
+<p>这里，数组的null会影响我们得出的结果，所以需要有一个函数fnull来为参数的null提供一些默认值。</p>
+<p>下面我们看看它的实现：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs js"><br><br></code></pre></td></tr></table></figure>
+
+
+
+
+
+
+      </section>
+      <section class="extra">
+        
+        <ul class="copyright">
+  
+  <li><strong>本文作者：</strong>kilic</li>
+  <li><strong>本文链接：</strong><a href="https://kilicmu.github.io/2020/12/02/JS%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/index.html">https://kilicmu.github.io/2020/12/02/JS%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/index.html</a></li>
+  <li><strong>版权声明：</strong>本博客所有文章均采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh"
+      rel="external nofollow" target="_blank"> BY-NC-SA </a>许可协议，转载请注明出处！</li>
+  
+</ul>
+        
+        
+        <section class="donate">
+  <div class="qrcode">
+    <img   class="lazyload" data-original="/images/others/alipay.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" >
+  </div>
+  <div class="icon">
+    <a href="javascript:;" id="alipay"><i class="iconfont iconalipay"></i></a>
+    <a href="javascript:;" id="wechat"><i class="iconfont iconwechat-fill"></i></a>
+  </div>
+</section>
+        
+        
+  <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/BOOK-REVIEW/" rel="tag">book review</a></li></ul>
+
+        
+<nav class="nav">
+  
+    <a href="/2020/12/19/2020-%E5%B9%B4%E7%BB%88%E6%80%BB%E7%BB%93-2021/"><i class="iconfont iconleft"></i>&lt;2020&gt;年终总结&lt;/2021&gt;</a>
+  
+  
+    <a href="/2020/11/17/%E5%86%8D%E8%A7%81%EF%BC%8C%E6%B7%B1%E5%9C%B3/">再见，深圳!<i class="iconfont iconright"></i></a>
+  
+</nav>
+
+      </section>
+      
+      <section class="comments">
+  
+  <div class="btn" id="comments-btn">查看评论</div>
+  
+  
+</section>
+      
+    </section>
+  </div>
+</article>
+  </div>
+</main>
+  <footer class="footer">
+  <div class="footer-social">
+    
+    
+    
+    
+    
+    <a href="tencent://message/?Menu=yes&uin=102483678 " target="_blank" onMouseOver="this.style.color= '#12B7F5'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconQQ "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="javascript:; " target="_blank" onMouseOver="this.style.color= '#09BB07'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconwechat-fill "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="https://www.instagram.com/kilicmu3/ " target="_blank" onMouseOver="this.style.color= '#DA2E76'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconinstagram "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="https://github.com/kilicmu " target="_blank" onMouseOver="this.style.color= '#24292E'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  icongithub-fill "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="kilicmu3389@outlook.com " target="_blank" onMouseOver="this.style.color='#FFBE5B'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconmail"></i>
+    </a>
+    
+  </div>
+  <div class="footer-copyright"><p>Powered by <a target="_blank" href="https://hexo.io">Hexo</a>  |  Theme - <a target="_blank" href="https://github.com/izhaoo/hexo-theme-zhaoo">zhaoo</a></p></div>
+</footer>
+  
+      <div class="fab fab-plus">
+    <i class="iconfont iconplus"></i>
+  </div>
+  
+  <div class="fab fab-daovoice">
+    <i class="iconfont iconcomment"></i>
+  </div>
+  
+  <div class="fab fab-up">
+    <i class="iconfont iconcaret-up"></i>
+  </div>
+  
+</body>
+
+
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+
+
+
+
+
+
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+
+
+
+
+
+<script src="https://cdn.bootcss.com/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+
+
+
+
+
+
+<script src="/js/utils.js"></script>
+<script src="/js/modules.js"></script>
+<script src="/js/zui.js"></script>
+<script src="/js/script.js"></script>
+
+
+
+
+
+<script>
+  (function (i, s, o, g, r, a, m) {
+    i["DaoVoiceObject"] = r;
+    i[r] = i[r] || function () {
+      (i[r].q = i[r].q || []).push(arguments)
+    }, i[r].l = 1 * new Date();
+    a = s.createElement(o), m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    a.charset = "utf-8";
+    m.parentNode.insertBefore(a, m)
+  })(window, document, "script", ('https:' == document.location.protocol ? 'https:' : 'http:') +
+    "//widget.daovoice.io/widget/0f81ff2f.js", "daovoice")
+  daovoice('init', {
+    app_id: "abcdefg"
+  }, {
+    launcher: {
+      disableLauncherIcon: true,
+    },
+  });
+  daovoice('update');
+</script>
+
+
+
+<script>
+  (function () {
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    } else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+<script>
+  var _hmt = _hmt || [];
+  (function () {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?4c204d8bc027a0455b5fc642ac334ca8";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+
+
+
+
+
+
+
+
+
+</html>
