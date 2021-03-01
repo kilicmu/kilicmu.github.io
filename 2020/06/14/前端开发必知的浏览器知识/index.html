@@ -7,7 +7,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>前端必知的浏览器知识 - kilic の 部落格</title>
+  <title>前端必知的浏览器知识 - herin の 部落格</title>
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="google" content="notranslate" />
@@ -17,7 +17,7 @@
   
   <meta name="description" content="个人觉得现代前端开发本质和后端语言开发几乎没有太大的区..."> 
   
-  <meta name="author" content="kilic"> 
+  <meta name="author" content="herin"> 
 
   
     <link rel="icon" href="/images/icons/favicon-16x16.png" type="image/png" sizes="16x16">
@@ -166,7 +166,7 @@
       <span class="post-info-item"><i class="iconfont iconcalendar"></i>June 14, 2020</span
         class="post-info-item">
       
-      <span class="post-info-item"><i class="iconfont iconfont-size"></i>5089</span>
+      <span class="post-info-item"><i class="iconfont iconfont-size"></i>8307</span>
     </div>
   </div>
 </section>
@@ -193,25 +193,91 @@
 <p><img   class="lazyload" data-original="https://i.niupic.com/images/2020/06/14/8gyE.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="服务架构"></p>
 <p>这个迭代过程会很长，此处不做赘述。</p>
 <h2 id="浏览器如何为你呈现一个页面"><a href="#浏览器如何为你呈现一个页面" class="headerlink" title="浏览器如何为你呈现一个页面"></a>浏览器如何为你呈现一个页面</h2><p>聊这个问题之前，我们先来说说从输入 URL 到页面的解析前我们做了些什么。</p>
-<h4 id="请求的发送"><a href="#请求的发送" class="headerlink" title="请求的发送"></a>请求的发送</h4><p>首先，用户在地址栏输入一个文本，这时候按下回车，浏览器的<code>浏览器进程</code>会根据你的输入来处理具体导航。他的处理流程如下：</p>
+<h4 id="请求的发送"><a href="#请求的发送" class="headerlink" title="请求的发送"></a>请求的发送</h4><h5 id="开始输入"><a href="#开始输入" class="headerlink" title="开始输入"></a>开始输入</h5><p>当你在搜索栏按下第一个字母，浏览器会接受这个消息，并出发自动完成机制，浏览器会根据自己的算法以及你是否处于隐私模式，对你的输入内容进行输入建议。随着输入的进行，浏览器会不断给出更为完善的建议。</p>
+<h5 id="处理URL"><a href="#处理URL" class="headerlink" title="处理URL"></a>处理URL</h5><p>然后，按下回车，浏览器的<code>浏览器进程</code>会根据你的输入来处理具体导航。他的处理流程如下：</p>
 <ul>
+<li>解析URL的协议(Protocol)和资源(Resource)</li>
 <li>判断输入的关键字是搜索内容，还是请求的 URL。</li>
 <li>如果内容不符合 URL 规则，则使用浏览器默认搜索引擎去拼接一个新的请求</li>
-<li>如果是符合，但是没有协议，则浏览器会为用户加上协议形成完整 URL</li>
+<li>将上述步骤的请求串编码，转换非ASCII得Uincode字符。</li>
 </ul>
-<p>开始导航前，浏览器页面执行一次 beforeunload 事件，可以做一些清理操作，也可以在这个事件终止导航。</p>
+<h5 id="检查HSTS列表"><a href="#检查HSTS列表" class="headerlink" title="检查HSTS列表"></a>检查HSTS列表</h5><p>浏览器将检查自带的HSTS（HTTP严格传输安全）列表，这个列表包含请求浏览器只用HTTPS连接的网站。</p>
+<p>如果网站在这个列表，浏览器会使用HTTPS而不是HTTP协议。</p>
+<h5 id="执行事件"><a href="#执行事件" class="headerlink" title="执行事件"></a>执行事件</h5><p>开始导航前，浏览器页面执行一次 beforeunload 事件，可以做一些清理操作，也可以在这个事件终止导航。</p>
 <p>如果导航被允许，<code>浏览器进程</code>会开启标签上的加载动画，并开始导航。</p>
-<p>开始导航以后，<code>浏览器进程</code>会要求<code>网络进程</code>去做 URL 请求，请注意，网络进程不是直接去做这个请求的。在发送请求前，网络进程会先查看本地缓存，若本地缓存有相应资源，则网络进程会直接返回相应的资源给<code>浏览器进程</code>，若没有缓存才会发出 HTTP 请求。</p>
-<p>关于请求依然需要几个步骤：</p>
+<h5 id="缓存检测"><a href="#缓存检测" class="headerlink" title="缓存检测"></a>缓存检测</h5><p>开始导航以后，<code>浏览器进程</code>会要求<code>网络进程</code>去做 URL 请求，请注意，网络进程不是直接去做这个请求的。在发送请求前，网络进程会先查看本地缓存，若本地缓存有相应资源，则网络进程会直接返回相应的资源给<code>浏览器进程</code>，若没有缓存才会发出 HTTP（S） 请求。</p>
+<h5 id="DNS查询"><a href="#DNS查询" class="headerlink" title="DNS查询"></a>DNS查询</h5><ol>
+<li>浏览器检查域名是否在当前缓存中（chrome://net-internals/#dns<a href="chrome://net-internals/#dns">chrome://net-internals/#dns</a>）</li>
+<li>如果缓存没有，调用gethostbyname库函数，进行查询</li>
+<li>gethostbyname函数在进行DNS解析前会检查域名是否在本地hosts文件</li>
+<li>如果gethostbyname没有域名缓存也没有hosts找到，它会向DNS服务器发送一个DNS查询请求</li>
+<li>查询本地DNS服务器</li>
+<li>如果DNS服务器与主机在同一子网，则系统会按照ARP过程对DNS服务器进行ARP查询</li>
+<li>如果DNS服务器和主机不在同一个子网，则系统会按照下面的ARP过程对默认网关查询</li>
+</ol>
+<h5 id="ARP过程"><a href="#ARP过程" class="headerlink" title="ARP过程"></a>ARP过程</h5><p>想要发送ARP广播，需要一个目标IP地址和用于发送ARP广播的接口的MAC地址。</p>
+<ol>
+<li>首先查询ARP缓存，缓存命中则返回结果 目标ip=MAC</li>
+<li>如果缓存没有命中：<ol>
+<li>查找路由表，看看目标IP是否在本地路由表中某个子网内，是的话使用和那个子网连接的接口，否则使用与默认网关连接的接口</li>
+<li>查询选择的网络接口的MAC地址</li>
+<li>发送一个二层ARP请求</li>
+<li>如果本地/ISP的DNS服务器没有结果，会发送一个递归请求，一层一层向高层DNS服务器做查询，知道查询到其实授权机构，返回结果</li>
+</ol>
+</li>
+</ol>
+<h5 id="使用套接字"><a href="#使用套接字" class="headerlink" title="使用套接字"></a>使用套接字</h5><ol>
+<li><p>当浏览器得到目标服务器的IP地址，以及URL中给出的端口号（http默认80，https默认443）。他会默认调用系统库函数，socket，请求一个TCP套接字，对应参数是 <code>AF_INET/ AF_INET6</code>和<code>SOCK_STREAM</code>。</p>
+</li>
+<li><p>这个请求会先交给传输层，被传输层封装为TCP segment，目标端口加入头部，源端口会在内核的动态端口范围选取(Linux: ip_local_port_range)</p>
+</li>
+<li><p>TCP segment被送往网络层，网络层加入IP头，将他封装为IP packet。</p>
+</li>
+<li><p>这个IP packet会加入链路层，在链路层加入frame头部，包含本地内置网卡MAC地址，以及网关（本地路由器）的MAC地址，如果不知道网关的MAC需要通过ARP过程查询。</p>
+</li>
+<li><p>封包会到达本地子网路由器，在那里出发，经过自治区域（AS）边界路由器，达到其他自治区域，最终到达目的服务器</p>
+</li>
+</ol>
+<h5 id="建立TCP连接"><a href="#建立TCP连接" class="headerlink" title="建立TCP连接"></a>建立TCP连接</h5><p>在上述套接字连接过程，会发生TCP连接期间</p>
+<ol>
+<li>客户端会选择一个初始序列号（ISN），设置SYN = 1， ACK=0 发送到服务器</li>
+<li>服务器收到后，选择一个自己的ISN，并设置 SYN = 1， ACK = 1，将客户端ISN + 1复制到ACK域</li>
+<li>客户端发送一个封包确认这次连接，自己ISN+1，接收端ACK+1, 设置ACK = 1</li>
+</ol>
+<h5 id="TSL握手"><a href="#TSL握手" class="headerlink" title="TSL握手"></a>TSL握手</h5><ol>
+<li>客户端发送一个ClientHello到服务器，其中包含客户端TLS的版本和支持的加密压缩算法</li>
+<li>服务端返回ServerHello，其中包含服务端TLS版本，服务器选用的加密压缩算法，数字证书机构签发的服务器公开证书，证书中含有公钥，客户端可以使用这个公钥加密下面的握手过程，指导协商生成一堆新对称密钥</li>
+<li>客户端根据CA列表验证证书可信，如果可信，客户端生成伪随机数，用服务端公钥加密，这串随机数用于生成对称密钥</li>
+<li>服务端用自己私钥解密随机数，用它生成自己的对称主密钥</li>
+<li>客户端发送一个Finished消息给服务端，使用对称密钥加密这次通信的散列值</li>
+<li>服务器生成自己的hash，解密客户端发出的信息，检查这两个值是否对应，如果对应向客户端发送一个Finished信息，使用协商好的密钥。</li>
+<li>之后所有会话，都会使用此对称密钥加密，传输应用层内容</li>
+</ol>
+<h5 id="HTTP服务器处理请求"><a href="#HTTP服务器处理请求" class="headerlink" title="HTTP服务器处理请求"></a>HTTP服务器处理请求</h5><p>HTTPD负责处理HTTP请求，步骤如下：</p>
+<ol>
+<li><p>HTTPD接受请求</p>
+</li>
+<li><p>服务器把请求拆分为下面几个参数</p>
 <ul>
-<li>做 DNS 解析</li>
-<li>TLS 连接（HTTPS）</li>
-<li>建立 TCP 连接</li>
-<li>构建 HTTP 请求头</li>
-<li>……</li>
+<li>请求方法</li>
+<li>域名</li>
+<li>请求资源路径</li>
 </ul>
-<p>以上内容涉及计算机网络，此处不做赘述。</p>
-<p>当<code>网络进程</code>收到了服务器的响应时，<code>网络进程</code>会去解析响应内容。</p>
+</li>
+<li><p>服务器验证其上面已经配置了google.com虚拟主机</p>
+</li>
+<li><p>服务器验证google.com接受GET方法</p>
+</li>
+<li><p>服务器验证用户可以使用GET方法</p>
+</li>
+<li><p>如果服务器安装了URL重写模块，会尝试匹配重写规则并执行</p>
+</li>
+<li><p>服务器根据请求信息获取响应内容</p>
+</li>
+<li><p>服务器会指定处理程序分析处理这个文件</p>
+</li>
+</ol>
+<h5 id="浏览器处理响应"><a href="#浏览器处理响应" class="headerlink" title="浏览器处理响应"></a>浏览器处理响应</h5><p>当<code>网络进程</code>收到了服务器的响应时，<code>网络进程</code>会去解析响应内容。</p>
 <p><code>网络进程</code>会判断当前响应行的状态码，若是 2XX 标识请求正常，301/2 则会自动根据请求体的 Location 字段发送第二次重定向指定请求。</p>
 <p>如果这个请求返回 2XX，浏览器如何判断是否要解析这个 html 而不是显示 html 文本或下载 html 文本？</p>
 <p>很多人都知道，HTTP 请求头中有个字段<code>Content-Type</code>，浏览器就是根据它来判断如何处理响应体内容。</p>
@@ -267,6 +333,22 @@
 </ol>
 <p>下面来具体看看每个阶段做了什么？</p>
 <h3 id="构建-DOM-树"><a href="#构建-DOM-树" class="headerlink" title="构建 DOM 树"></a>构建 DOM 树</h3><p>首先，浏览器需要解析 HTML。由于 html 文件只是一个文本，浏览器无法识别，所以需要使用 HTML 解析器将 HTML 解析为可识别的 DOM 树。</p>
+<h4 id="HTML解析器"><a href="#HTML解析器" class="headerlink" title="HTML解析器"></a>HTML解析器</h4><p>HTML 解析器的任务是将 HTML 标记解析成解析树。</p>
+<p>算法：标记化和树构建</p>
+<h5 id="标记化算法"><a href="#标记化算法" class="headerlink" title="标记化算法"></a>标记化算法</h5><p>输出HTML的标记，该算法使用状态机表示，每个状态接受来自输入流的一个或多个字符，并根据这些字符更新下一个状态。</p>
+<p>举例：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">html</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span><br>    Hello world<br>  <span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p>初始状态是数据状态。遇到字符 <code>&lt;</code> 时，状态更改为<strong>“标记打开状态”</strong>。接收一个 <code>a-z</code> 字符会创建“起始标记”，状态更改为<strong>“标记名称状态”</strong>。这个状态会一直保持到接收 <code>&gt;</code> 字符。在此期间接收的每个字符都会附加到新的标记名称上。在本例中，我们创建的标记是 <code>html</code> 标记。</p>
+<p>遇到 <code>&gt;</code> 标记时，会发送当前的标记，状态改回<strong>“数据状态”</strong>。<code>&lt;body&gt;</code> 标记也会进行同样的处理。目前 <code>html</code> 和 <code>body</code> 标记均已发出。现在我们回到<strong>“数据状态”</strong>。接收到 <code>Hello world</code> 中的 <code>H</code> 字符时，将创建并发送字符标记，直到接收 <code>&lt;/body&gt;</code> 中的 <code>&lt;</code>。我们将为 <code>Hello world</code> 中的每个字符都发送一个字符标记。</p>
+<p>现在我们回到<strong>“标记打开状态”</strong>。接收下一个输入字符 <code>/</code> 时，会创建 <code>end tag token</code> 并改为<strong>“标记名称状态”</strong>。我们会再次保持这个状态，直到接收 <code>&gt;</code>。然后将发送新的标记，并回到<strong>“数据状态”</strong>。<code>&lt;/html&gt;</code> 输入也会进行同样的处理。</p>
+<p><img   class="lazyload" data-original="https://www.html5rocks.com/zh/tutorials/internals/howbrowserswork/image019.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="状态机"></p>
+<h5 id="树构建算法"><a href="#树构建算法" class="headerlink" title="树构建算法"></a>树构建算法</h5><p>在树构建阶段，以 Document 为根节点的 DOM 树也会不断进行修改，向其中添加各种元素。标记生成器发送的每个节点都会由树构建器进行处理。规范中定义了每个标记所对应的 DOM 元素，这些元素会在接收到相应的标记时创建。这些元素不仅会添加到 DOM 树中，还会添加到开放元素的堆栈中。此堆栈用于纠正嵌套错误和处理未关闭的标记。其算法也可以用状态机来描述。这些状态称为“插入模式”。</p>
+<p><strong>还是上面的HTML代码：</strong></p>
+<p>树构建阶段的输入是一个来自标记化阶段的标记序列。第一个模式是<strong>“initial mode”</strong>。接收 HTML 标记后转为<strong>“before html”</strong>模式，并在这个模式下重新处理此标记。这样会创建一个 HTMLHtmlElement 元素，并将其附加到 Document 根对象上。</p>
+<p>然后状态将改为<strong>“before head”</strong>。此时我们接收“body”标记。即使我们的示例中没有“head”标记，系统也会隐式创建一个 HTMLHeadElement，并将其添加到树中。</p>
+<p>现在我们进入了<strong>“in head”</strong>模式，然后转入<strong>“after head”</strong>模式。系统对 body 标记进行重新处理，创建并插入 HTMLBodyElement，同时模式转变为<strong>“in body”</strong>。</p>
+<p>现在，接收由“Hello world”字符串生成的一系列字符标记。接收第一个字符时会创建并插入“Text”节点，而其他字符也将附加到该节点。</p>
+<p>接收 body 结束标记会触发<strong>“after body”</strong>模式。现在我们将接收 HTML 结束标记，然后进入<strong>“after after body”</strong>模式。接收到文件结束标记后，解析过程就此结束。</p>
 <p>DOM 树是一种使用节点构建成的一个树形结构，节点的类型分为：元素节点，属性节点，文本节点。</p>
 <p>大致感觉如下：</p>
 <p><img   class="lazyload" data-original="https://i.niupic.com/images/2020/06/27/8k9A.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="DOM树"></p>
@@ -319,8 +401,7 @@
 </li>
 </ul>
 <p>如下面的例子：</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">style</span>&gt;</span><br><span class="css">    <span class="hljs-selector-class">.layout-box</span> &#123;</span><br>      overflow: scroll;<br>      width: 300px;<br>      height: 300px;<br><span class="css">      <span class="hljs-selector-tag">border</span>: 2<span class="hljs-selector-tag">px</span> <span class="hljs-selector-tag">solid</span> <span class="hljs-selector-id">#000</span>;</span><br>    &#125;<br><br><span class="css">    <span class="hljs-selector-class">.content</span> &#123;</span><br>      height: 500px;<br>      width: 300px;<br>      background-color: paleturquoise;<br>    &#125;<br><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">style</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span><br><br><span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"layout-box"</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"content"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span><br></code></pre></td></tr></table></figure>
-
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">style</span>&gt;</span><br><span class="css">    <span class="hljs-selector-class">.layout-box</span> &#123;</span><br>      overflow: scroll;<br>      width: 300px;<br>      height: 300px;<br><span class="css">      <span class="hljs-selector-tag">border</span>: 2<span class="hljs-selector-tag">px</span> <span class="hljs-selector-tag">solid</span> <span class="hljs-selector-id">#000</span>;</span><br>    &#125;<br><br><span class="css">    <span class="hljs-selector-class">.content</span> &#123;</span><br>      height: 500px;<br>      width: 300px;<br>      background-color: paleturquoise;<br>    &#125;<br><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">style</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span><br><br><span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;layout-box&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;content&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span><br></code></pre></td></tr></table></figure>
 <p>看效果图：</p>
 <p><img   class="lazyload" data-original="https://i.niupic.com/images/2020/06/27/8kgS.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="布局"></p>
 <p>可以看到，被裁减的区域被单独提取出一个图层，进度条也是单独一个图层</p>
@@ -344,7 +425,7 @@
         
         <ul class="copyright">
   
-  <li><strong>本文作者：</strong>kilic</li>
+  <li><strong>本文作者：</strong>herin</li>
   <li><strong>本文链接：</strong><a href="https://kilicmu.github.io/2020/06/14/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91%E5%BF%85%E7%9F%A5%E7%9A%84%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9F%A5%E8%AF%86/index.html">https://kilicmu.github.io/2020/06/14/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91%E5%BF%85%E7%9F%A5%E7%9A%84%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9F%A5%E8%AF%86/index.html</a></li>
   <li><strong>版权声明：</strong>本博客所有文章均采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh"
       rel="external nofollow" target="_blank"> BY-NC-SA </a>许可协议，转载请注明出处！</li>
