@@ -166,7 +166,7 @@
       <span class="post-info-item"><i class="iconfont iconcalendar"></i>June 22, 2020</span
         class="post-info-item">
       
-      <span class="post-info-item"><i class="iconfont iconfont-size"></i>2474</span>
+      <span class="post-info-item"><i class="iconfont iconfont-size"></i>2473</span>
     </div>
   </div>
 </section>
@@ -192,7 +192,6 @@
 <p>请注意，这里有一个很重要的问题，若多个对象相互引用构成一个循环，他们之间会至少存在一个引用计数，但是这几个变量已经不被当前环境所需要，且这些对象无法被判定为死亡，导致这些内存无法被回收，进一步造成内存泄漏。</p>
 <p>如下面的代码：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">foo</span>(<span class="hljs-params"></span>) </span>&#123;<br>  <span class="hljs-keyword">var</span> D = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Object</span>();<br>  <span class="hljs-keyword">var</span> E = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Object</span>();<br><br>  D.e = E;<br>  E.d = D;<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <p><img   class="lazyload" data-original="https://i.niupic.com/images/2020/06/22/8iww.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="循环引用"></p>
 <p>可以看到 D，E 虽然不被需要了，但是因为他们被彼此引用他们的引用计数始终不会清零。</p>
 <p>因为循环引用的问题，使得引用回收垃圾算法很难被信任，但是他简单的特点，使得这种算法在某些地方仍然被使用。</p>

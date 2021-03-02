@@ -166,7 +166,7 @@
       <span class="post-info-item"><i class="iconfont iconcalendar"></i>July 04, 2020</span
         class="post-info-item">
       
-      <span class="post-info-item"><i class="iconfont iconfont-size"></i>1847</span>
+      <span class="post-info-item"><i class="iconfont iconfont-size"></i>1824</span>
     </div>
   </div>
 </section>
@@ -203,7 +203,6 @@
 </ul>
 <h3 id="6-资源过滤："><a href="#6-资源过滤：" class="headerlink" title="6. 资源过滤："></a>6. 资源过滤：</h3><p>通过 GET 方法的参数指定过滤条件：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs api">?id&#x3D;1<br>?limit&#x3D;10&amp;offset&#x3D;1<br>?sortby&#x3D;username<br></code></pre></td></tr></table></figure>
-
 <h3 id="7-状态码"><a href="#7-状态码" class="headerlink" title="7. 状态码"></a>7. 状态码</h3><table>
 <thead>
 <tr>
@@ -249,11 +248,9 @@
 </tr>
 </tbody></table>
 <h3 id="8-错误处理"><a href="#8-错误处理" class="headerlink" title="8. 错误处理"></a>8. 错误处理</h3><p>对 4XX 系列的状态码，应该在返回信息中封装 error 作为键名</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs json">&#123;<br>  <span class="hljs-attr">"status"</span>: <span class="hljs-number">404</span>,<br>  <span class="hljs-attr">"error"</span>: <span class="hljs-string">"NOT FOUND"</span><br>&#125;<br></code></pre></td></tr></table></figure>
-
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs json">&#123;<br>  <span class="hljs-attr">&quot;status&quot;</span>: <span class="hljs-number">404</span>,<br>  <span class="hljs-attr">&quot;error&quot;</span>: <span class="hljs-string">&quot;NOT FOUND&quot;</span><br>&#125;<br></code></pre></td></tr></table></figure>
 <h3 id="9-服务器返回规范"><a href="#9-服务器返回规范" class="headerlink" title="9. 服务器返回规范"></a>9. 服务器返回规范</h3><p>服务器向用户返回的结果应该符合以下规范。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs txt">GET &#x2F;collection：返回资源对象的列表（数组）<br>GET &#x2F;collection&#x2F;resource：返回单个资源对象<br>POST &#x2F;collection：返回新生成的资源对象<br>PUT &#x2F;collection&#x2F;resource：返回完整的资源对象<br>PATCH &#x2F;collection&#x2F;resource：返回完整的资源对象<br>DELETE &#x2F;collection&#x2F;resource：返回一个空文档<br></code></pre></td></tr></table></figure>
-
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs txt">GET /collection：返回资源对象的列表（数组）<br>GET /collection/resource：返回单个资源对象<br>POST /collection：返回新生成的资源对象<br>PUT /collection/resource：返回完整的资源对象<br>PATCH /collection/resource：返回完整的资源对象<br>DELETE /collection/resource：返回一个空文档<br></code></pre></td></tr></table></figure>
 <h3 id="其他："><a href="#其他：" class="headerlink" title="其他："></a>其他：</h3><p>API 的身份认证应该使用<a href="http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html">OAuth 2.0</a>框架。可以看我的一篇 JWT 文章：<a href="[https://kilicmu.github.io/2020/06/12/JWT%E5%8E%9F%E7%90%86%E4%B8%8ENESTJS%E7%9A%84JWT%E6%96%B9%E6%A1%88/](https://kilicmu.github.io/2020/06/12/JWT原理与NESTJS的JWT方案/)">JWT 原理与 Nestjs 的 JWT 方案</a></p>
 <p>服务器返回的数据格式，应该尽量使用 JSON，避免使用 XML。</p>
 <h2 id="参考资源"><a href="#参考资源" class="headerlink" title="参考资源"></a>参考资源</h2><p><a href="http://www.ruanyifeng.com/blog/2011/09/restful.html">理解 RESTful 架构</a></p>

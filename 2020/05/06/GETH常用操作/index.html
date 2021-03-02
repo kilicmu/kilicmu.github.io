@@ -167,7 +167,7 @@
       <span class="post-info-item"><i class="iconfont iconcalendar"></i>May 06, 2020</span
         class="post-info-item">
       
-      <span class="post-info-item"><i class="iconfont iconfont-size"></i>1780</span>
+      <span class="post-info-item"><i class="iconfont iconfont-size"></i>1840</span>
     </div>
   </div>
 </section>
@@ -190,20 +190,20 @@
 <ul>
 <li><p>新建创世块参数文件 <code>genesis.json</code></p>
 </li>
-<li><pre><code class="json">{
-  <span class="attr">"config"</span>: {
+<li><pre><code class="json">&#123;
+  <span class="attr">"config"</span>: &#123;
     <span class="attr">"chainId"</span>: <span class="number">15</span>,
     <span class="attr">"homesteadBlock"</span>: <span class="number">0</span>,
     <span class="attr">"eip155Block"</span>: <span class="number">0</span>,
     <span class="attr">"eip158Block"</span>: <span class="number">0</span>
-  },
+  &#125;,
   <span class="attr">"difficulty"</span>: <span class="string">"10000"</span>,
   <span class="attr">"gasLimit"</span>: <span class="string">"2100000"</span>,
-  <span class="attr">"alloc"</span>: {
-    <span class="attr">"7df9a875a174b3bc565e6424a0050ebc1b2d1d82"</span>: { <span class="attr">"balance"</span>: <span class="string">"300000"</span> },
-    <span class="attr">"f41c74c9ae680c1aa78f42e5647a62f353b7bdde"</span>: { <span class="attr">"balance"</span>: <span class="string">"400000"</span> }
-  }
-}</code></pre>
+  <span class="attr">"alloc"</span>: &#123;
+    <span class="attr">"7df9a875a174b3bc565e6424a0050ebc1b2d1d82"</span>: &#123; <span class="attr">"balance"</span>: <span class="string">"300000"</span> &#125;,
+    <span class="attr">"f41c74c9ae680c1aa78f42e5647a62f353b7bdde"</span>: &#123; <span class="attr">"balance"</span>: <span class="string">"400000"</span> &#125;
+  &#125;
+&#125;</code></pre>
 </li>
 <li><p><code>geth --datadir ./ethdev init genesis.json</code>：初始化测试网络的以太坊。<code>./ethdev</code>是存放测试网络数据的文件夹，可以任意指定</p>
 </li>
@@ -216,7 +216,7 @@
 <li>eth:<ul>
 <li><code>eth.accounts</code>：查看网络中所有账户</li>
 <li><code>eth.getBalance(account)</code>：获得账户余额</li>
-<li><code>eth.sendTransaction({from:’&#39;, to:’&#39;, value:web3.toWei(99, &quot;ether&quot;)})</code>：发起一笔交易（转账）</li>
+<li><code>eth.sendTransaction(&#123;from:’&#39;, to:’&#39;, value:web3.toWei(99, &quot;ether&quot;)&#125;)</code>：发起一笔交易（转账）</li>
 </ul>
 </li>
 <li>personal：<ul>

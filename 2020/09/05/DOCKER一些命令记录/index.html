@@ -166,7 +166,7 @@
       <span class="post-info-item"><i class="iconfont iconcalendar"></i>September 05, 2020</span
         class="post-info-item">
       
-      <span class="post-info-item"><i class="iconfont iconfont-size"></i>2624</span>
+      <span class="post-info-item"><i class="iconfont iconfont-size"></i>2622</span>
     </div>
   </div>
 </section>
@@ -225,8 +225,7 @@
 <p><code>docker rm -f [容器名称]/[容器id]</code>：可使用<code>docker rm -f $(docker ps -s -p)​</code>删除所有的容器</p>
 </li>
 <li><p>生产环境进入容器脚本：docker_in.sh：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash">!/bin/bash</span><br><span class="hljs-meta">#</span><span class="bash">定义进入仓库函数</span><br>docker_in()&#123;<br>  NAME_ID=$1<br>  PID=$(docker inspect --format &#123;&#123;.State.Pid&#125;&#125; $NAME_ID)<br>  nsenter --target $PID --mount --uts --ipc --net --pid<br>&#125;<br><br>docker_in $1<br></code></pre></td></tr></table></figure>
-</li>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash">!/bin/bash</span><br><span class="hljs-meta">#</span><span class="bash">定义进入仓库函数</span><br>docker_in()&#123;<br>  NAME_ID=$1<br>  PID=$(docker inspect --format &#123;&#123;.State.Pid&#125;&#125; $NAME_ID)<br>  nsenter --target $PID --mount --uts --ipc --net --pid<br>&#125;<br><br>docker_in $1<br></code></pre></td></tr></table></figure></li>
 <li><p>镜像的构建</p>
 <p><code>docker commit -m “日志信息” -a “作者信息&quot; [容器id] 镜像名称:版本号</code></p>
 <p><code>docker export [容器id] &gt; 模板文件名.tar</code></p>
@@ -253,8 +252,7 @@
 <li><p>数据备份</p>
 </li>
 </ol>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> 1. 创建一个挂载数据卷容器的容器</span><br><span class="hljs-meta">#</span><span class="bash"> 2. 挂载宿主机本地目录作为备份数据卷</span><br><span class="hljs-meta">#</span><span class="bash"> 3. 将数据卷容器内容备份到宿主机本地目录挂载的数据卷中</span><br><span class="hljs-meta">#</span><span class="bash"> 4. 完成后销毁创建的容器</span><br><br>docker run --rm --volumes-from [数据卷容器id/name] -v[宿主机目录]:[容器目录][镜像名称] tar -zcPf /backup/data.tar.gz /data-tmp<br></code></pre></td></tr></table></figure>
-
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> 1. 创建一个挂载数据卷容器的容器</span><br><span class="hljs-meta">#</span><span class="bash"> 2. 挂载宿主机本地目录作为备份数据卷</span><br><span class="hljs-meta">#</span><span class="bash"> 3. 将数据卷容器内容备份到宿主机本地目录挂载的数据卷中</span><br><span class="hljs-meta">#</span><span class="bash"> 4. 完成后销毁创建的容器</span><br><br>docker run --rm --volumes-from [数据卷容器id/name] -v[宿主机目录]:[容器目录][镜像名称] tar -zcPf /backup/data.tar.gz /data-tmp<br><br></code></pre></td></tr></table></figure>
 <h3 id="网络管理"><a href="#网络管理" class="headerlink" title="网络管理"></a>网络管理</h3><ol>
 <li>端口映射：</li>
 </ol>
@@ -291,7 +289,6 @@
 <p><code>mkdir -p /etc/systemed/system/docker.service.d</code></p>
 <p><code>vim /etc/systemed/system/docker.service.d/Using_Environment_File.conf</code>：写配置</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell">[Service]<br>EnvironmentFile=-/etc/default/docker<br>ExecStart=<br>ExecStart=/usr/bin/dockerd -H fd:// $DOCKER_OPTS<br></code></pre></td></tr></table></figure>
-
 <p><code>systemctl restart daemon-reload</code>重载配置文件</p>
 <p><code>systemctl restart docker</code>：重启 docker 服务</p>
 <hr>
