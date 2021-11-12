@@ -1,0 +1,512 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>TS 快速进阶（类型篇） - herin の 部落格</title>
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="google" content="notranslate" />
+
+  
+  <meta name="keywords" content="undefined"> 
+  
+  <meta name="description" content="TS 快速进阶（类型篇）本文demo的codesand..."> 
+  
+  <meta name="author" content="herin"> 
+
+  
+    <link rel="icon" href="/images/icons/favicon-16x16.png" type="image/png" sizes="16x16">
+  
+  
+    <link rel="icon" href="/images/icons/favicon-32x32.png" type="image/png" sizes="32x32">
+  
+  
+    <link rel="apple-touch-icon" href="/images/icons/apple-touch-icon.png" sizes="180x180">
+  
+  
+    <meta rel="mask-icon" href="/images/icons/stun-logo.svg" color="#333333">
+  
+  
+    <meta rel="msapplication-TileImage" content="/images/icons/favicon-144x144.png">
+    <meta rel="msapplication-TileColor" content="#000000">
+  
+
+  
+<link rel="stylesheet" href="/css/style.css">
+
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1445822_h1619vhl1nr.css">
+
+  
+
+  
+  
+  
+<link rel="stylesheet" href="https://cdn.bootcss.com/fancybox/3.5.7/jquery.fancybox.min.css">
+
+  
+
+  
+  
+  
+<link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.18.1/styles/xcode.min.css">
+
+  
+
+  <script>
+    var CONFIG = window.CONFIG || {};
+    var ZHAOO = window.ZHAOO || {};
+    CONFIG = {
+      isHome: false,
+      fancybox: true,
+      pjax: false,
+      lazyload: {
+        enable: true,
+        loadingImage: '',
+      },
+      donate: {
+        enable: true,
+        alipay: '/images/others/alipay.jpg',
+        wechat: '/images/others/wechat.jpg'
+      },
+      motto: {
+        api: '',
+        default: 'fading is true while flowering is past。'
+      },
+      galleries: {
+        enable: true
+      },
+      fab: {
+        enable: true,
+        alwaysShow: false
+      },
+      carrier: {
+        enable: true
+      },
+      daovoice: {
+        enable: true
+      }
+    }
+  </script>
+
+  
+
+  
+<meta name="generator" content="Hexo 5.3.0"></head>
+<body class="lock-screen">
+  <div class="loading"></div>
+  
+
+
+<nav class="navbar">
+  <div class="left"></div>
+  <div class="center">TS 快速进阶（类型篇）</div>
+  <div class="right">
+    <i class="iconfont iconmenu j-navbar-menu"></i>
+  </div>
+</nav>
+
+  <nav class="menu">
+  <div class="menu-wrap">
+    <div class="menu-close">
+      <i class="iconfont iconbaseline-close-px"></i>
+    </div>
+    <ul class="menu-content">
+      
+      
+      
+      
+      <li class="menu-item"><a href="/ " class="underline"> 首页</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/galleries " class="underline"> 摄影</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/archives " class="underline"> 归档</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/tags " class="underline"> 标签</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/categories " class="underline"> 分类</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/about " class="underline"> 关于</a></li>
+      
+    </ul>
+    <div class="menu-copyright"><p>Powered by <a target="_blank" href="https://hexo.io">Hexo</a>  |  Theme - <a target="_blank" href="https://github.com/izhaoo/hexo-theme-zhaoo">zhaoo</a></p></div>
+  </div>
+</nav>
+  <main id="main">
+  <div class="container" id="container">
+    <article class="article">
+  <div class="wrap">
+    <section class="head">
+  <img   class="lazyload" data-original="https://pic.netbian.com/uploads/allimg/200602/211830-15911039105775.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  draggable="false">
+  <div class="head-mask">
+    <h1 class="head-title">TS 快速进阶（类型篇）</h1>
+    <div class="head-info">
+      <span class="post-info-item"><i class="iconfont iconcalendar"></i>November 11, 2021</span
+        class="post-info-item">
+      
+      <span class="post-info-item"><i class="iconfont iconfont-size"></i>8725</span>
+    </div>
+  </div>
+</section>
+    <section class="main">
+      <section class="content">
+        <h2 id="TS-快速进阶（类型篇）"><a href="#TS-快速进阶（类型篇）" class="headerlink" title="TS 快速进阶（类型篇）"></a>TS 快速进阶（类型篇）</h2><p>本文demo的codesandbox地址：<a href="https://codesandbox.io/s/wild-thunder-cfn6z?file=/src/index.ts，写的比较着急，可能有的demo已经丢失。。。见谅。">https://codesandbox.io/s/wild-thunder-cfn6z?file=/src/index.ts，写的比较着急，可能有的demo已经丢失。。。见谅。</a></p>
+<p>先明确一个概念，TS存在类型空间（type space）和值空间（value space）两个概念。</p>
+<p>同一个声明（如：class声明，enum声明）可能同时存在类型空间与值空间中，本文主要放在类型空间的使用讲解，值空间大部分可以理解为和 ES6+ 相差无几，掌握了 ES6+ 基本就理解了TS的值空间大部分概念。</p>
+<p>希望本文读者对ES6语法有所掌握且了解TS的一些基础知识，如果完全不了解希望可以先看TS官方文档或handbook文档再看本文，本文不会重复纠结于文档内容。</p>
+<h3 id="前置知识"><a href="#前置知识" class="headerlink" title="前置知识"></a>前置知识</h3><h4 id="类型与值与变量（别名）定义"><a href="#类型与值与变量（别名）定义" class="headerlink" title="类型与值与变量（别名）定义"></a>类型与值与变量（别名）定义</h4><p>简单理解，在TS类型系统中，我们可以简单的把类型看做是一个值的集合，如有类型: number，{-Infinity, 1, 2, 3, 4, …. , Infinity, NaN} ∈ number，则number可以被视为一个类型。</p>
+<p>但是当一个类型作为最小子集的时候，类型本身则可以被视为值~。</p>
+<p>举个小🌰：</p>
+<p>声明别名A：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs ts"><span class="hljs-keyword">type</span> A = <span class="hljs-built_in">number</span><br><span class="hljs-keyword">const</span> val: A = <span class="hljs-number">1</span> <span class="hljs-comment">// 编译通过</span><br><span class="hljs-comment">// or: const val: A = 2 // 编译通过</span><br><span class="hljs-comment">//...</span><br></code></pre></td></tr></table></figure>
+<p>此时对于类型系统来说，别名<code>A</code>可以看做一个数值集合，所以别名A本身可以被作为类型标注使用。</p>
+<p>但是假如我们声明别名B：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ts"><span class="hljs-keyword">type</span> B = <span class="hljs-number">1</span><br></code></pre></td></tr></table></figure>
+<p>此时，别名B对应最小集合 1，此时，别名仅可表示唯一值，则此别名我们可以视为一个值的定义而非类型。</p>
+<p>在Typescript中，类型系统的变量定义可以通过type实现：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs ts"><span class="hljs-keyword">type</span> variable = <span class="hljs-number">1</span><br><span class="hljs-comment">// ==&gt; 等价JS</span><br><span class="hljs-keyword">const</span> variable = <span class="hljs-number">1</span><br></code></pre></td></tr></table></figure>
+<p>当然，变量的定义存在作用域的概念，TS类型变量作用域与JS有一些不同。在JavaScript中，存在很多的作用域概念，如：ES6以前的全局作用域、函数作用域、eval 作用域。ES6新增的块级作用域~。</p>
+<p>TS类型系统中仅仅包含两个作用域：全局作用域与局部作用域。</p>
+<p>全局作用域声明见以下Demo：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ts"><span class="hljs-keyword">type</span> globalVariable = [<span class="hljs-string">&#x27;foo&#x27;</span>, <span class="hljs-string">&#x27;caa&#x27;</span>] <span class="hljs-comment">// 全局作用域的元组声明</span><br></code></pre></td></tr></table></figure>
+<p>局部作用域比较复杂，需要依靠 infer 来实现所需效果，如果看不懂可以暂时不去纠结，后面 infer 小结会做出讲解：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs ts"><span class="hljs-keyword">type</span> B = [<span class="hljs-string">&#x27;foo&#x27;</span>, <span class="hljs-string">&#x27;caa&#x27;</span>] <span class="hljs-keyword">extends</span> infer scopedVariable ? (<br>    scopedVariable <span class="hljs-comment">// =&gt; 在这个括号的表达式范围内，scopedVariable 都被定义为 [&#x27;foo&#x27;, &#x27;caa&#x27;] 元组~</span><br>) : <span class="hljs-built_in">never</span>  <br></code></pre></td></tr></table></figure>
+<h4 id="extends"><a href="#extends" class="headerlink" title="extends"></a>extends</h4><p>extends简单来说可以理解为定义类型的收敛，假设有 A extends B，代表 A 为 B 的子集。在 TS 中，我们经常会用 extends 来做一些泛型或类型的限定操作。</p>
+<p>举个🌰：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs ts"><span class="hljs-keyword">type</span> foo = <span class="hljs-number">1</span> | <span class="hljs-number">2</span> <span class="hljs-keyword">extends</span> <span class="hljs-number">1</span> | <span class="hljs-number">2</span> | <span class="hljs-number">3</span> ? <span class="hljs-literal">true</span> : <span class="hljs-literal">false</span>;<br><span class="hljs-comment">// =&gt; foo = true</span><br><span class="hljs-keyword">type</span> foo = [<span class="hljs-number">1</span>] <span class="hljs-keyword">extends</span> [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>] ? <span class="hljs-literal">true</span> : <span class="hljs-literal">false</span>;<br><span class="hljs-comment">// =&gt; foo = false</span><br><span class="hljs-keyword">type</span> Foo = <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">T</span> <span class="hljs-attr">extends</span> <span class="hljs-attr">string</span> | <span class="hljs-attr">number</span>&gt;</span>(arg: T) =&gt; void</span><br>const fn: Foo = (arg: Record&lt;string, any&gt;) =&gt; &#123;&#125;<br>// =&gt; Error: Type &#x27;string | number&#x27; is not assignable to type &#x27;Record&lt;string, any&gt;&#x27;.<br></code></pre></td></tr></table></figure>
+<p>结合上面的类型系统的值和类型两个维度概念，我们可以得出以下规律：</p>
+<table>
+<thead>
+<tr>
+<th>规则</th>
+<th>特性</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>值   extends    类型</td>
+<td>判断值是否属于类型</td>
+</tr>
+<tr>
+<td>值   extends    值</td>
+<td>两个值是否相等，等价于 编程语言的： <code>===</code></td>
+</tr>
+<tr>
+<td>类型   extends  值</td>
+<td>恒定为否</td>
+</tr>
+<tr>
+<td>类型   extends  类型</td>
+<td>前置类型是否为后置类型子集</td>
+</tr>
+</tbody></table>
+<p>基于这个规律，利用类型，我们也可以做到在类型系统做到语言级别的判断能力~</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs ts"><span class="hljs-keyword">type</span> result = <span class="hljs-number">1</span> <span class="hljs-keyword">extends</span> <span class="hljs-number">1</span> ? <span class="hljs-literal">true</span> : <span class="hljs-literal">false</span><br><span class="hljs-comment">// =&gt; 等价于</span><br><span class="hljs-keyword">const</span> result = <span class="hljs-number">1</span> === <span class="hljs-number">1</span> ? <span class="hljs-literal">true</span> : <span class="hljs-literal">false</span><br></code></pre></td></tr></table></figure>
+<h4 id="infer"><a href="#infer" class="headerlink" title="infer"></a>infer</h4><p>infer在TS中算是一个比较难以理解的概念了。</p>
+<p>简单来说，个人理解 infer 本质上是一种使得 extends 条件成立的推导（模式匹配）。</p>
+<p>举个🌰：</p>
+<p>假设，我们需要有一个别名为Fn的函数类型：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ts"><span class="hljs-keyword">type</span> Fn = <span class="hljs-function">(<span class="hljs-params">val: <span class="hljs-built_in">string</span></span>) =&gt;</span> <span class="hljs-built_in">void</span><br></code></pre></td></tr></table></figure>
+<p>假设我们需要拿到他的参数类型，当然，我们可以直接根据字面值写出来：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ts"><span class="hljs-keyword">type</span> Arg = <span class="hljs-built_in">string</span><br></code></pre></td></tr></table></figure>
+<p>但是如果有动态获取的需求，显然这么做不是很优雅。这种情况下，就可以借助 infer 的能力了。我们定义一个类型：GetArgs<T>来帮助我们快速获取函数参数:</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs ts"><span class="hljs-keyword">type</span> GetArgs&lt;T&gt; = T <span class="hljs-keyword">extends</span> (arg: infer K) =&gt; <span class="hljs-built_in">any</span> ? K : <span class="hljs-built_in">never</span><br><span class="hljs-keyword">type</span> args = GetArgs&lt;Fn&gt;<br><span class="hljs-comment">// =&gt; args = string</span><br></code></pre></td></tr></table></figure>
+<p>但是上面的这个推导存在一个问题。如果我们把Fn的定义改为如下形式，上面的定义显然就会失效：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs ts"><span class="hljs-keyword">type</span> Fn = <span class="hljs-function">(<span class="hljs-params">val: <span class="hljs-built_in">string</span>, foo: <span class="hljs-built_in">number</span></span>) =&gt;</span> <span class="hljs-built_in">void</span><br><span class="hljs-keyword">type</span> args = GetArgs&lt;Fn&gt;<br><span class="hljs-comment">// =&gt; args = never</span><br></code></pre></td></tr></table></figure>
+<p>至于为什么会失效，因为类型 (val: string, foo: number) =&gt; void 参数列表无论如何也无法匹配上 (args: K) =&gt; any的参数列表，所以只能触发了extends的false分支。获取到了never。</p>
+<p>为了使得多参数函数类型使用GetArgs仍然可以获取正确的参数，可以把上述定义改为如下：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs ts"><span class="hljs-keyword">type</span> GetArgs&lt;T&gt; = T <span class="hljs-keyword">extends</span> (...args: infer K) =&gt; <span class="hljs-built_in">any</span> ? K : <span class="hljs-built_in">never</span><br><span class="hljs-keyword">type</span> Fn = <span class="hljs-function">(<span class="hljs-params">val: <span class="hljs-built_in">string</span>, foo: <span class="hljs-built_in">number</span></span>) =&gt;</span> <span class="hljs-built_in">void</span><br><span class="hljs-keyword">type</span> args = GetArgs&lt;Fn&gt;<br><span class="hljs-comment">// =&gt; args = [string, number]</span><br></code></pre></td></tr></table></figure>
+<p>但是获取的是一个类型元组，显然不符合我们预期~。不过我们可以再抽象一个类型方法，用来获取第n个参数类型。</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs ts"><span class="hljs-keyword">type</span> _GetNthArg&lt;T <span class="hljs-keyword">extends</span> unknown[], K&gt; = T[<span class="hljs-string">&quot;length&quot;</span>] <span class="hljs-keyword">extends</span> K ? T : _GetNthArg&lt;[...T, unknown], K&gt;<br><span class="hljs-keyword">type</span> GetNthArg&lt;T, K&gt; = T <span class="hljs-keyword">extends</span> [..._GetNthArg&lt;[], K&gt;, infer R, ...infer RR] ? R : <span class="hljs-built_in">never</span><br><br><span class="hljs-keyword">type</span> secondParamType = GetNthArg&lt;GetArgs&lt;Fn&gt;, <span class="hljs-number">1</span>&gt;<br><span class="hljs-comment">// =&gt; secondParamType = number</span><br></code></pre></td></tr></table></figure>
+<p>这个例子其实故意用了复杂的写法，主要为了演示infer的能力，也可以直接用下标取值。</p>
+<p>这个Demo因为TS类型没有闭包的能力。所以递归保存状态只能使用泛型传参，可能不是很优雅，但是仍然可以实现我们需要的效果。</p>
+<p>对于递归，TS具有层数限制。当然，上面这种尾递归会被编译器优化，所以不存在问题触发TS递归深度限制问题，后面遇到相同问题将具体说明。</p>
+<p>同理也可以写出RetureType的实现：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs ts"><span class="hljs-keyword">type</span> RetureType&lt;T <span class="hljs-keyword">extends</span> (...args: <span class="hljs-built_in">any</span>) =&gt; <span class="hljs-built_in">any</span>&gt; = T <span class="hljs-keyword">extends</span> (...args: <span class="hljs-built_in">any</span>[]) =&gt; infer K ? K : <span class="hljs-built_in">never</span><br><span class="hljs-keyword">type</span> rtResult = RetureType&lt;Fn&gt;<br><span class="hljs-comment">// =&gt; rtResult = void</span><br></code></pre></td></tr></table></figure>
+<p>ts内置了很多内置的类型方法，可以在<code>lib.es.d.ts</code>查看相关定义与使用文档~</p>
+<h4 id="泛型"><a href="#泛型" class="headerlink" title="泛型"></a>泛型</h4><p>泛型可以看做接口或类型别名的参数~主要目的是实现组件结构（类、函数、类型等等）的复用。</p>
+<p>对于类型系统，我们可以简单的把泛型想象为函数的参数~</p>
+<p>举个🌰：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs ts"><span class="hljs-keyword">type</span> judgeStr&lt;T <span class="hljs-keyword">extends</span> <span class="hljs-built_in">string</span>&gt; = T <span class="hljs-keyword">extends</span> <span class="hljs-string">&quot;hello&quot;</span> ? <span class="hljs-literal">true</span> : <span class="hljs-literal">false</span><br><span class="hljs-comment">// =&gt; 等价于以 Go 为例的强类型语言：</span><br>func judgeStr(T <span class="hljs-built_in">string</span>) bool &#123;<br>  <span class="hljs-keyword">return</span> T === <span class="hljs-string">&quot;hello&quot;</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<p>其实上面的几个小结已经用了很多的类型泛型，所以如果你能把上面的都搞懂了，我猜测对于泛型应该也没有什么恐惧了。所以这里我就一带而过了~</p>
+<p>下面我们来说说重头戏——逆变、协变。</p>
+<h4 id="逆变、协变"><a href="#逆变、协变" class="headerlink" title="逆变、协变"></a>逆变、协变</h4><p>很多童鞋在写TS时，总是被编译器给出的满屏报错毒打~不知道你是否有过调来调去，发现仍然通不过编译，气的想要<code>rm -rf</code>的经历∠(°ゝ°)。</p>
+<p>放心，只要你真正掌握了这一小结，这些问题都将迎刃而解~</p>
+<p>先说说为什么需要变形吧：</p>
+<h5 id="变形"><a href="#变形" class="headerlink" title="变形"></a>变形</h5><p>几乎所有的类型编程语言都绕不开变形，类型系统更是无法绕开变形的存在。</p>
+<p>对于类型来说，当然子类型相对于父类型存在更多的属性，且属性较多的类型为属性较少类型的子集：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs ts"><span class="hljs-keyword">interface</span> Parent &#123;<br>  pp(): <span class="hljs-built_in">void</span>;<br>&#125;<br><br><span class="hljs-keyword">interface</span> Son <span class="hljs-keyword">extends</span> Parent &#123;<br>  ss(): <span class="hljs-built_in">void</span>;<br>&#125;<br><br><span class="hljs-keyword">type</span> result = Son <span class="hljs-keyword">extends</span> Parent ? <span class="hljs-literal">true</span> : <span class="hljs-literal">false</span><br><span class="hljs-comment">// =&gt; true</span><br></code></pre></td></tr></table></figure>
+<p>但是对于集合系统相反：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs ts"><span class="hljs-keyword">type</span> a = <span class="hljs-number">1</span> | <span class="hljs-number">2</span> | <span class="hljs-number">3</span><br><span class="hljs-keyword">type</span> b = <span class="hljs-number">1</span> | <span class="hljs-number">2</span><br><span class="hljs-keyword">type</span> result = a <span class="hljs-keyword">extends</span> b ? <span class="hljs-literal">true</span> : <span class="hljs-literal">false</span><br><span class="hljs-comment">// =&gt; result = false</span><br><span class="hljs-keyword">let</span> aa: a <br><span class="hljs-keyword">let</span> bb: b<br>aa = bb<br><span class="hljs-comment">// =&gt; no error</span><br>bb = aa<br><span class="hljs-comment">// =&gt; error: Type &#x27;3&#x27; is not assignable to type &#x27;b&#x27;.</span><br></code></pre></td></tr></table></figure>
+<p>虽然违背了类型系统知觉，但是对于集合来说，对于类型a可能存在出现3的可能性，但是对于类型b不存在此元素，集合丢失了元素，显然属性更少的集合才是子集。</p>
+<p>仔细观察上面的两个例子，看似矛盾，但是存在一个共同点：对于父类型来说，相对而言更加宽泛。而子类型则更加具体。所以子类型是可以赋值给父类型的。</p>
+<h5 id="逆变和协变"><a href="#逆变和协变" class="headerlink" title="逆变和协变"></a>逆变和协变</h5><p>定义：</p>
+<p><strong>逆变（contra-variance）：子类型可以转换为父类型</strong></p>
+<p><strong>协变（co-variance）：父类型可以转换为子类型</strong></p>
+<p>假如有如下两个类型：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs ts"><span class="hljs-keyword">interface</span> Father &#123;<br>  doNormalThings(): <span class="hljs-built_in">void</span>;<br>&#125;<br><br><span class="hljs-keyword">interface</span> Son <span class="hljs-keyword">extends</span> Father &#123;<br>  doSpecialThings(): <span class="hljs-built_in">void</span>;<br>&#125;<br><br><span class="hljs-comment">// 若有两个函数签名：</span><br><span class="hljs-keyword">type</span> Fn1 = <span class="hljs-function">(<span class="hljs-params">father: Father</span>) =&gt;</span> <span class="hljs-built_in">void</span>;<br><span class="hljs-keyword">type</span> Fn2 = <span class="hljs-function">(<span class="hljs-params">son: Son</span>) =&gt;</span> <span class="hljs-built_in">void</span>;<br><br><span class="hljs-keyword">let</span> f1: Fn1 = <span class="hljs-function">(<span class="hljs-params">father: Father</span>) =&gt;</span> &#123;&#125;;<br><span class="hljs-keyword">let</span> f2: Fn2 = <span class="hljs-function">(<span class="hljs-params">son: Son</span>) =&gt;</span> &#123;&#125;;<br><br>f1 = f2<br><span class="hljs-comment">// =&gt; error：Property &#x27;doSpecialThings&#x27; is missing in type &#x27;Father&#x27; but required in type &#x27;Son&#x27;.</span><br>f2 = f1<br><span class="hljs-comment">// =&gt; 编译通过</span><br></code></pre></td></tr></table></figure>
+<p>简单理解一下，对于函数参数来说，TS允许类型发生协变，对于Fn1的签名，father参数实例推导出的可使用属性皆为son实例属性的子集，所以签名为Fn1的变量赋值给签名为Fn2的变量显然是安全的。</p>
+<p>再来看下面的例子，同样的Fn1和Fn2如下定义：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs ts"><span class="hljs-keyword">type</span> Fn1 = <span class="hljs-function">() =&gt;</span> Father;<br><span class="hljs-keyword">type</span> Fn2 = <span class="hljs-function">() =&gt;</span> Son;<br><br><span class="hljs-keyword">let</span> f1: Fn1 = <span class="hljs-function">() =&gt;</span> (&#123;&#125; <span class="hljs-keyword">as</span> Father);<br><span class="hljs-keyword">let</span> f2: Fn2 = <span class="hljs-function">() =&gt;</span> (&#123;&#125; <span class="hljs-keyword">as</span> Son);<br><br>f1 = f2;<br><span class="hljs-comment">// =&gt; 编译通过</span><br>f2 = f1;<br><span class="hljs-comment">// =&gt; error: &#x27;doSpecialThings&#x27; is declared here.</span><br></code></pre></td></tr></table></figure>
+<p>可见，对于函数返回值类型，TS采取了协变兼容的策略：即对于返回值的可能性进行收敛，保证重赋值后的函数返回值在后续类型推导保证安全。</p>
+<h5 id="双变"><a href="#双变" class="headerlink" title="双变"></a>双变</h5><p>参数类型既可以协变又可以逆变~（及其不安全），请通过strictFunctionTypes<code>或</code>strict：true来关闭这个功能。</p>
+<h5 id="不变"><a href="#不变" class="headerlink" title="不变"></a>不变</h5><p>完全不兼容，则会发生不变。举个例子：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs ts"><span class="hljs-keyword">interface</span> T1 &#123;<br>  a: numebr;<br>&#125;<br><span class="hljs-keyword">interface</span> T2 &#123;<br>  b: <span class="hljs-built_in">number</span>;<br>&#125;<br><br><span class="hljs-keyword">let</span> a: T1 = &#123;<span class="hljs-attr">a</span>: <span class="hljs-number">1</span>&#125;<br><span class="hljs-keyword">let</span> b: T2 = &#123;<span class="hljs-attr">b</span>: <span class="hljs-number">2</span>&#125;<br>a = b<br><span class="hljs-comment">// =&gt; error: Property &#x27;a&#x27; is missing in type &#x27;T2&#x27; but required in type &#x27;T1&#x27;.</span><br></code></pre></td></tr></table></figure>
+<p>两者完全无法兼容，显然TS无需做出逆变或协变的兼容，直接报错。。。</p>
+<p>这里多插一句，虽然TS存在extends语法，但是其实TS的继承本质上仍然是基于structual typing实现，所以存在下面的🌰：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs ts"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">vector2D</span></span>&#123;<br>  <span class="hljs-function"><span class="hljs-title">constructor</span>(<span class="hljs-params"><span class="hljs-keyword">public</span> x:<span class="hljs-built_in">number</span>, <span class="hljs-keyword">public</span> y: <span class="hljs-built_in">number</span></span>)</span>&#123;<br>    <span class="hljs-built_in">this</span>.x = x;<br>    <span class="hljs-built_in">this</span>.y = y;<br>  &#125;<br>&#125;<br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">vector3D</span></span>&#123;<br>  <span class="hljs-function"><span class="hljs-title">constructor</span>(<span class="hljs-params"><span class="hljs-keyword">public</span> x:<span class="hljs-built_in">number</span>,<span class="hljs-keyword">public</span> y:<span class="hljs-built_in">number</span>,<span class="hljs-keyword">public</span> z:<span class="hljs-built_in">number</span></span>)</span>&#123;<br>    <span class="hljs-built_in">this</span>.x = x;<br>    <span class="hljs-built_in">this</span>.y = y;<br>    <span class="hljs-built_in">this</span>.z = z;<br>  &#125;<br>&#125;<br><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">calculateLength</span>(<span class="hljs-params">v: vector2D</span>)</span>&#123;<br>  <span class="hljs-keyword">return</span> <span class="hljs-built_in">Math</span>.sqrt(v.x*v.x + v.y*v.y)<br>&#125;<br><span class="hljs-keyword">const</span> point = <span class="hljs-keyword">new</span> vector3D(<span class="hljs-number">0</span>,<span class="hljs-number">1</span>,<span class="hljs-number">2</span>)<br><span class="hljs-keyword">const</span> dist = calculateLength(point)<br><span class="hljs-comment">// =&gt; 编译通过</span><br></code></pre></td></tr></table></figure>
+<p>想要更好的理解这个部分，本质上还是要理解类型空间，从类型的层面去思考安全才会更好理解TS的变形处理思路。</p>
+<h3 id="做个题？"><a href="#做个题？" class="headerlink" title="做个题？"></a>做个题？</h3><h4 id="菲波那切数列"><a href="#菲波那切数列" class="headerlink" title="菲波那切数列"></a>菲波那切数列</h4><p>小明去微软面试，其中有一道手写代码题。题干很简单：用TS求出斐波那契数列第N个值~</p>
+<p>好家伙，这个简单啊，于是小明没等面试官说完，刷刷刷半分钟一个递归写出来了：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> fib = (n: number): <span class="hljs-function"><span class="hljs-params">number</span> =&gt;</span> &#123;<br>   <span class="hljs-keyword">if</span>(n === <span class="hljs-number">1</span> || n === <span class="hljs-number">2</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;<br>   <span class="hljs-keyword">return</span> fib(n - <span class="hljs-number">1</span>) + fib(n - <span class="hljs-number">2</span>)<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>很可惜这只是小明的一厢情愿了😭~，在小明期盼的目光下，面试官缓缓说出后半句话——请用类型实现。</p>
+<p>小明傻眼了，这可咋做呀。。。</p>
+<p>有了上面的前置知识，其实我相信你已经可以做出来这道题了，如果做不出来那就看小明是怎么解题的吧：</p>
+<p>小明发现这道题看起来也很简单，只要把上面的函数转换为类型系统就可以了，于是写下了下面的定义：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs ts"><span class="hljs-keyword">type</span> Fib&lt;N <span class="hljs-keyword">extends</span> <span class="hljs-built_in">number</span>&gt; = N <span class="hljs-keyword">extends</span> <span class="hljs-number">0</span> | <span class="hljs-number">1</span> ? Fib&lt;N - <span class="hljs-number">1</span>&gt; + Fib&lt;N - <span class="hljs-number">2</span>&gt;<br><span class="hljs-comment">// 编译不通过</span><br></code></pre></td></tr></table></figure>
+<p>显然，对于TS来说，没有这种语法的，让小明感到很头秃，怎么实现加减运算呢？类型系统显然不支持加减运算啊？</p>
+<p>聪明的小明突然想到之前看到的前置知识：</p>
+<p>对于类型<code>T[]</code>，有：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs ts"><span class="hljs-keyword">type</span> result = [unknown, unknown][<span class="hljs-string">&quot;length&quot;</span>]<br><span class="hljs-comment">// =&gt; 2</span><br></code></pre></td></tr></table></figure>
+<p>这太让人兴奋了，可以通过构建数组来实现加法操作啊~</p>
+<p>于是小明写下了如下声明：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs ts"><span class="hljs-keyword">export</span> <span class="hljs-keyword">type</span> NArray&lt;T, N <span class="hljs-keyword">extends</span> <span class="hljs-built_in">number</span>&gt; = N <span class="hljs-keyword">extends</span> N ? (<span class="hljs-built_in">number</span> <span class="hljs-keyword">extends</span> N ? T[] : _NArray&lt;T, N, []&gt;) : <span class="hljs-built_in">never</span><br><span class="hljs-keyword">type</span> _NArray&lt;T, N <span class="hljs-keyword">extends</span> <span class="hljs-built_in">number</span>, R <span class="hljs-keyword">extends</span> unknown[]&gt; = R[<span class="hljs-string">&#x27;length&#x27;</span>] <span class="hljs-keyword">extends</span> N ? R : _NArray&lt;T, N, [T, ...R]&gt;<br><span class="hljs-keyword">type</span> NArrayNumber&lt;L <span class="hljs-keyword">extends</span> <span class="hljs-built_in">number</span>&gt; = NArray&lt;<span class="hljs-built_in">number</span>, L&gt;<br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">type</span> Add&lt;M <span class="hljs-keyword">extends</span> <span class="hljs-built_in">number</span>, N <span class="hljs-keyword">extends</span> <span class="hljs-built_in">number</span>&gt; = [...NArrayNumber&lt;M&gt;, ...NArrayNumber&lt;N&gt;][<span class="hljs-string">&#x27;length&#x27;</span>]<br></code></pre></td></tr></table></figure>
+<p>测试了一下：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs ts"><span class="hljs-keyword">type</span> result = Add&lt;<span class="hljs-number">1</span>, <span class="hljs-number">2</span>&gt;<br><span class="hljs-comment">// =&gt; result = 3</span><br></code></pre></td></tr></table></figure>
+<p>确实可以，于是小明模仿着写出了减法操作：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs ts"><span class="hljs-keyword">export</span> <span class="hljs-keyword">type</span> Subtract&lt;M <span class="hljs-keyword">extends</span> <span class="hljs-built_in">number</span>, N <span class="hljs-keyword">extends</span> <span class="hljs-built_in">number</span>&gt; =<br>    NArrayNumber&lt;M&gt; <span class="hljs-keyword">extends</span> [...x: NArrayNumber&lt;N&gt;, ...rest: infer R] ? R[<span class="hljs-string">&#x27;length&#x27;</span>] : unknown<br></code></pre></td></tr></table></figure>
+<p>测试一下：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs ts"><span class="hljs-keyword">type</span> result = Subtract&lt;<span class="hljs-number">2</span>, <span class="hljs-number">1</span>&gt;<br><span class="hljs-comment">// =&gt; result = 1</span><br></code></pre></td></tr></table></figure>
+<p>小明感觉offer快要到手了，他改造了之前的Fib声明：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs ts"><span class="hljs-keyword">type</span> Fib&lt;N <span class="hljs-keyword">extends</span> <span class="hljs-built_in">number</span>&gt; =<br>     N <span class="hljs-keyword">extends</span> (<span class="hljs-number">0</span> | <span class="hljs-number">1</span>) ?<br>     <span class="hljs-number">1</span> : Add&lt;Fib&lt;Subtract&lt;N, <span class="hljs-number">1</span>&gt;&gt;, Fib&lt;Subtract&lt;N, <span class="hljs-number">2</span>&gt;&gt;&gt;<br><span class="hljs-comment">// =&gt; error: Type instantiation is excessively deep and possibly infinite.</span><br></code></pre></td></tr></table></figure>
+<p>嗯？？小明绝望的发现，怎么还有报错？其实这个不是小明的问题，是TS为了避免类型深度递归造成的爆栈问题，选择了限制最深50层的递归深度，可以通过升级TS版本解决这个问题。</p>
+<p>所以小明还是顺利的拿到了offer。</p>
+<p>// PS: 写到这里突然发现口子开的有点大，可能这个系列将被拆成两个部分吧。。。下一篇主要说一些技巧和TS的一些陷阱（应用篇）。。。</p>
+<p>未完待续。</p>
+
+      </section>
+      <section class="extra">
+        
+        <ul class="copyright">
+  
+  <li><strong>本文作者：</strong>herin</li>
+  <li><strong>本文链接：</strong><a href="https://kilicmu.github.io/2021/11/11/TS%E5%BF%AB%E9%80%9F%E8%BF%9B%E9%98%B6%EF%BC%88%E7%B1%BB%E5%9E%8B%E7%AF%87%EF%BC%89/index.html">https://kilicmu.github.io/2021/11/11/TS%E5%BF%AB%E9%80%9F%E8%BF%9B%E9%98%B6%EF%BC%88%E7%B1%BB%E5%9E%8B%E7%AF%87%EF%BC%89/index.html</a></li>
+  <li><strong>版权声明：</strong>本博客所有文章均采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh"
+      rel="external nofollow" target="_blank"> BY-NC-SA </a>许可协议，转载请注明出处！</li>
+  
+</ul>
+        
+        
+        <section class="donate">
+  <div class="qrcode">
+    <img   class="lazyload" data-original="/images/others/alipay.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" >
+  </div>
+  <div class="icon">
+    <a href="javascript:;" id="alipay"><i class="iconfont iconalipay"></i></a>
+    <a href="javascript:;" id="wechat"><i class="iconfont iconwechat-fill"></i></a>
+  </div>
+</section>
+        
+        
+  <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/TYPESCRIPT/" rel="tag">typescript</a></li></ul>
+
+        
+<nav class="nav">
+  
+  
+    <a href="/2021/05/19/CI-CD-%E5%85%A5%E9%97%A8/">CI/CD 入门<i class="iconfont iconright"></i></a>
+  
+</nav>
+
+      </section>
+      
+      <section class="comments">
+  
+  <div class="btn" id="comments-btn">查看评论</div>
+  
+  
+</section>
+      
+    </section>
+  </div>
+</article>
+  </div>
+</main>
+  <footer class="footer">
+  <div class="footer-social">
+    
+    
+    
+    
+    
+    <a href="tencent://message/?Menu=yes&uin=102483678 " target="_blank" onMouseOver="this.style.color= '#12B7F5'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconQQ "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="javascript:; " target="_blank" onMouseOver="this.style.color= '#09BB07'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconwechat-fill "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="https://www.instagram.com/kilicmu3/ " target="_blank" onMouseOver="this.style.color= '#DA2E76'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconinstagram "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="https://github.com/kilicmu " target="_blank" onMouseOver="this.style.color= '#24292E'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  icongithub-fill "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="kilicmu3389@outlook.com " target="_blank" onMouseOver="this.style.color='#FFBE5B'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconmail"></i>
+    </a>
+    
+  </div>
+  <div class="footer-copyright"><p>Powered by <a target="_blank" href="https://hexo.io">Hexo</a>  |  Theme - <a target="_blank" href="https://github.com/izhaoo/hexo-theme-zhaoo">zhaoo</a></p></div>
+</footer>
+  
+      <div class="fab fab-plus">
+    <i class="iconfont iconplus"></i>
+  </div>
+  
+  <div class="fab fab-daovoice">
+    <i class="iconfont iconcomment"></i>
+  </div>
+  
+  <div class="fab fab-up">
+    <i class="iconfont iconcaret-up"></i>
+  </div>
+  
+</body>
+
+
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+
+
+
+
+
+
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+
+
+
+
+
+<script src="https://cdn.bootcss.com/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+
+
+
+
+
+
+<script src="/js/utils.js"></script>
+<script src="/js/modules.js"></script>
+<script src="/js/zui.js"></script>
+<script src="/js/script.js"></script>
+
+
+
+
+
+<script>
+  (function (i, s, o, g, r, a, m) {
+    i["DaoVoiceObject"] = r;
+    i[r] = i[r] || function () {
+      (i[r].q = i[r].q || []).push(arguments)
+    }, i[r].l = 1 * new Date();
+    a = s.createElement(o), m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    a.charset = "utf-8";
+    m.parentNode.insertBefore(a, m)
+  })(window, document, "script", ('https:' == document.location.protocol ? 'https:' : 'http:') +
+    "//widget.daovoice.io/widget/0f81ff2f.js", "daovoice")
+  daovoice('init', {
+    app_id: "abcdefg"
+  }, {
+    launcher: {
+      disableLauncherIcon: true,
+    },
+  });
+  daovoice('update');
+</script>
+
+
+
+<script>
+  (function () {
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    } else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+<script>
+  var _hmt = _hmt || [];
+  (function () {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?4c204d8bc027a0455b5fc642ac334ca8";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+
+
+
+
+
+
+
+
+
+</html>

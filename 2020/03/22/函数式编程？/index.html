@@ -166,7 +166,7 @@
       <span class="post-info-item"><i class="iconfont iconcalendar"></i>March 22, 2020</span
         class="post-info-item">
       
-      <span class="post-info-item"><i class="iconfont iconfont-size"></i>2505</span>
+      <span class="post-info-item"><i class="iconfont iconfont-size"></i>2518</span>
     </div>
   </div>
 </section>
@@ -208,7 +208,7 @@
 <p>简单的请求一个 json 数据，显然这是一个不纯的函数，其中我们可以将存在副作用的函数封装后，推迟执行：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">let</span> httpRequire = <span class="hljs-function">(<span class="hljs-params">url</span>) =&gt;</span> &#123;<br>  <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>&#123;<br>    <span class="hljs-keyword">return</span> fetch(url).then(<span class="hljs-function">(<span class="hljs-params">res</span>) =&gt;</span> res.json());<br>  &#125;;<br>&#125;;<br></code></pre></td></tr></table></figure>
 <p>可以看到，httpRequire 函数已经变为一个纯函数。</p>
-<h5 id="TODO"><a href="#TODO" class="headerlink" title="//TODO"></a>//TODO</h5>
+<h5 id="TODO-有点事情，先坑一下。。。"><a href="#TODO-有点事情，先坑一下。。。" class="headerlink" title="//TODO 有点事情，先坑一下。。。"></a>//TODO 有点事情，先坑一下。。。</h5>
       </section>
       <section class="extra">
         
